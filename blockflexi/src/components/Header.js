@@ -14,6 +14,12 @@ function Header() {
 
       const open = Boolean(anchorEl);
       const id = open ? 'dropdown-menu' : undefined;
+
+    const listitemtext={
+        fontSize:'14px',
+        fontWeight:'bold',
+        color:'#000'
+    } 
     
   return (
     <div className="header">
@@ -24,8 +30,32 @@ function Header() {
         </Typography>
         <Button color="inherit">Home</Button>
         <Button color="inherit">Contact</Button>
-        <Button color="inherit">Schemes</Button>
-        
+        <Button color="inherit" >Schemes </Button>
+        <Button color="inherit" onClick={handleClick}>Gold Price</Button>
+        <Popover
+          id={id}
+          open={open}
+          anchorEl={anchorEl}
+          onClose={handleClose}
+          anchorOrigin={{
+            vertical: 'bottom',
+            horizontal: 'center',
+          }}
+          transformOrigin={{
+            vertical: 'top',
+            horizontal: 'center',
+          }}
+        >
+          <List>
+            <ListItem >
+              <ListItemText primary="Current Gold Price per gm" style={listitemtext}/>
+            </ListItem>
+            <ListItem >
+              <ListItemText primary="Rs.22,500" style={listitemtext}/>
+            </ListItem>
+            
+          </List>
+        </Popover>
         <Button color="inherit">Profile</Button>
       </Toolbar>
     </AppBar>
