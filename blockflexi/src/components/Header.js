@@ -11,8 +11,7 @@ import {
   Menu,
   MenuItem
 } from "@mui/material";
-import React from 'react';
-import { AppBar, Toolbar, Typography, Button,Popover,List,ListItem,ListItemText,Card,CardContent,CardActions} from '@mui/material';
+import {Card,CardContent,CardActions} from '@mui/material';
 
 function Header() {
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -107,7 +106,7 @@ function Header() {
       </Menu>
         </Toolbar>
       </AppBar>
-    <AppBar position="static" style={{ background: '#9A1B56' }}>
+    {/* <AppBar position="static" style={{ background: '#9A1B56' }}>
       <Toolbar>
         <Typography variant="h4" style={{ marginRight:"auto" }}>
           BLOCKFLEXI
@@ -144,7 +143,7 @@ function Header() {
         </Popover>
         <Button color="inherit">Profile</Button>
       </Toolbar>
-    </AppBar>
+    </AppBar> */}
     <Card style={{ margin: '150px  550px 0  70px',Width:'400px'}} variant="outlined" raised="true">
         <CardContent>
           <Typography variant="h4" component="h2" style={{ marginRight:"320px",marginBottom:"12px"  }}>
