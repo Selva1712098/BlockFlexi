@@ -10,13 +10,31 @@ import {
   ListItemText,
   Menu,
   MenuItem,
-  Stack
+  Stack,ToggleButtonGroup,ToggleButton
 } from "@mui/material";
-import {Card,CardContent,CardActions} from '@mui/material';
+import {Card,CardContent,CardActions,CardMedia} from '@mui/material';
 
 function Header() {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [isProfileOpen, setProfileOpen] = React.useState(null);
+  const [activeButton, setActiveButton] = React.useState('customer');
+  let cardTitle;
+  let cardContent;
+  let cardMedia;
+  
+  if (activeButton === 'customer') {
+    cardTitle= <Typography variant="h4" component="h2" style={{marginRight:'320px',}}>Customer</Typography>
+    cardContent = <Typography variant="body1" component="p" style={{marginLeft:'20px',textAlign:'justify'}}>Unlock the Power of Gold with our Platform - Buy Now and Invest in Timeless Value. With our Secure and Reliable System, You Can Own Your Very Own Piece of History Today.</Typography>;
+    cardMedia=<CardMedia component='img' height='210' image='https://digitalmarketingdeal.com/blog/wp-content/uploads/2020/07/Top-10-Famous-Jewellers-in-India.jpg?x27618://img.etimg.com/thumb/msid-67738640,width-1200,height-900,imgsize-209853,overlay-economictimes/photo.jpg' alt='customer details'/>
+  } else if (activeButton === 'jeweller') {
+    cardTitle= <Typography variant="h4" component="h2" style={{marginRight:'330px'}}>Jeweller</Typography>
+    cardContent = <Typography variant="body1" component="p" style={{marginLeft:'25px',textAlign:'justify'}}>Maximize Your Profit Potential Today! Register with Our Platform and Transform Your Gold Schemes into Quick Cash. Don't Wait - Join Now and Watch Your Business Soar</Typography>;
+    cardMedia=<CardMedia component='img' height='210' image='https://www.designhill.com/design-blog/wp-content/uploads/2015/11/1-min.jpg' alt='customer details'/>
+  } else {
+    cardTitle= <Typography variant="h4" component="h2" style={{marginLeft:'15px',marginRight:'390px'}}>Bank</Typography>
+    cardContent = <Typography variant="body1" component="p" style={{marginLeft:'25px',textAlign:'justify'}}>Join the Blockchain Revolution with Our Platform - The Future of Secure and Profitable Investments. Partner with Us Today and Access a New World of Financial Opportunities</Typography>;
+    cardMedia=<CardMedia component='img' height='210' image='https://thumbs.dreamstime.com/b/bank-building-icon-isolated-black-background-bank-building-icon-isolated-black-background-simple-vector-logo-161293296.jpg' alt='customer details'/>
+  }
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -110,7 +128,7 @@ function Header() {
       </AppBar>
    
     <div style={{ display: 'flex' ,flexWrap:'row wrap'}}>
-    <Card style={{ Width:'400px',display: 'flex' ,flexDirection:'column',margin:'120px 0 0 40px'}} variant="outlined" >
+    <Card style={{ display: 'flex' ,flexDirection:'column',margin:'120px 0 0 40px',maxHeight:'220px'}} variant="outlined" >
         <CardContent>
           <Typography variant="h4" component="h2" style={{ marginRight:"320px",marginBottom:"12px"  }}>
             Welcome to BlockFlexi
@@ -124,22 +142,34 @@ function Header() {
   
         </CardContent>
         <CardActions>
-          <Stack spacing={2} direction='row'>
-      <Button size="large" variant="outlined"  style={{width:"200px"  }}>
+          <Stack spacing={3} direction='row'>
+            {/* <ToggleButtonGroup variant='contained'>
+              <ToggleButton size="medium" variant="contained" onClick={()=>setActiveButton('customer')}  style={{width:"200px"  }} >Customer</ToggleButton>
+              <ToggleButton size="medium"  variant="outlined" onClick={()=>setActiveButton('jeweller')}  style={{width:"200px"}}  >Jeweller</ToggleButton>
+              <ToggleButton size="medium"  variant="outlined" onClick={()=>setActiveButton('bank')}  style={{width:"200px"}} >Bank</ToggleButton>
+            </ToggleButtonGroup> */}
+      <Button size="large" variant="outlined" onClick={()=>setActiveButton('customer')}  style={{width:"200px"  }}>
             Customer
           </Button>
-          <Button size="large"  variant="outlined"   style={{width:"200px"}}>
+          <Button size="large"  variant="outlined" onClick={()=>setActiveButton('jeweller')}  style={{width:"200px"}}>
             Jeweller
           </Button>
-          <Button size="large"  variant="outlined"   style={{width:"200px"}}>
+          <Button size="large"  variant="outlined" onClick={()=>setActiveButton('bank')}  style={{width:"200px"}}>
             Bank
           </Button>
           </Stack>
         </CardActions>
+        
        
         
       </Card>
+      <Card style={{width:'500px',height:'340px',margin:'120px 40px 0px 40px'}} variant='outlined' elevated>
+        {cardMedia}
+        {cardTitle}
+        {cardContent}
+      </Card>
       </div>
+     
     </div>
   );
 }
