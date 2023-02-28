@@ -5,15 +5,15 @@ import {
   TextField,
   Button,
   Typography,
+  Grid,
 } from '@mui/material';
 
-const Login = () => {
+const JewellerLogin = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const[bisno,setBisNo] = useState('');
   const [name, setName] = useState('');
-const [address, setAddress] = useState('');
-const [mobile, setMobile] = useState('');
-const [PANNo, setPANNo] = useState('');
+
 
 
   const handleEmailChange = (event) => {
@@ -24,12 +24,25 @@ const [PANNo, setPANNo] = useState('');
     setPassword(event.target.value);
   };
 
+  const handleNameChange = (event) => {
+    setName(event.target.value);
+    };
+    
+ const handlebisNoChange=(event)=>{
+    setBisNo(event.target.value);
+ }
+    
+
+   
+
+
   const handleSubmit = (event) => {
     event.preventDefault();
     
   };
 
   return (
+
     <div
       style={{
         display: 'flex',
@@ -39,6 +52,10 @@ const [PANNo, setPANNo] = useState('');
         backgroundColor: '#f5f5f5',
       }}
     >
+     <Grid container spacing={1} style={{
+      margin:'20px 10px 10px 300px'
+     }}>
+      <Grid item >
       <Card
         style={{
           width: '400px',
@@ -49,7 +66,7 @@ const [PANNo, setPANNo] = useState('');
       >
         <div
           style={{
-            backgroundColor: '#2196f3',
+            backgroundColor: '#9A1B56',
             height: '100px',
             display: 'flex',
             alignItems: 'center',
@@ -92,7 +109,7 @@ const [PANNo, setPANNo] = useState('');
             <Button
               style={{
                 margin: '10px 0px 30px',
-                backgroundColor: '#2196f3',
+                backgroundColor: '#9A1B56',
                 color: 'white',
                 borderRadius: '20px',
                 width: '100%',
@@ -106,8 +123,77 @@ const [PANNo, setPANNo] = useState('');
           </form>
         </CardContent>
       </Card>
+      </Grid>
+      <Grid item >
+      <Card sx={{ bgcolor: '#f5f5f5', width: '400px', margin: '0px 10px 0px 40px',borderRadius: '10px' }}>
+      <div  style={{
+            backgroundColor: '#9A1B56',
+            height: '100px',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}>
+      <Typography variant="h5" component="h2" style={{ textAlign: 'center',color:'white' }}>
+REGISTER
+</Typography>
+</div>
+<CardContent>
+  
+
+
+<form onSubmit>
+<TextField
+           id="name"
+           label="Name"
+           type="text"
+           variant="outlined"
+           fullWidth
+           value={name}
+           onChange={handleNameChange}
+           margin="normal"
+         />
+
+
+<TextField
+           id="email"
+           label="Email ID"
+           type="email"
+           variant="outlined"
+           fullWidth
+           value={email}
+           onChange={handleEmailChange}
+           margin="normal"
+         />
+<TextField
+           id="password"
+           label="Password"
+           type="password"
+           variant="outlined"
+           fullWidth
+           value={password}
+           onChange={handlePasswordChange}
+           margin="normal"
+         />
+         <TextField
+           id="bisno"
+           label="BIS No"
+           type="text"
+           variant="outlined"
+           fullWidth
+           value={bisno}
+           onChange={handlebisNoChange}
+           margin="normal"
+         />
+<Button sx={{ margin: '10px 0px 0px 120px', bgcolor: '#9A1B56' }} variant="contained" color="primary" type="submit">
+Register
+</Button>
+</form>
+</CardContent>
+</Card>
+</Grid>
+</Grid>
     </div>
   );
 };
 
-export default Login;
+export default JewellerLogin;
