@@ -4,6 +4,8 @@ import './index.css';
 import App from './App';
 import Login from './components/Modals/Login'
 import Registration from './components/Modals/Registration';
+import JewellerHome from './pages/JewellerHome';
+
 import {Route,BrowserRouter as Router,Routes} from 'react-router-dom'
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -14,6 +16,7 @@ root.render(
         <Route path={'/'} element={<App/>}/>
         <Route path={'/login'} element={<Login/>}/>
         <Route path={'/register'} element={<Registration/>}/>
+        <Route path={'/jewellerhome'} element={<JewellerHome/>}/>
       </Routes>
     </Router>
     
