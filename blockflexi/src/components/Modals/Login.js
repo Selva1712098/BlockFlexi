@@ -10,6 +10,11 @@ import {
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [name, setName] = useState('');
+const [address, setAddress] = useState('');
+const [mobile, setMobile] = useState('');
+const [PANNo, setPANNo] = useState('');
+
 
   const handleEmailChange = (event) => {
     setEmail(event.target.value);
