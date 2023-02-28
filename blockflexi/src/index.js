@@ -2,11 +2,21 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
+import Login from './components/Modals/Login'
+import Registration from './components/Modals/Registration';
+import {Route,BrowserRouter as Router,Routes} from 'react-router-dom'
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <App />
+    <Router>
+      <Routes>
+        <Route path={'/'} element={<App/>}/>
+        <Route path={'/login'} element={<Login/>}/>
+        <Route path={'/register'} element={<Registration/>}/>
+      </Routes>
+    </Router>
+    
   </React.StrictMode>
 );
 
