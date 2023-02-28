@@ -11,7 +11,7 @@ const Register = () => {
 const [name, setName] = useState('');
 const [address, setAddress] = useState('');
 const [mobile, setMobile] = useState('');
-const [AadharNo, setAadharNo] = useState('');
+const [PANNo, setPANNo] = useState('');
 const [email, setEmail] = useState('');
 const [password, setPassword] = useState('');
 
@@ -27,8 +27,8 @@ const handleMobileChange = (event) => {
 setMobile(event.target.value);
 };
 
-const handleAadharNoChange = (event) => {
-setAadharNo(event.target.value);
+const handlePANNoChange = (event) => {
+setPANNo(event.target.value);
 };
 
 const handleEmailChange = (event) => {
@@ -83,18 +83,18 @@ REGISTER
            margin="normal"
          />
 <TextField
-           id="aadharNo"
-           label="Aadhar No"
+           id="PAN No"
+           label="PAN No"
            type="text"
            variant="outlined"
            fullWidth
-           value={AadharNo}
-           onChange={handleAadharNoChange}
+           value={PANNo}
+           onChange={handlePANNoChange}
            margin="normal"
          />
 <TextField
            id="email"
-           label="Email id"
+           label="Email ID"
            type="email"
            variant="outlined"
            fullWidth
@@ -112,7 +112,7 @@ REGISTER
            onChange={handlePasswordChange}
            margin="normal"
          />
-<Button sx={{ margin: '20px auto 0', bgcolor: '#1E88E5' }} variant="contained" color="primary" type="submit">
+<Button sx={{ margin: '10px 0px 0px 120px', bgcolor: '#1E88E5' }} variant="contained" color="primary" type="submit">
 Register
 </Button>
 </form>
