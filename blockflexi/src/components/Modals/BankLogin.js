@@ -1,4 +1,6 @@
 import React ,{useState} from 'react'
+import Header from '../Header';
+
 import {
     Card,
     CardContent,
@@ -11,10 +13,7 @@ import {
 function BankLogin() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const[branch,setBranch] = useState('');
-    const [name, setName] = useState('');
-    const[ifsc,setIfsc] = useState('');
-  
+    
   
   
     const handleEmailChange = (event) => {
@@ -25,17 +24,7 @@ function BankLogin() {
       setPassword(event.target.value);
     };
   
-    const handleNameChange = (event) => {
-      setName(event.target.value);
-      };
-
-    const handleifscChange= (event) => {
-        setIfsc(event.target.value);
-    }
-      
-   const handleBranchChange=(event)=>{
-    setBranch(event.target.value);
-   }
+   
     const handleSubmit = (event) => {
       event.preventDefault();
       
@@ -45,6 +34,8 @@ function BankLogin() {
   
     
     return (
+  <>
+  <Header/>
   
       <div
         style={{
@@ -56,7 +47,7 @@ function BankLogin() {
         }}
       >
        <Grid container spacing={1} style={{
-        margin:'20px 10px 10px 300px'
+        margin:'20px 10px 10px 470px'
        }}>
         <Grid item >
         <Card
@@ -82,7 +73,7 @@ function BankLogin() {
               fontFamily="bold"
               style={{ color: 'white' }}
             >
-              LOGIN
+               BANK LOGIN
             </Typography>
           </div>
           <CardContent style={{ paddingTop: '40px' }}>
@@ -127,85 +118,10 @@ function BankLogin() {
           </CardContent>
         </Card>
         </Grid>
-        <Grid item >
-        <Card sx={{ bgcolor: '#f5f5f5', width: '400px', margin: '0px 10px 0px 40px',borderRadius: '10px' }}>
-        <div  style={{
-              backgroundColor: '#9A1B56',
-              height: '100px',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-            }}>
-        <Typography variant="h5" component="h2" style={{ textAlign: 'center',color:'white' }}>
-  REGISTER
-  </Typography>
-  </div>
-  <CardContent>
-    
-  
-  
-  <form onSubmit>
-  <TextField
-             id="name"
-             label="Name"
-             type="text"
-             variant="outlined"
-             fullWidth
-             value={name}
-             onChange={handleNameChange}
-             margin="normal"
-           />
-  
-  
-  <TextField
-             id="email"
-             label="Email ID"
-             type="email"
-             variant="outlined"
-             fullWidth
-             value={email}
-             onChange={handleEmailChange}
-             margin="normal"
-           />
-  <TextField
-             id="password"
-             label="Password"
-             type="password"
-             variant="outlined"
-             fullWidth
-             value={password}
-             onChange={handlePasswordChange}
-             margin="normal"
-           />
-           <TextField
-             id="ifscno"
-             label="IFSC Code"
-             type="text"
-             variant="outlined"
-             fullWidth
-             value={ifsc}
-             onChange={handleifscChange}
-             margin="normal"
-           />
-           <TextField
-             id="branch-name"
-             label="Branch Name"
-             type="text"
-             variant="outlined"
-             fullWidth
-             value={branch}
-             onChange={handleBranchChange}
-             margin="normal"
-           />
-  <Button sx={{ margin: '10px 0px 0px 120px', bgcolor: '#9A1B56' }} variant="contained" color="primary" type="submit">
-  Register
-  </Button>
-  </form>
-  </CardContent>
-  </Card>
-  </Grid>
+        
   </Grid>
       </div>
+      </>
   
   )
 }

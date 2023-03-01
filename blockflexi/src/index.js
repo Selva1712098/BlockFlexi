@@ -2,9 +2,10 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
-import Login from './components/Modals/CustomerLogin'
+import CustomerLogin from './components/Modals/CustomerLogin'
 import JewellerLogin from './components/Modals/JewellerLogin'
 import BankLogin from './components/Modals/BankLogin'
+import JewellerHome from './pages/JewellerHome';
 
 import {Route,BrowserRouter as Router,Routes} from 'react-router-dom'
 
@@ -14,9 +15,12 @@ root.render(
     <Router>
       <Routes>
         <Route path={'/'} element={<App/>}/>
-        <Route path={'/Clogin'} element={<Login/>}/>
-        <Route path={'/Jlogin'} element={<JewellerLogin/>}/>
-        <Route path={'/Blogin'} element={<BankLogin/>}/>
+        <Route path={'/Customer/login'} element={<CustomerLogin/>}/>
+        <Route path={'/Jeweller/login'} element={<JewellerLogin/>}/>
+        <Route path={'/Bank/login'} element={<BankLogin/>}/>
+        
+        
+        <Route path={'/jewellerhome'} element={<JewellerHome/>}/>
       </Routes>
     </Router>
     

@@ -28,7 +28,7 @@ function Description() {
     setActiveButton('customer')
 
     setTimeout(()=>{
-        Navigate('/Clogin')
+        Navigate('/Customer/login')
     },1000)
   }
   const jewellerActive=()=>{
@@ -36,14 +36,14 @@ function Description() {
    
 
     setTimeout(()=>{
-        Navigate('/Jlogin')
+        Navigate('/Jeweller/login')
     },1000)
   }
   const bankActive=()=>{
     setActiveButton('bank')
     
     setTimeout(()=>{
-        Navigate('/Blogin')
+        Navigate('/Bank/login')
     },1000)
   }
   return (
