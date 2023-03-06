@@ -5,6 +5,10 @@ import App from './App';
 import Login from './components/Modals/Login'
 import Registration from './components/Modals/Registration';
 import {Route,BrowserRouter as Router,Routes} from 'react-router-dom'
+import CustomerHome from './pages/CustomerHome';
+import CustomerScheme from './pages/CustomerScheme';
+
+
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -14,6 +18,8 @@ root.render(
         <Route path={'/'} element={<App/>}/>
         <Route path={'/login'} element={<Login/>}/>
         <Route path={'/register'} element={<Registration/>}/>
+        <Route path={'/CustomerHome'} element={<CustomerHome/>}/>
+        <Route path={'/CustomerScheme'} element={<CustomerScheme/>}/>
       </Routes>
     </Router>
     
