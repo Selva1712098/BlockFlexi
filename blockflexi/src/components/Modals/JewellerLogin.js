@@ -1,19 +1,22 @@
 import React, { useState } from 'react';
+import Header from '../Header';
 import {
   Card,
   CardContent,
   TextField,
   Button,
   Typography,
+  Grid,
 } from '@mui/material';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
-const Login = () => {
+const JewellerLogin = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [name, setName] = useState('');
-const [address, setAddress] = useState('');
-const [mobile, setMobile] = useState('');
-const [PANNo, setPANNo] = useState('');
+  const navigate=useNavigate()
+  
+
 
 
   const handleEmailChange = (event) => {
@@ -24,12 +27,29 @@ const [PANNo, setPANNo] = useState('');
     setPassword(event.target.value);
   };
 
-  const handleSubmit = (event) => {
+  async function login(event){
     event.preventDefault();
-    
-  };
+    await axios.post("http://localhost:5000/JewellerLogin",{
+      email,
+      password
+    }).then((res)=>{
+      if(res.data.status==='ok'){
+        alert('login was successful')
+      }
+      else if(res.data.status==='error'){
+        alert("wrong password")
+      }
+      else if(res.data.status==='not found'){
+        alert('No user found.Contact us to create an account')
+        navigate('/')
+      }
+    }).catch(e=>{
+      alert('wrong details')
 
+    })  }
   return (
+    <>
+    <Header/>
     <div
       style={{
         display: 'flex',
@@ -39,6 +59,10 @@ const [PANNo, setPANNo] = useState('');
         backgroundColor: '#f5f5f5',
       }}
     >
+     <Grid container spacing={1} style={{
+      margin:'20px 10px 10px 470px'
+     }}>
+      <Grid item >
       <Card
         style={{
           width: '400px',
@@ -49,7 +73,7 @@ const [PANNo, setPANNo] = useState('');
       >
         <div
           style={{
-            backgroundColor: '#2196f3',
+            backgroundColor: '#9A1B56',
             height: '100px',
             display: 'flex',
             alignItems: 'center',
@@ -62,11 +86,11 @@ const [PANNo, setPANNo] = useState('');
             fontFamily="bold"
             style={{ color: 'white' }}
           >
-            LOGIN
+           JEWELLER LOGIN
           </Typography>
         </div>
         <CardContent style={{ paddingTop: '40px' }}>
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={login} action="POST">
             <TextField
               id="email"
               label="Email"
@@ -92,7 +116,7 @@ const [PANNo, setPANNo] = useState('');
             <Button
               style={{
                 margin: '10px 0px 30px',
-                backgroundColor: '#2196f3',
+                backgroundColor: '#9A1B56',
                 color: 'white',
                 borderRadius: '20px',
                 width: '100%',
@@ -106,8 +130,12 @@ const [PANNo, setPANNo] = useState('');
           </form>
         </CardContent>
       </Card>
+      </Grid>
+      
+</Grid>
     </div>
+    </>
   );
 };
 
-export default Login;
+export default JewellerLogin;

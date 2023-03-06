@@ -6,15 +6,18 @@ TextField,
 Button,
 Typography,
 } from '@mui/material';
+import {useNavigate} from 'react-router-dom'
+import Header from '../Header'
+import axios from 'axios'
 
-const Register = () => {
+const CustomerRegister = () => {
 const [name, setName] = useState('');
 const [address, setAddress] = useState('');
 const [mobile, setMobile] = useState('');
 const [PANNo, setPANNo] = useState('');
 const [email, setEmail] = useState('');
 const [password, setPassword] = useState('');
-
+const navigate=useNavigate()
 const handleNameChange = (event) => {
 setName(event.target.value);
 };
@@ -39,19 +42,51 @@ const handlePasswordChange = (event) => {
 setPassword(event.target.value);
 };
 
-const handleSubmit = (event) => {
-event.preventDefault();
-// Add your registration logic here
-};
 
+
+ async function register(event){
+  event.preventDefault();
+  await axios.post("http://localhost:5000/CustomerRegister",{
+    name,
+    address,
+    mobile,PANNo,email,password
+  }).then(res=>{
+    if(res.data.status==='ok'){
+      alert("Your account has been created successfully")
+      navigate('/Customer/login')
+}
+    else if(res.data.status==='exists'){
+      alert("You are already a part of us")
+      navigate('/Customer/login')
+    }
+  }).catch(e=>{
+    alert("wrong details")
+  })
+}
 return (
+    <>
+    <Header/>
 <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}>
+    
+
 <Card sx={{ bgcolor: '#f5f5f5', width: '400px', margin: '50px' }}>
-<CardContent>
-<Typography variant="h5" component="h2" style={{ textAlign: 'center', fontWeight: 'bold' }}>
-REGISTER
+<div
+          style={{
+            backgroundColor: '#9A1B56',
+            height: '100px',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+        >
+<Typography variant="h5" component="h2" style={{ textAlign: 'center',color:'white' }}>
+CUSTOMER REGISTER
 </Typography>
-<form onSubmit={handleSubmit}>
+</div>
+<CardContent>
+
+
+<form onSubmit={register} action="POST">
 <TextField
            id="name"
            label="Name"
@@ -112,14 +147,15 @@ REGISTER
            onChange={handlePasswordChange}
            margin="normal"
          />
-<Button sx={{ margin: '10px 0px 0px 120px', bgcolor: '#1E88E5' }} variant="contained" color="primary" type="submit">
+<Button  sx={{ margin: '10px 0px 0px 120px', bgcolor: '#9A1B56' }} variant="contained" color="primary" type="submit">
 Register
 </Button>
 </form>
 </CardContent>
 </Card>
 </div>
+</>
 );
 };
 
-export default Register;
+export default CustomerRegister;
