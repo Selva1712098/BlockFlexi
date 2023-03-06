@@ -8,11 +8,13 @@ import {
   Typography,
   Grid,
 } from '@mui/material';
+import axios from 'axios'
+import { useNavigate } from 'react-router-dom';
 
 const CustomerLogin = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  
+  const navigate=useNavigate()
   const handleEmailChange = (event) => {
     setEmail(event.target.value);
   };
@@ -21,15 +23,26 @@ const CustomerLogin = () => {
     setPassword(event.target.value);
   };
 
-  
-
-   
-
-
-  const handleSubmit = (event) => {
+  async function login(event){
     event.preventDefault();
-    
-  };
+    await axios.post('http://localhost:5000/CustomerLogin',
+    {
+      email,password
+    },{withCredentials:true}).then((res)=>{
+      if(res.data.status==='ok'){
+        alert('login was successful')
+        navigate('/')
+      }
+      else if(res.data.status==='error'){
+        alert("wrong password")
+      }
+      else if(res.data.status==='not found'){
+        alert('user not found')
+      }
+    }).catch(e=>{
+      alert('wrong details')
+    })
+  }
 
   return (
     <>
@@ -45,7 +58,9 @@ const CustomerLogin = () => {
     >
       
      <Grid container style={{
-      margin:'120px 10px 10px 470px'
+      margin:'120px 10px 10px 470px',
+      display:'flex',
+      flexWrap:'column wrap'
      }}>
       <Grid item >
       <Card
@@ -76,7 +91,7 @@ const CustomerLogin = () => {
           </Typography>
         </div>
         <CardContent style={{ paddingTop: '40px' }}>
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={login}>
             <TextField
               id="email"
               label="Email"
@@ -114,6 +129,7 @@ const CustomerLogin = () => {
               Login
             </Button>
           </form>
+          <Typography align='center' variant='body1'>Don't have an acount.<a href="/Customer/Register">Register here</a></Typography>
         </CardContent>
       </Card>
       </Grid>

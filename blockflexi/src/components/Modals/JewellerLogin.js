@@ -8,10 +8,13 @@ import {
   Typography,
   Grid,
 } from '@mui/material';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const JewellerLogin = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const navigate=useNavigate()
   
 
 
@@ -24,16 +27,26 @@ const JewellerLogin = () => {
     setPassword(event.target.value);
   };
 
-  
-
-   
-
-
-  const handleSubmit = (event) => {
+  async function login(event){
     event.preventDefault();
-    
-  };
+    await axios.post("http://localhost:5000/JewellerLogin",{
+      email,
+      password
+    }).then((res)=>{
+      if(res.data.status==='ok'){
+        alert('login was successful')
+      }
+      else if(res.data.status==='error'){
+        alert("wrong password")
+      }
+      else if(res.data.status==='not found'){
+        alert('No user found.Contact us to create an account')
+        navigate('/')
+      }
+    }).catch(e=>{
+      alert('wrong details')
 
+    })  }
   return (
     <>
     <Header/>
@@ -77,7 +90,7 @@ const JewellerLogin = () => {
           </Typography>
         </div>
         <CardContent style={{ paddingTop: '40px' }}>
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={login} action="POST">
             <TextField
               id="email"
               label="Email"

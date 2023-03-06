@@ -14,7 +14,7 @@ import {
   DialogTitle,
   DialogContent,
   
-  DialogActions,Slide
+  DialogActions,Slide, DialogContentText
 } from "@mui/material";
 import Header from "../components/Header";
 
@@ -58,23 +58,23 @@ export default function SimpleTable() {
         
       >
         <DialogTitle>
-            <Typography variant='h4'>Customer Details</Typography></DialogTitle>
+            <Typography variant='h5' sx={{fontWeight:'bold',fontFamily:'Roboto'}}>CUSTOMER DETAILS</Typography></DialogTitle>
         <DialogContent>
           {selectedUser && (
-            <>
-              <Typography variant="h5"  gutterBottom>
+           <DialogContentText>
+              <Typography variant="h6"  gutterBottom>
                 Name: {selectedUser.name}
               </Typography>
-              <Typography variant="h5"  gutterBottom>
+              <Typography variant="h6"  gutterBottom>
                 Phone: {selectedUser.Phone_No}
               </Typography>
-              <Typography variant="h5"  gutterBottom>
+              <Typography variant="h6"   gutterBottom>
                 PAN: {selectedUser.PANNo}
               </Typography>
-              <Typography variant="h5"  gutterBottom>
+              <Typography variant="h6"  gutterBottom>
                 Months Paid: {selectedUser.Months_paid}
               </Typography>
-              </>
+              </DialogContentText>
           )}
         </DialogContent>
             <DialogActions>
@@ -90,8 +90,8 @@ export default function SimpleTable() {
           alignItems: "center",
         }}
       >
-        <Typography align="center" variant="h3">
-          Incoming Requests
+        <Typography align="center" variant="h4" sx={{fontWeight:'bold'}}>
+          INCOMING REQUESTS
         </Typography>
       </div>
       

@@ -49,7 +49,8 @@ function Description() {
   return (
     <div>
         
-        <div style={{ display: 'flex' ,flexWrap:'row wrap'}}>
+        <div style={{ display: 'flex' ,flexDirection:'row'}}>
+          
     <Card style={{ display: 'flex' ,flexDirection:'column',margin:'120px 0 0 40px',maxHeight:'248px',backgroundColor:' rgb(240,234,220)'}} variant="outlined" >
         <CardContent>
           <Typography variant="h4" component="h2" align='left' gutterBottom>
@@ -82,14 +83,15 @@ function Description() {
           </Stack>
         </CardActions>
         
-       
-        
       </Card>
+      
+      
       <Card style={{width:'500px',maxHeight:'380px',margin:'120px 40px 0px 90px', backgroundColor:' rgb(240,234,220)'}}  variant='outlined' elevated>
         {cardMedia}
         {cardTitle}
         {cardContent}
       </Card>
+      
       </div>
         <br/>
         <br/>
