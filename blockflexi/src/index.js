@@ -21,12 +21,8 @@ root.render(
     <Router>
       <Routes>
         <Route path={'/'} element={<App/>}/>
-<<<<<<< HEAD
-        <Route path={'/login'} element={<Login/>}/>
-        <Route path={'/register'} element={<Registration/>}/>
         <Route path={'/CustomerHome'} element={<CustomerHome/>}/>
         <Route path={'/CustomerScheme'} element={<CustomerScheme/>}/>
-=======
         <Route path={'/Customer/login'} element={<CustomerLogin/>}/>
         <Route path={'/Customer/Register'} element={<CustomerRegister/>}/>
         <Route path={'/Jeweller/login'} element={<JewellerLogin/>}/>
@@ -34,7 +30,6 @@ root.render(
         
         <Route path={'/BankHome'} element={<BankHome/>}/>
         <Route path={'/jewellerhome'} element={<JewellerHome/>}/>
->>>>>>> a60073279db453c01b99b15cfa79e44b339cbb7c
       </Routes>
     </Router>
     
