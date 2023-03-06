@@ -24,21 +24,21 @@ function JewellerSchemeTable() {
   };
 
   return (
-    <Box style={{backgroudImage:'linear-gradient(to bottom, #BF8F91, #CAA2A3, #D4B5B5, #DFC7C8)'}} sx={{ padding:"0px" }}>
+    <Box style={{backgroudImage:'linear-gradient(to bottom, #BF8F91, #CAA2A3, #D4B5B5, #DFC7C8)',borderRadius:'16px'}} sx={{ padding:"0px" }}>
       <Button
         style={{ margin:'0px 0px 30px 120px', fontWeight: "bold" }}
         variant="contained"
-        color="primary"
+        color="success"
         onClick={handleAddJewel}
       >
         ADD SCHEMES
       </Button>
-      <TableContainer component={Paper} variant="outlined">
+      <TableContainer component={Paper} variant="outlined" style={{backgroundImage:'linear-gradient(to bottom, #BF8F91, #CAA2A3, #D4B5B5, #DFC7C8)'}}>
         <Table>
           <TableHead>
-            <TableRow>
+            <TableRow >
               <TableCell style={{ fontWeight: "bold" }}>SCHEMES</TableCell>
-              <TableCell style={{ fontWeight: "bold",margin:'0px 100px 0px 200px' }}>DELETE SCHEME</TableCell>
+              <TableCell style={{ fontWeight: "bold",margin:'0px 0px 0px 200px' }}>DELETE SCHEME</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -51,10 +51,11 @@ function JewellerSchemeTable() {
                       style={{
                         fontSize: "13px",
                         fontWeight: "bold",
-                        backgroundColor: "rgb(25 118 210)"
+                        margin:'0px 0px 0px 100px',
+                        
                       }}
                       variant="contained"
-                      color="secondary"
+                      color="error"
                       onClick={() => handleDeleteJewel(index)}
                     >
                       Delete

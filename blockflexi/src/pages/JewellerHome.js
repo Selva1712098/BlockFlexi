@@ -38,6 +38,7 @@ const styles = {
     bgcolor: 'background.paper',
     boxShadow: 24,
     p: 4,
+    backgroundColor:'#c89e9f'
   },
 };
 // use state variable
@@ -143,6 +144,24 @@ variant='h1'
 component='div'>
    LOAN REQUEST
 </Typography>
+<div style={{display:'flex',flexDirection:'column',alignItems:'center'}}>
+  <Typography style={{fontWeight:'bold',fontFamily:'Raleway, sans-serif',textAlign:'left',marginBottom:'10px'}}>
+    &#9733; Eligibility criteria - The requirements that must be met to be eligible for the loan
+  </Typography>
+  <Typography style={{fontWeight:'bold',fontFamily:'Raleway, sans-serif',textAlign:'left',marginBottom:'10px'}}>
+    &#9733; Desired loan amount - The amount of money needed
+  </Typography>
+  <Typography style={{fontWeight:'bold',fontFamily:'Raleway, sans-serif',textAlign:'left',marginBottom:'10px'}}>
+    &#9733; Preferred tenure - The duration of the loan repayment
+  </Typography>
+  <Typography style={{fontWeight:'bold',fontFamily:'Raleway, sans-serif',textAlign:'left',marginBottom:'10px'}}>
+    &#9733; Interest rate information - The interest rate charged on the loan
+  </Typography>
+  <Typography style={{fontWeight:'bold',fontFamily:'Raleway, sans-serif',textAlign:'left',marginBottom:'10px'}}>
+    &#9733; Flexibility options - Any options to modify the loan repayment terms
+  </Typography>
+</div>
+
           <Typography style={styles.text} variant='body2' color='text.secondary'>
             
             
@@ -303,10 +322,12 @@ component='div'>
     onClose={viewClose}
     aria-labelledby='modal-title'
     aria-describedby='modal-description'
+    
+   
   >
     
     
-    <Box sx={styles.modal}>
+    <Box sx={styles.modal} style={{borderRadius:'16px'}} >
       <JewellerSchemeTable/>
      <Typography id='modal-description' sx={{ mt: 2 }}>
       {/* <Button variant="contained" style={{fontWeight:"bold",margin:"0px 0px 0px 330px"}}>

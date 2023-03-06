@@ -29,7 +29,7 @@ const JewellerLogin = () => {
 
   async function login(event){
     event.preventDefault();
-    await axios.post("http://localhost:5000/JewellerLogin",{
+    await axios.post("http://localhost:9000/JewellerLogin",{
       email,
       password
     }).then((res)=>{
