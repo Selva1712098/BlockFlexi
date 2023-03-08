@@ -151,7 +151,3 @@ export const jewellerMasterCollection = mongoose.model(
   jewellerSchema
 );
 export const bankMasterCollection = mongoose.model("Bank_Master", bankSchema);
-
-
- 
-

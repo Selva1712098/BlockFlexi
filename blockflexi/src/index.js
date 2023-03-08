@@ -8,6 +8,7 @@ import BankLogin from './components/Modals/BankLogin'
 import JewellerHome from './pages/JewellerHome';
 import BankHome from './pages/BankHome';
 import CustomerRegister from './components/Modals/CustomerRegister';
+import PrivateRoute from './pages/PrivateRoute';
 
 import {Route,BrowserRouter as Router,Routes} from 'react-router-dom'
 
@@ -21,7 +22,7 @@ root.render(
         <Route path={'/Customer/Register'} element={<CustomerRegister/>}/>
         <Route path={'/Jeweller/login'} element={<JewellerLogin/>}/>
         <Route path={'/Bank/login'} element={<BankLogin/>}/>
-        
+       {/* <PrivateRoute path={'/BankHome'} component={<BankHome/>}/> */}
         <Route path={'/BankHome'} element={<BankHome/>}/>
         <Route path={'/jewellerhome'} element={<JewellerHome/>}/>
       </Routes>

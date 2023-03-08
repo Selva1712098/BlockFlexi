@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState ,useEffect} from "react";
 import {
   Table,
   TableBody,
@@ -17,6 +17,9 @@ import {
   DialogActions,Slide, DialogContentText
 } from "@mui/material";
 import Header from "../components/Header";
+import {useCookies }from 'react-cookie'
+import {useNavigate} from 'react-router-dom'
+import jwt_decode from 'jwt-decode'
 
 function createData(Sno, name, Phone_No, Payment_Status, Months_paid, PANNo) {
   return { Sno, name, Phone_No, Payment_Status, Months_paid, PANNo };
@@ -35,11 +38,27 @@ const rows = [
 export default function SimpleTable() {
   const [open, setOpen] = useState(false);
   const [selectedUser, setSelectedUser] = useState(null);
+  const[cookies,setCookie,removeCookie]=useCookies(['sessionId'])
+  const navigate=useNavigate()
+  const token=jwt_decode(cookies.sessionId)
+  
+  console.log(token)
 
+  useEffect(()=>{
+    if(token.name!=='YourBank'){
+      alert('you are not logged in , please login')
+      navigate('/')
+    }
+  },[token])
   function handleDialogOpen(user) {
     setOpen(true);
     setSelectedUser(user);
     
+  }
+  function handleLogout(){
+    removeCookie('sessionId');
+    navigate('/',{replace:true});
+
   }
 
   return (
@@ -59,6 +78,7 @@ export default function SimpleTable() {
       >
         <DialogTitle>
             <Typography variant='h5' sx={{fontWeight:'bold',fontFamily:'Roboto'}}>CUSTOMER DETAILS</Typography></DialogTitle>
+            
         <DialogContent>
           {selectedUser && (
            <DialogContentText>
@@ -90,9 +110,10 @@ export default function SimpleTable() {
           alignItems: "center",
         }}
       >
-        <Typography align="center" variant="h4" sx={{fontWeight:'bold'}}>
+        <Typography align="center" variant="h4" sx={{fontWeight:'bold',margin:'0 0 0 395px'}}>
           INCOMING REQUESTS
         </Typography>
+        <Button variant="contained" onClick={handleLogout} sx={{margin:'0 0 0 400px'}}>Logout</Button>
       </div>
       
       <TableContainer component={Paper} sx={{ maxHeight: "400px"}}>
@@ -122,7 +143,7 @@ export default function SimpleTable() {
                 Payments
               </TableCell>
               <TableCell
-                align="left"
+                align='left'
                 sx={{ fontWeight: "bold", fontSize: "22px"}}
               >
                 Approval
@@ -159,10 +180,10 @@ export default function SimpleTable() {
                 <TableCell align="center">
                   <Stack direction="row" alignItems="center" spacing={3}>
                     <Button variant="contained" color="success">
-                      Approve{" "}
+                      Approve
                     </Button>
                     <Button variant="contained" color="error">
-                      Reject{" "}
+                      Reject
                     </Button>
                   </Stack>
                 </TableCell>

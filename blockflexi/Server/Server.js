@@ -87,9 +87,12 @@ app.post('/CustomerLogin',async(req,res)=>{
             const isPasswordValid= bcrypt.compareSync(password,check.Password)
 
             if(isPasswordValid){
-                
-                res.setHeader('Set-Cookie',`sessionId=${check.CustomerID}`)
-                res.cookie('sessionId',check.CustomerID,{
+                const token=jwt.sign({
+                    name:check.Name,
+                    id:check.CustomerID
+                },process.env.secret)
+                res.setHeader('Set-Cookie',`sessionId=${token}`)
+                res.cookie('sessionId',token,{
                     httponly:true,
                     maxAge:24*60*60*1000
                 }).json({status:'ok'})
@@ -120,7 +123,11 @@ app.post('/JewellerLogin',async(req,res)=>{
                 const isPasswordValid= bcrypt.compareSync(password,check.Password)
     
                 if(isPasswordValid){
-                    res.json({status:'ok'})
+                    res.setHeader('Set-Cookie',`sessionId=${check.JewellerID}`)
+                res.cookie('sessionId',check.JewellerID,{
+                    httponly:true,
+                    maxAge:24*60*60*1000
+                }).json({status:'ok'})
                 }
                 else{
                     res.json({status:'error'})
@@ -148,11 +155,16 @@ app.post('/BankLogin',async(req,res)=>{
                const isPasswordValid= bcrypt.compareSync(password,check.Password)
    
                if(isPasswordValid){
-                res.setHeader('Set-Cookie',`sessionId=${check.BankID}`)
-                res.cookie('sessionId',check.BankID,{
+                const token= jwt.sign({
+                    name:check.BankName,
+                    id:check.BankID,
+                },process.env.secret)
+                res.setHeader('Set-Cookie',`sessionId=${token}`)
+                req.session.authorized=true;
+                res.cookie('sessionId',token,{
                     httponly:true,
                     maxAge:30000
-                }).json({status:'ok'})
+                }).json({status:'ok',authorized:true})
                }
                else{
                    res.json({status:'error'})
@@ -170,21 +182,21 @@ app.post('/BankLogin',async(req,res)=>{
    
 })
 
-app.post('/logout',async (req,res)=>{
-    req.session.destroy(err=>{
+// app.post('/logout',async (req,res)=>{
+//     req.session.destroy(err=>{
         
-        if(err){
-            console.log(err)
-            return res.status(500).send('Internal server error')
-        }
+//         if(err){
+//             console.log(err)
+//             return res.status(500).send('Internal server error')
+//         }
        
         
        
         
-    });
-    res.clearCookie('sessionId').json({status:'cleared'})
+//     });
+//     res.clearCookie('sessionId').json({status:'cleared'})
     
-})
+// })
 
 app.listen(5000,()=>{
     console.log("Server Started!")
