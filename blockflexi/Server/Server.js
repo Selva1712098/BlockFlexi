@@ -2,7 +2,7 @@ import express, { request } from 'express'
 
 import cors from 'cors'
 import session from 'express-session'
-import passport from 'passport'
+// import passport from 'passport'
 import jwt from 'jsonwebtoken';
 import {customerMasterCollection,jewellerMasterCollection,bankMasterCollection} from './mongo.js'
 // import bankMasterCollection from './mongo.js'

@@ -31,7 +31,7 @@ const CustomerLogin = () => {
     },{withCredentials:true}).then((res)=>{
       if(res.data.status==='ok'){
         alert('login was successful')
-        navigate('/')
+        navigate('/CustomerHome')
       }
       else if(res.data.status==='error'){
         alert("wrong password")

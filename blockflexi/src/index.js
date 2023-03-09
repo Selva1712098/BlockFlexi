@@ -8,7 +8,13 @@ import BankLogin from './components/Modals/BankLogin'
 import JewellerHome from './pages/JewellerHome';
 // import BankHome from './pages/BankHome';
 import CustomerRegister from './components/Modals/CustomerRegister';
+
+
 import {Route,BrowserRouter as Router,Routes} from 'react-router-dom'
+import CustomerHome from './pages/CustomerHome';
+import CustomerScheme from './pages/CustomerScheme';
+
+
 const LazyBankHome=React.lazy(()=>import ('./pages/BankHome'))
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -17,6 +23,8 @@ root.render(
     <Router>
       <Routes>
         <Route path={'/'} element={<App/>}/>
+        <Route path={'/CustomerHome'} element={<CustomerHome/>}/>
+        <Route path={'/CustomerScheme'} element={<CustomerScheme/>}/>
         <Route path={'/Customer/login'} element={<CustomerLogin/>}/>
         <Route path={'/Customer/Register'} element={<CustomerRegister/>}/>
         <Route path={'/Jeweller/login'} element={<JewellerLogin/>}/>
@@ -24,6 +32,7 @@ root.render(
       
         <Route path={'/BankHome'} element={<React.Suspense fallback='Loading ...'><LazyBankHome/></React.Suspense>}/>
         <Route path={'/jewellerhome'} element={<JewellerHome/>}/>
+       
       </Routes>
     </Router>
     

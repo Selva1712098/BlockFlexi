@@ -35,7 +35,7 @@ const JewellerLogin = () => {
     }).then((res)=>{
       if(res.data.status==='ok'){
         alert('login was successful')
-        navigate('/jewellerhome')
+        navigate('/jewellerHome')
       }
       else if(res.data.status==='error'){
         alert("wrong password")
