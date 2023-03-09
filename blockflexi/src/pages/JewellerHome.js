@@ -1,8 +1,14 @@
 import Header from '../components/Header';
+import {useNavigate} from 'react-router-dom';
+
 import { useState } from 'react';
 import { Box, Card, CardContent, Typography, CardActions, Button, Modal,TextField } from '@mui/material';
 import JewellerSchemeTable from '../components/JewellerSchemeTable';
+
+
+
 // style
+
 const styles = {
   container: {
     display: 'flex',
@@ -48,10 +54,15 @@ const JewellerHome = () => {
   const [view,setView] = useState(false);
   const[monthlyInstallment,setMonthlyInstallment]=useState(0)
   const[total,setTotal]=useState(0)
+  const navigate=useNavigate()
   const handleOpen = () => {
     setOpen(true);
   };
   
+  const handleClick=()=>{
+    
+    navigate('/request')
+  }
 
   const handleClose = () => {
     setOpen(false);
@@ -146,7 +157,7 @@ component='div'>
 </Typography>
 <div style={{display:'flex',flexDirection:'column',alignItems:'center'}}>
   <Typography style={{fontWeight:'bold',fontFamily:'Raleway, sans-serif',textAlign:'left',marginBottom:'10px'}}>
-    &#9733; Eligibility criteria - The requirements that must be met to be eligible for the loan
+    &#9733; Purpose of loan - Reason for taking the loan
   </Typography>
   <Typography style={{fontWeight:'bold',fontFamily:'Raleway, sans-serif',textAlign:'left',marginBottom:'10px'}}>
     &#9733; Desired loan amount - The amount of money needed
@@ -169,7 +180,7 @@ component='div'>
         </CardContent>
         <CardActions style={styles.button}>  
           
-        <Button style={{backgroundImage:'linear-gradient(to bottom, #BF8F91, #CAA2A3, #D4B5B5, #DFC7C8)', color:'#000000', borderRadius: '30px', padding: '10px 20px',fontWeight:'bold',margin:'0px 0px 0px 85px',fontSize:'15px'}} variant="contained" >REQUEST</Button> 
+        <Button style={{backgroundImage:'linear-gradient(to bottom, #BF8F91, #CAA2A3, #D4B5B5, #DFC7C8)', color:'#000000', borderRadius: '30px', padding: '10px 20px',fontWeight:'bold',margin:'0px 0px 0px 85px',fontSize:'15px'}} variant="contained" onClick={handleClick} >REQUEST</Button> 
         </CardActions>
       </Card>
 
@@ -341,4 +352,5 @@ component='div'>
 </div>
  );
 };
+
 export default JewellerHome;
