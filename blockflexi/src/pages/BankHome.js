@@ -35,7 +35,7 @@ const rows = [
   createData(5, "Mike", 8918918936, "No", 3, "KIL913O"),
 ];
 
-export default function SimpleTable() {
+export default function BankHome() {
   const [open, setOpen] = useState(false);
   const [selectedUser, setSelectedUser] = useState(null);
   const[cookies,setCookie,removeCookie]=useCookies(['sessionId'])
