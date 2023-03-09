@@ -101,6 +101,10 @@ export default function SimpleTable() {
           <Button variant='contained'  size='small'  onClick={() => setOpen(false)}>Ok</Button>
           </DialogActions>
       </Dialog>
+      <br/>
+      <br/>
+      <br/>
+      <br/>
       <div
         style={{
           height: "140px",
