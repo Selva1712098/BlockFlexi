@@ -29,13 +29,13 @@ const JewellerLogin = () => {
 
   async function login(event){
     event.preventDefault();
-    await axios.post("http://localhost:9000/JewellerLogin",{
+    await axios.post("http://localhost:5000/JewellerLogin",{
       email,
       password
-    }).then((res)=>{
+    },{withCredentials:true}).then((res)=>{
       if(res.data.status==='ok'){
         alert('login was successful')
-        navigate('/JewellerHome')
+        navigate('/jewellerhome')
       }
       else if(res.data.status==='error'){
         alert("wrong password")

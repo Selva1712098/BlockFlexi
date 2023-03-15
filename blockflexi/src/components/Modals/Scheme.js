@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Stack } from '@chakra-ui/react'
 import {
     Modal,
@@ -22,11 +22,38 @@ import {
     AccordionIcon,
   } from '@chakra-ui/react'
   import { Card, CardBody, CardFooter, Heading } from '@chakra-ui/react'
+  import axios from "axios";
 function Scheme({isOpen, onClose }){
+  const[schemes,setSchemes]=useState('');
   const [isJoined, setIsJoined] = useState(false);
-  const handleJoinClick = () => {
-    setIsJoined(true);
-  };
+  // const handleJoinClick = (index) => {
+  //   setSchemes((schemes) =>
+  //   schemes.map((scheme, i) =>
+  //     i === index
+  //       ? {
+  //           ...scheme,
+  //           isJoined: true,
+  //           joinButtonText: "Joined",
+  //         }
+  //       : scheme
+  //   )
+  // );
+  // };
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        // Make a GET request to the /schemes API endpoint
+        const response = await axios.get("http://localhost:5000/viewschemes");
+
+        // Set the retrieved schemes in the state
+        setSchemes(response.data);
+      } catch (err) {
+        console.error(err);
+      }
+    }
+
+    fetchData();
+  }, []);
     return(
 <div>
 <Modal isOpen={isOpen} onClose={onClose}>
@@ -35,57 +62,57 @@ function Scheme({isOpen, onClose }){
           <ModalHeader>Schemes</ModalHeader>
           <ModalCloseButton />
           <ModalBody maxHeight="400px" overflowY="scroll">
+            {schemes && schemes.map((scheme,index)=>(
+ 
           <Card
   direction={{ base: 'column', sm: 'row' }}
   overflow='hidden'
   variant='outline'
 >
-<Stack>
-    <CardBody>
-      <Heading size='md'>Standard Gold Scheme(11 months)</Heading>
 
-      <Text py='2'>
-       Monthly= 5000/month
-       Total= 55000
-      </Text>
-    </CardBody>
+    <Stack>
+      <CardBody>
+        <Heading size='md'>{scheme.SchemeName}</Heading>
 
-    <CardFooter>
-    {isJoined ? (
-                    <Button variant="solid" bgColor={"#c17171"} color={"#fff"} disabled>
-                      Joined
-                    </Button>
-                  ) : (
-      <Button variant='solid' bgColor={"#c17171"} mr={'4'} color={"#fff"} onClick={handleJoinClick} >
-        Join
-      </Button>  
+        <Text py='2'>
+          {scheme.MonthlyPayment}
+        </Text>
+      </CardBody>
+
+      <CardFooter>
+        {/* {scheme.isJoined ? (
+          <Button variant="solid" bgColor={"#c17171"} color={"#fff"} >
+            Joined
+          </Button>
+        ) : ( */}
+          <Button variant='solid' bgColor={"#c17171"} mr={'4'} color={"#fff"}>
+            Join
+          </Button>
+
         
-                  )}      
-      {/* <Button variant='solid' bgColor={"#c17171"} color={"#fff"} onClick={()=>setShow(true)} >
-        Show More
-      </Button>    */}
-      <Accordion allowToggle>
-  <AccordionItem>
-    <h2>
-      <AccordionButton>
-        <Box as="span" flex='1' textAlign='left'>
-          See details
-        </Box>
-        <AccordionIcon />
-      </AccordionButton>
-    </h2>
-    <AccordionPanel pb={4}>
-    "Get ready to strike gold with our Standard Golden Scheme! Make monthly payments of just Rs. 5000 for 11 months and receive gold worth Rs. 55,000 at the end of the scheme.
-     It's the perfect way to save money while investing in gold - the ultimate symbol of wealth and prosperity.
-      So why wait? Sign up for the Standard Golden Scheme today and let your savings shine!"
+        <Accordion allowToggle>
+          <AccordionItem>
+            <h2>
+              <AccordionButton>
+                <Box as="span" flex='1' textAlign='left'>
+                  See details
+                </Box>
+                <AccordionIcon />
+              </AccordionButton>
+            </h2>
+            <AccordionPanel pb={4}>
+              {scheme.SchemeDetails}
 
-    </AccordionPanel>
-  </AccordionItem>
-  </Accordion>       
-    </CardFooter>
-  </Stack>
+            </AccordionPanel>
+          </AccordionItem>
+        </Accordion>
+      </CardFooter>
+    </Stack>
+  
 </Card>
-<Card
+            ))}
+      
+{/* <Card
   direction={{ base: 'column', sm: 'row' }}
   overflow='hidden'
   variant='outline'
@@ -128,11 +155,12 @@ function Scheme({isOpen, onClose }){
       </Button>
     </CardFooter>
   </Stack>
-</Card>
+</Card> */}
 <Alert status='success' variant='left-accent' hidden={!isJoined}>
               <AlertIcon />
               You have successfully joined the scheme!
             </Alert>
+
           </ModalBody>
           <ModalFooter>
             <Button variant='ghost'mr={3} >Go to MySchemes</Button>

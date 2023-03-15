@@ -1,6 +1,7 @@
-import mongoose from "mongoose";
+import mongoose, { Schema } from "mongoose";
 import shortid from "shortid";
 import dotenv from "dotenv";
+import { Int32, Timestamp } from "mongodb";
 dotenv.config();
 
 mongoose.set("strictQuery", false);
@@ -141,6 +142,104 @@ const bankSchema = new mongoose.Schema(
     collection: "Bank_Master",
   }
 );
+const schemeSchema = new mongoose.Schema(
+  {
+    JewellerID: {
+      type: String,
+      ref: "Jeweller_Master.JewellerID",
+    },
+    SchemeID: {
+      type: String,
+      unique: true,
+      default: shortid.generate,
+      required: true,
+    },
+    SchemeName: {
+      type: String,
+      require: true,
+    },
+    SchemeDetails: {
+      type: String,
+      require: true,
+    },
+    MonthlyPayment: {
+      type: Number,
+      require: true,
+    },
+    RowDate: {
+      type: Date,
+      required: true,
+    },
+    Status: {
+      type: Boolean,
+      default: true,
+    },
+  },
+  {
+    collection: "Jewellery_Scheme",
+  }
+);
+const CustomerSchemeSchema = new mongoose.Schema(
+  {
+    JewellerID: {
+      type: String,
+      ref: "Jeweller_Master.JewellerID",
+    },
+    SchemeID: {
+      type: String,
+      ref: "Jewellery_Scheme.SchemeID",
+    },
+    CustomerID: {
+      type: String,
+      ref: "Customer_Master.CustomerID",
+      require: true,
+    },
+    DOJ: {
+      type: Date,
+    },
+    LoanReq: {
+      type: Boolean,
+    },
+    LoanRegDate: {
+      type: Date,
+      require: true,
+    },
+    LoanStatus_Jw: {
+      type: String,
+    },
+    LoanStatus_Jw_Date: {
+      type: Date,
+    },
+    BankID: {
+      type: String,
+      ref: "Bank_Master.BankID",
+    },
+    LoanStatus_Bank: {
+      type: String,
+    },
+    LoanStatus_Bank_Date: {
+      type: Date,
+    },
+    LoanAmount: {
+      type: Number,
+    },
+    GoldClaimStatus: {
+      type: Boolean,
+    },
+    GoldClaimDate: {
+      type: Date,
+    },
+    GoldSettledStatus: {
+      type: Boolean,
+    },
+    GoldSettledDate: {
+      type: Date,
+    },
+  },
+  {
+    collection: "Customer_Scheme",
+  }
+);
 
 export const customerMasterCollection = mongoose.model(
   "Customer_Master",
@@ -151,7 +250,11 @@ export const jewellerMasterCollection = mongoose.model(
   jewellerSchema
 );
 export const bankMasterCollection = mongoose.model("Bank_Master", bankSchema);
-
-
- 
-
+export const jewellerySchemeCollection = mongoose.model(
+  "Jewellery_Scheme",
+  schemeSchema
+);
+export const CustomerSchemeCollection = mongoose.model(
+  "Customer_Scheme",
+  CustomerSchemeSchema
+);

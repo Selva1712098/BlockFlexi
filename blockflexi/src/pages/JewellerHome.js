@@ -2,6 +2,9 @@ import Header from '../components/Header';
 import { useState } from 'react';
 import { Box, Card, CardContent, Typography, CardActions, Button, Modal,TextField } from '@mui/material';
 import JewellerSchemeTable from '../components/JewellerSchemeTable';
+import axios from 'axios';
+import jwt_decode from 'jwt-decode'
+import {useCookies} from 'react-cookie'
 // style
 const styles = {
   container: {
@@ -46,13 +49,21 @@ const styles = {
 const JewellerHome = () => {
   const [open, setOpen] = useState(false);
   const [view,setView] = useState(false);
-  const[monthlyInstallment,setMonthlyInstallment]=useState(0)
-  const[total,setTotal]=useState(0)
+  const [SchemeName, setSchemeName] = useState("");
+  const [SchemeDetails, setSchemeDetails] = useState("");
+  const [MonthlyPayment, setMonthlyPayment] = useState("");
+  const[cookies,setCookie,removeCookie]=useCookies(['sessionId'])
+  // const[monthlyInstallment,setMonthlyInstallment]=useState(0)
+  // const[total,setTotal]=useState(0)
+  const token=jwt_decode(cookies.sessionId)
+  const JewellerID=token.jid
+  console.log(typeof(JewellerID))
   const handleOpen = () => {
     setOpen(true);
   };
   
-
+  
+  
   const handleClose = () => {
     setOpen(false);
   };
@@ -62,14 +73,66 @@ const JewellerHome = () => {
   const viewClose = () => {
     setView(false);
   };
-  const calculateTotal = (event) => {
-    event.preventDefault()
+  const handleName = (event) => {
+    setSchemeName(event.target.value);
+    };
+    
+    const handleDetails = (event) => {
+    setSchemeDetails(event.target.value);
+    };
+    
+    const handleMonthlyPayment = (event) => {
+    setMonthlyPayment(event.target.value);
+    };
+    async function scheme(event){
+      event.preventDefault();
+      await axios.post("http://localhost:5000/scheme",{
+        JewellerID,
+        SchemeName,
+        SchemeDetails,
+        MonthlyPayment
+      }).then(res=>{
+        if(res.data.status==='ok'){
+          console.log(res.data)
+          alert("Scheme Added")
+          // navigate('/Customer/login')
+    }
+        else if(res.data.status==='exists'){
+          alert("You are already a part of us")
+          // navigate('/Customer/login')
+        }
+      }).catch(e=>{
+        alert("wrong details")
+        console.log(e);
+      })
+    }
+  
+  // const calculateTotal = (event) => {
+  //   event.preventDefault()
    
    
     
-    setTotal(monthlyInstallment*11);
+  //   setTotal(monthlyInstallment*11);
     
-  }
+  // };
+  // const handleSubmit=(event)=>{
+  //   event.preventDefault();
+  //   Axios();
+  //   const scheme = { SchemeName:SchemeName, SchemeDetails:SchemeDetails, MonthlyPayment:MonthlyPayment }
+
+
+  // fetch("/scheme", {
+  //   method: "POST",
+  //   headers: {
+  //     "Content-Type": "application/json",
+  //   },
+  //   body: JSON.stringify(scheme),
+  // })
+  //   .then((response) => response.json())
+  //   .then((scheme) => console.log(scheme))
+  //   .catch((error) => console.error(error));
+
+  // };
 // react code
   return (
     <div>
@@ -204,6 +267,7 @@ component='div'>
   </Box>
 
   {/* Modal */}
+
   <Modal 
     open={open}
     onClose={handleClose}
@@ -213,13 +277,17 @@ component='div'>
     
 
     
-
+    
     <Box style={{backgroundImage:'linear-gradient(to bottom, #BF8F91, #CAA2A3, #D4B5B5, #DFC7C8)',borderRadius: '16px' }} sx={styles.modal}>
+    <form onSubmit={scheme} action='POST'>
     <Typography style={{fontSize:'20px',fontWeight:'bold'}}id='modal-title' variant='h6'  component='h2'>
         SCHEME NAME</Typography>
-        <TextField
+        <TextField 
   id="outlined-basic"
   variant="outlined"
+  name='SchemeName'
+  value={SchemeName}
+  onChange={handleName}
   style={{
     width: '40%',
     margin: '10px 0',
@@ -243,14 +311,46 @@ component='div'>
   
   
 />
-      
-      <Typography style={{fontSize:'20px',fontWeight:'bold'}}id='modal-title' variant='h6'  component='h2'>
-        MONTHLY INSTALLMENT</Typography>
-        <form onSubmit={calculateTotal}>
+<Typography style={{fontSize:'20px',fontWeight:'bold'}}id='modal-title' variant='h6'  component='h2'>
+        SCHEME DETAILS</Typography>
         <TextField
+  id="outlined-basic"
+  variant="outlined"
+  name='SchemeDetails'
+  value={SchemeDetails}
+  onChange={handleDetails}
+  style={{
+    width: '40%',
+    margin: '10px 0',
+    borderRadius: '4px',
+    backgroundColor: '#f4f4f4',
+    boxShadow: '0 2px 4px 0 rgba(0,0,0,0.10)',
+    padding: '6px 6px',
+    fontSize: '40px',
+  }}
+  InputLabelProps={{
+    style: {
+      fontSize: '14px',
+      color: '#666',
+    },
+  }}
+  InputProps={{
+    style: {
+      fontSize: '14px',
+    },
+  }}
+  />
+      
+      {/* <Typography style={{fontSize:'20px',fontWeight:'bold'}}id='modal-title' variant='h6'  component='h2'>
+        MONTHLY INSTALLMENT</Typography>
+        {/* <form onSubmit={calculateTotal}> */}
+        {/* <TextField
   id="outlined-basic"
   type="number"
   variant="outlined"
+  name='MonthlyPayment'
+  value={MonthlyPayment}
+ onChange={(e)=>setMonthlyPayment(e.target.value)}
   style={{width: '40%',margin: '10px 0',borderRadius: '4px',backgroundColor: '#f4f4f4',
     boxShadow: '0 2px 4px 0 rgba(0,0,0,0.10)',
     padding: '6px 6px',
@@ -267,12 +367,11 @@ component='div'>
       fontSize: '14px',
     },
   }}
- value={monthlyInstallment}
- onChange={(e)=>setMonthlyInstallment(e.target.value)}
+ 
 
 />
-<Button style={{margin:'25px 0px 0px 40px',fontWeight:'bold'}} variant="contained" type="submit" >submit</Button>
-</form>
+<Button style={{margin:'25px 0px 0px 40px',fontWeight:'bold'}} variant="contained" type="submit" >submit</Button> */} 
+{/* </form> */}
       
       <Typography style={{fontSize:'20px',fontWeight:'bold'}}id='modal-title' variant='h6'  component='h1'>
         TOTAL
@@ -280,6 +379,9 @@ component='div'>
       <TextField
   id="outlined-basic"
   variant="outlined"
+  name='MonthlyPayment'
+  value={MonthlyPayment}
+ onChange={handleMonthlyPayment}
   style={{
     width: '40%',
     margin: '10px 0',
@@ -300,12 +402,12 @@ component='div'>
       fontSize: '14px',
     },
   }}
-  defaultValue='0'
-  value={total}
+  // defaultValue='0'
+  // value={total}
 />
       
       <Typography id='modal-description' sx={{ mt: 2 }}>
-      <Button 
+      <Button type='submit'
   variant="contained"
   style={{fontWeight:"bold",margin:"0px 0px 0px 55px"
   }}
@@ -314,9 +416,9 @@ component='div'>
 </Button>
         {/* Add a form here to collect information about the new scheme */}
       </Typography>
+      </form>
     </Box>
   </Modal>
-
   <Modal
     open={view}
     onClose={viewClose}
