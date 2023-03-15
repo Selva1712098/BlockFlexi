@@ -1,11 +1,20 @@
 import Header from '../components/Header';
+import {useNavigate} from 'react-router-dom';
+
 import { useState } from 'react';
 import { Box, Card, CardContent, Typography, CardActions, Button, Modal,TextField } from '@mui/material';
 import JewellerSchemeTable from '../components/JewellerSchemeTable';
+<<<<<<< HEAD
 import axios from 'axios';
 import jwt_decode from 'jwt-decode'
 import {useCookies} from 'react-cookie'
+=======
+
+
+
+>>>>>>> bf68908268cc7c3cc862ff713cfdaf0f9e6536ab
 // style
+
 const styles = {
   container: {
     display: 'flex',
@@ -49,6 +58,7 @@ const styles = {
 const JewellerHome = () => {
   const [open, setOpen] = useState(false);
   const [view,setView] = useState(false);
+<<<<<<< HEAD
   const [SchemeName, setSchemeName] = useState("");
   const [SchemeDetails, setSchemeDetails] = useState("");
   const [MonthlyPayment, setMonthlyPayment] = useState("");
@@ -58,12 +68,33 @@ const JewellerHome = () => {
   const token=jwt_decode(cookies.sessionId)
   const JewellerID=token.jid
   console.log(typeof(JewellerID))
+=======
+  const[monthlyInstallment,setMonthlyInstallment]=useState(0)
+  const[total,setTotal]=useState(0)
+  const navigate=useNavigate()
+>>>>>>> bf68908268cc7c3cc862ff713cfdaf0f9e6536ab
   const handleOpen = () => {
     setOpen(true);
   };
   
+<<<<<<< HEAD
   
   
+=======
+  const handleClick=()=>{
+    
+    navigate('/request')
+    
+  }
+  const handleClick1=()=>{
+    
+    navigate('/settle')
+    
+  }
+  
+
+
+>>>>>>> bf68908268cc7c3cc862ff713cfdaf0f9e6536ab
   const handleClose = () => {
     setOpen(false);
   };
@@ -209,7 +240,7 @@ component='div'>
 </Typography>
 <div style={{display:'flex',flexDirection:'column',alignItems:'center'}}>
   <Typography style={{fontWeight:'bold',fontFamily:'Raleway, sans-serif',textAlign:'left',marginBottom:'10px'}}>
-    &#9733; Eligibility criteria - The requirements that must be met to be eligible for the loan
+    &#9733; Purpose of loan - Reason for taking the loan
   </Typography>
   <Typography style={{fontWeight:'bold',fontFamily:'Raleway, sans-serif',textAlign:'left',marginBottom:'10px'}}>
     &#9733; Desired loan amount - The amount of money needed
@@ -232,7 +263,7 @@ component='div'>
         </CardContent>
         <CardActions style={styles.button}>  
           
-        <Button style={{backgroundImage:'linear-gradient(to bottom, #BF8F91, #CAA2A3, #D4B5B5, #DFC7C8)', color:'#000000', borderRadius: '30px', padding: '10px 20px',fontWeight:'bold',margin:'0px 0px 0px 85px',fontSize:'15px'}} variant="contained" >REQUEST</Button> 
+        <Button style={{backgroundImage:'linear-gradient(to bottom, #BF8F91, #CAA2A3, #D4B5B5, #DFC7C8)', color:'#000000', borderRadius: '30px', padding: '10px 20px',fontWeight:'bold',margin:'0px 0px 0px 85px',fontSize:'15px'}} variant="contained" onClick={handleClick} >REQUEST</Button> 
         </CardActions>
       </Card>
 
@@ -260,7 +291,7 @@ component='div'>
         </CardContent>
         <CardActions style={styles.button}>  
           
-        <Button style={{backgroundImage:'linear-gradient(to bottom, #BF8F91, #CAA2A3, #D4B5B5, #DFC7C8)',margin:'0px 0px 0px 85px', color:'#000000', borderRadius: '30px', padding: '10px 20px',fontWeight:'bold',fontSize:'15px'}} variant="contained" >SETTLE</Button>          
+        <Button style={{backgroundImage:'linear-gradient(to bottom, #BF8F91, #CAA2A3, #D4B5B5, #DFC7C8)',margin:'0px 0px 0px 85px', color:'#000000', borderRadius: '30px', padding: '10px 20px',fontWeight:'bold',fontSize:'15px'}} onClick={handleClick1} variant="contained" >SETTLE</Button>          
         </CardActions>
       </Card>
     </div>
@@ -443,4 +474,5 @@ component='div'>
 </div>
  );
 };
+
 export default JewellerHome;
