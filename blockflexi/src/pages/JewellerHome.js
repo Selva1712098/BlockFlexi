@@ -62,7 +62,15 @@ const JewellerHome = () => {
   const handleClick=()=>{
     
     navigate('/request')
+    
   }
+  const handleClick1=()=>{
+    
+    navigate('/settle')
+    
+  }
+  
+
 
   const handleClose = () => {
     setOpen(false);
@@ -208,7 +216,7 @@ component='div'>
         </CardContent>
         <CardActions style={styles.button}>  
           
-        <Button style={{backgroundImage:'linear-gradient(to bottom, #BF8F91, #CAA2A3, #D4B5B5, #DFC7C8)',margin:'0px 0px 0px 85px', color:'#000000', borderRadius: '30px', padding: '10px 20px',fontWeight:'bold',fontSize:'15px'}} variant="contained" >SETTLE</Button>          
+        <Button style={{backgroundImage:'linear-gradient(to bottom, #BF8F91, #CAA2A3, #D4B5B5, #DFC7C8)',margin:'0px 0px 0px 85px', color:'#000000', borderRadius: '30px', padding: '10px 20px',fontWeight:'bold',fontSize:'15px'}} onClick={handleClick1} variant="contained" >SETTLE</Button>          
         </CardActions>
       </Card>
     </div>
