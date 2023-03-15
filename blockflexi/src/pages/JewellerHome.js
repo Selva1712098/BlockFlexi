@@ -4,6 +4,8 @@ import {useNavigate} from 'react-router-dom';
 import { useState } from 'react';
 import { Box, Card, CardContent, Typography, CardActions, Button, Modal,TextField } from '@mui/material';
 import JewellerSchemeTable from '../components/JewellerSchemeTable';
+import jwt_decode from 'jwt-decode'
+import { useCookies } from 'react-cookie';
 
 
 
@@ -54,6 +56,11 @@ const JewellerHome = () => {
   const [view,setView] = useState(false);
   const[monthlyInstallment,setMonthlyInstallment]=useState(0)
   const[total,setTotal]=useState(0)
+  const[cookies,setCookie,removeCookie]=useCookies(['sessionId'])
+  console.log(cookies)
+  const token=jwt_decode(cookies.sessionId)
+  
+  console.log(token)
   const navigate=useNavigate()
   const handleOpen = () => {
     setOpen(true);

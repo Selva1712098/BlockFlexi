@@ -32,10 +32,10 @@ const JewellerLogin = () => {
     await axios.post("http://localhost:5000/JewellerLogin",{
       email,
       password
-    }).then((res)=>{
+    },{withCredentials:true}).then((res)=>{
       if(res.data.status==='ok'){
         alert('login was successful')
-        navigate('/jewellerHome')
+        navigate('/jewellerhome')
       }
       else if(res.data.status==='error'){
         alert("wrong password")

@@ -26,14 +26,14 @@ function Description() {
   }
   const customerActive=()=>{
     setActiveButton('customer')
-
+    //Navigate('/Customer/login')
     setTimeout(()=>{
         Navigate('/Customer/login')
     },1000)
   }
   const jewellerActive=()=>{
     setActiveButton('jeweller')
-   
+    //Navigate('/Jeweller/login')
 
     setTimeout(()=>{
         Navigate('/Jeweller/login')
@@ -41,7 +41,7 @@ function Description() {
   }
   const bankActive=()=>{
     setActiveButton('bank')
-    
+    //Navigate('/Bank/login')
     setTimeout(()=>{
         Navigate('/Bank/login')
     },1000)
@@ -49,7 +49,7 @@ function Description() {
   return (
     <div>
         
-        <Grid container>
+        <Grid container >
       <Grid item>    
     <Card style={{ display: 'flex' ,flexDirection:'column',margin:'120px 0 0 40px',maxHeight:'248px',backgroundColor:' rgb(240,234,220)'}} variant="outlined" >
         <CardContent>

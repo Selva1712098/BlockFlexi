@@ -22,7 +22,7 @@ app.use(session({
     
 }))
 
-app.use(cors({ origin: "http://localhost:3000", credentials: true }))
+app.use(cors({ origin: ["http://localhost:3000"], credentials: true }))
 
 
 app.use((req, res, next) => {
@@ -88,13 +88,13 @@ app.post('/CustomerLogin',async(req,res)=>{
 
             if(isPasswordValid){
                 const token=jwt.sign({
-                    name:check.Name,
+                    name:check.CustomerName,
                     id:check.CustomerID
                 },process.env.secret)
                 res.setHeader('Set-Cookie',`sessionId=${token}`)
                 res.cookie('sessionId',token,{
                     httponly:true,
-                    maxAge:24*60*60*1000
+                    maxAge:24*60*60*365*1000
                 }).json({status:'ok'})
                  
             }
@@ -116,32 +116,38 @@ app.post('/CustomerLogin',async(req,res)=>{
 app.post('/JewellerLogin',async(req,res)=>{
     const {email,password}=req.body
 
-     try{
-            const check= await jewellerMasterCollection.findOne({EmailID:email})
-            
-            if(check){
-                const isPasswordValid= bcrypt.compareSync(password,check.Password)
-    
-                if(isPasswordValid){
-                    res.setHeader('Set-Cookie',`sessionId=${check.JewellerID}`)
-                res.cookie('sessionId',check.JewellerID,{
+
+    try{
+        const check= await jewellerMasterCollection.findOne({EmailID:email})
+        
+        if(check){
+            const isPasswordValid= bcrypt.compareSync(password,check.Password)
+
+            if(isPasswordValid){
+                const token=jwt.sign({
+                    name:check.JewellerName,
+                    id:check.JewellerID
+                },process.env.secret)
+                res.setHeader('Set-Cookie',`sessionId=${token}`)
+                res.cookie('sessionId',token,{
                     httponly:true,
-                    maxAge:24*60*60*1000
+                    maxAge:24*60*60*365
                 }).json({status:'ok'})
-                }
-                else{
-                    res.json({status:'error'})
-                }
+                 
             }
             else{
-                res.json({status:'not found'})
+                res.json({status:'error'})
             }
-    
-    
         }
-        catch(e){
-            console.log("Something went Wrong.try again later")
+        else{
+            res.json({status:'not found'})
         }
+
+
+    }
+    catch(e){
+        console.log("Something went Wrong.try again later")
+    }
     
 })
 
@@ -163,7 +169,7 @@ app.post('/BankLogin',async(req,res)=>{
                 req.session.authorized=true;
                 res.cookie('sessionId',token,{
                     httponly:true,
-                    maxAge:30000
+                    maxAge:24*60*60*365*1000
                 }).json({status:'ok',authorized:true})
                }
                else{
@@ -182,21 +188,6 @@ app.post('/BankLogin',async(req,res)=>{
    
 })
 
-// app.post('/logout',async (req,res)=>{
-//     req.session.destroy(err=>{
-        
-//         if(err){
-//             console.log(err)
-//             return res.status(500).send('Internal server error')
-//         }
-       
-        
-       
-        
-//     });
-//     res.clearCookie('sessionId').json({status:'cleared'})
-    
-// })
 
 app.listen(5000,()=>{
     console.log("Server Started!")

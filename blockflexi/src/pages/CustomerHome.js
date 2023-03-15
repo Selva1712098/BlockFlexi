@@ -1,7 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Header from "../components/Header";
-import { ChakraProvider,  Stack } from "@chakra-ui/react";
+import { useCookies } from "react-cookie";
+import { ChakraProvider, Stack } from "@chakra-ui/react";
 import { SimpleGrid } from "@chakra-ui/react";
+import { useNavigate } from "react-router-dom";
 import {
   Card,
   CardHeader,
@@ -12,17 +14,35 @@ import {
   Button,
 } from "@chakra-ui/react";
 import Scheme from "../components/Modals/Scheme";
+import jwtDecode from "jwt-decode";
 import MySchemes from "../components/Modals/MySchemes";
 function CustomerHome() {
   const [isOpen, setIsOpen] = useState(false);
-  const[isModalOpen,setisModalOpen]=useState(false);
-  const handleSchemes=()=>{
+  const [isModalOpen, setisModalOpen] = useState(false);
+  const [cookies, setCookie, removeCookie] = useCookies(["sessionId"]);
+  const navigate = useNavigate();
+  const token = jwtDecode(cookies.sessionId);
+
+  console.log(token);
+
+  useEffect(() => {
+    if (!token) {
+      alert("you are not logged in , please login");
+      navigate("/");
+    }
+  }, [token]);
+  const handleSchemes = () => {
     setisModalOpen(true);
   };
-  const handleCloseSchemes=()=>{
+  const handleCloseSchemes = () => {
     setisModalOpen(false);
-  }
+  };
 
+  const logout = () => {
+    removeCookie('sessionId');
+    navigate('/',{replace:true});
+
+  };
   const handleOpenModal = () => {
     setIsOpen(true);
   };
@@ -31,9 +51,22 @@ function CustomerHome() {
     setIsOpen(false);
   };
   return (
-    <div>
+    <>
       <Header />
-      <>
+
+      <div>
+        <ChakraProvider>
+          <SimpleGrid
+            mt="20"
+           
+            mx="auto"
+            justifyContent="right"
+            alignItems={"right"}
+            spacing="60px"
+          >
+            <Button bgColor={"blue"} color="white"_hover={{bgColor:'white',color:'blue'}} sx={{margin:'10px 20px 0 0'}} onClick={logout}>Logout</Button>
+          </SimpleGrid>
+        </ChakraProvider>
         <ChakraProvider>
           <SimpleGrid
             mt="20"
@@ -44,7 +77,7 @@ function CustomerHome() {
             alignItems={"center"}
             spacing="60px"
             templateColumns="repeat(auto-fill, minmax(200px, 1fr))"
-            style={{ margin: "120px 100px 145px 90px" }}
+            style={{ margin: "60px 100px 145px 90px" }}
           >
             <Card
               size={"lg"}
@@ -61,18 +94,25 @@ function CustomerHome() {
               </CardBody>
               <CardFooter>
                 <Stack spacing={1} direction="row">
-                  <Button bgGradient="linear(to-b, #BF8F91, #CAA2A3, #D4B5B5, #DFC7C8)" 
-                  onClick={handleSchemes} sx=
-                {{margin:'0 0 0 -15px'}}>
+                  <Button
+                    bgGradient="linear(to-b, #BF8F91, #CAA2A3, #D4B5B5, #DFC7C8)"
+                    onClick={handleSchemes}
+                    sx={{ margin: "0 0 0 -15px" }}
+                  >
                     View
                   </Button>
                   <Button
                     bgGradient="linear(to-b, #BF8F91, #CAA2A3, #D4B5B5, #DFC7C8)"
-                    onClick={handleOpenModal} size='md'>
+                    onClick={handleOpenModal}
+                    size="md"
+                  >
                     Join Scheme
                   </Button>
-                  
-                  <MySchemes isOpen={isModalOpen} onClose={handleCloseSchemes}/>
+
+                  <MySchemes
+                    isOpen={isModalOpen}
+                    onClose={handleCloseSchemes}
+                  />
                   <Scheme isOpen={isOpen} onClose={handleCloseModal} />
                 </Stack>
               </CardFooter>
@@ -135,8 +175,8 @@ function CustomerHome() {
             </Card>
           </SimpleGrid>
         </ChakraProvider>
-      </>
-    </div>
+      </div>
+    </>
   );
 }
 export default CustomerHome;
