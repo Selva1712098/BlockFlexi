@@ -3,6 +3,8 @@ import express, { request } from "express";
 import cors from "cors";
 import session from "express-session";
 // import passport from 'passport'
+import jwt from 'jsonwebtoken';
+import {customerMasterCollection,jewellerMasterCollection,bankMasterCollection} from './mongo.js'
 // import jwt from 'jsonwebtoken';
 import {
   customerMasterCollection,
@@ -20,16 +22,20 @@ import { Schema } from "mongoose";
 
 const app = express();
 
-app.use(express.json());
-app.use(
-  session({
-    secret: process.env.secret,
-    resave: true,
-    saveUninitialized: false,
-  })
-);
 
-app.use(cors({ origin: "http://localhost:3000", credentials: true }));
+
+app.use(express.json())
+app.use(session({
+    secret:process.env.secret,
+    resave:true,
+    saveUninitialized:false
+    
+}))
+
+app.use(cors({ origin: ["http://localhost:3000"], credentials: true }))
+app.use(express.json());
+
+
 
 app.use((req, res, next) => {
   res.header("Access-Control-Allow-Origin", "http://localhost:3000");
@@ -83,6 +89,119 @@ app.post("/CustomerRegister", async (req, res) => {
 app.post("/scheme", async (req, res) => {
   const { JewellerID,SchemeID, SchemeName, SchemeDetails, MonthlyPayment } = req.body;
 
+
+    try{
+        const check= await customerMasterCollection.findOne({EmailID:email})
+        
+        if(check){
+            const isPasswordValid= bcrypt.compareSync(password,check.Password)
+
+            if(isPasswordValid){
+                const token=jwt.sign({
+                    name:check.CustomerName,
+                    id:check.CustomerID
+                },process.env.secret)
+                res.setHeader('Set-Cookie',`sessionId=${token}`)
+                res.cookie('sessionId',token,{
+                    httponly:true,
+                    maxAge:24*60*60*365*1000
+                }).json({status:'ok'})
+                 
+            }
+            else{
+                res.json({status:'error'})
+            }
+        }
+        else{
+            res.json({status:'not found'})
+        }
+
+
+    }
+    catch(e){
+        console.log("Something went Wrong.try again later")
+    }
+})
+
+app.post('/JewellerLogin',async(req,res)=>{
+    const {email,password}=req.body
+
+
+    try{
+        const check= await jewellerMasterCollection.findOne({EmailID:email})
+        
+        if(check){
+            const isPasswordValid= bcrypt.compareSync(password,check.Password)
+
+            if(isPasswordValid){
+                const token=jwt.sign({
+                    name:check.JewellerName,
+                    id:check.JewellerID
+                },process.env.secret)
+                res.setHeader('Set-Cookie',`sessionId=${token}`)
+                res.cookie('sessionId',token,{
+                    httponly:true,
+                    maxAge:24*60*60*365
+                }).json({status:'ok'})
+                 
+            }
+            else{
+                res.json({status:'error'})
+            }
+        }
+        else{
+            res.json({status:'not found'})
+        }
+
+
+    }
+    catch(e){
+        console.log("Something went Wrong.try again later")
+    }
+    
+})
+
+app.post('/BankLogin',async(req,res)=>{
+    const {email,password}=req.body
+
+    try{
+           const check= await bankMasterCollection.findOne({EmailID:email})
+           
+           if(check){
+               const isPasswordValid= bcrypt.compareSync(password,check.Password)
+   
+               if(isPasswordValid){
+                const token= jwt.sign({
+                    name:check.BankName,
+                    id:check.BankID,
+                },process.env.secret)
+                res.setHeader('Set-Cookie',`sessionId=${token}`)
+                req.session.authorized=true;
+                res.cookie('sessionId',token,{
+                    httponly:true,
+                    maxAge:24*60*60*365*1000
+                }).json({status:'ok',authorized:true})
+               }
+               else{
+                   res.json({status:'error'})
+               }
+           }
+           else{
+               res.json({status:'not found'})
+           }
+   
+   
+       }
+       catch(e){
+           console.log("Something went Wrong.try again later")
+       }
+   
+})
+
+
+app.listen(5000,()=>{
+    console.log("Server Started!")
+})
   const scheme = {
     JewellerID: JewellerID,
     SchemeID,
@@ -107,7 +226,7 @@ app.post("/scheme", async (req, res) => {
   } catch (err) {
     res.json({ message: err.message, status: 400 });
   }
-});
+
 
 app.get("/viewschemes", async (req, res) => {
   try {

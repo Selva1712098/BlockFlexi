@@ -26,14 +26,14 @@ function Description() {
   }
   const customerActive=()=>{
     setActiveButton('customer')
-
+    //Navigate('/Customer/login')
     setTimeout(()=>{
         Navigate('/Customer/login')
     },1000)
   }
   const jewellerActive=()=>{
     setActiveButton('jeweller')
-   
+    //Navigate('/Jeweller/login')
 
     setTimeout(()=>{
         Navigate('/Jeweller/login')
@@ -41,7 +41,7 @@ function Description() {
   }
   const bankActive=()=>{
     setActiveButton('bank')
-    
+    //Navigate('/Bank/login')
     setTimeout(()=>{
         Navigate('/Bank/login')
     },1000)
@@ -49,8 +49,8 @@ function Description() {
   return (
     <div>
         
-        <div style={{ display: 'flex' ,flexDirection:'row'}}>
-          
+        <Grid container >
+      <Grid item>    
     <Card style={{ display: 'flex' ,flexDirection:'column',margin:'120px 0 0 40px',maxHeight:'248px',backgroundColor:' rgb(240,234,220)'}} variant="outlined" >
         <CardContent>
           <Typography variant="h4" component="h2" align='left' gutterBottom>
@@ -84,15 +84,17 @@ function Description() {
         </CardActions>
         
       </Card>
+      </Grid>
       
-      
-      <Card style={{width:'500px',maxHeight:'380px',margin:'120px 40px 0px 90px', backgroundColor:' rgb(240,234,220)'}}  variant='outlined' elevated>
+      <Grid item>
+      <Card style={{width:'500px',maxHeight:'380px',margin:'120px 0px 0px 80px', backgroundColor:' rgb(240,234,220)'}}  variant='outlined' >
         {cardMedia}
         {cardTitle}
         {cardContent}
       </Card>
+      </Grid>
+      </Grid>
       
-      </div>
         <br/>
         <br/>
         <br/>

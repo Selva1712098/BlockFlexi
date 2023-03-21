@@ -31,10 +31,11 @@ function BankLogin() {
     await axios.post("http://localhost:5000/BankLogin",{
       email,
       password
-    }).then((res)=>{
-      if(res.data.status==='ok'){
+    },{withCredentials:true}).then((res)=>{
+      if(res.data.status==='ok' && res.data.authorized){
         alert('login was successful')
-        navigate('/BankHome')
+       
+        navigate('/BankHome',{replace:true})
       }
       else if(res.data.status==='error'){
         alert("wrong password")

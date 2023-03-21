@@ -12,10 +12,12 @@ import {
   MenuItem,
  
 } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 function Header() {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [isProfileOpen, setProfileOpen] = React.useState(null);
+  const navigate=useNavigate()
   
 
   const handleClick = (event) => {
@@ -47,12 +49,12 @@ function Header() {
   
   return (
     <div className="header">
-      <AppBar position="static" style={{ background: "#9A1B56",display:'flex',flexDirection:'column' }}>
+      <AppBar position="fixed"style={{ background: "#9A1B56",display:'flex',flexDirection:'column' }}>
         <Toolbar style={{display:'flex',flexFlow: 'row wrap',justifyContent:'center',alignItems:'center'}}>
-          <Typography variant="h4" style={{ marginRight: "auto" }}>
+          <Typography variant="h4" style={{ marginRight: "auto" }} onClick={()=>navigate('/')}>
             BLOCKFLEXI
           </Typography>
-          <Button color="inherit">Home</Button>
+          <Button color="inherit" onClick={()=>navigate('/')}>Home</Button>
           <Button color="inherit">Contact</Button>
           <Button color="inherit">Schemes </Button>
           <Button color="inherit" onClick={handleClick}>

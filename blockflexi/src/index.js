@@ -6,7 +6,7 @@ import CustomerLogin from './components/Modals/CustomerLogin'
 import JewellerLogin from './components/Modals/JewellerLogin'
 import BankLogin from './components/Modals/BankLogin'
 import JewellerHome from './pages/JewellerHome';
-import BankHome from './pages/BankHome';
+// import BankHome from './pages/BankHome';
 import CustomerRegister from './components/Modals/CustomerRegister';
 import Request from './pages/Request';
 import Settle from './pages/Settle';
@@ -18,6 +18,7 @@ import CustomerScheme from './pages/CustomerScheme';
 import CustomerLanding from './pages/CustomerLanding';
 
 
+const LazyBankHome=React.lazy(()=>import ('./pages/BankHome'))
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -31,9 +32,10 @@ root.render(
         <Route path={'/Customer/Register'} element={<CustomerRegister/>}/>
         <Route path={'/Jeweller/login'} element={<JewellerLogin/>}/>
         <Route path={'/Bank/login'} element={<BankLogin/>}/>
-        
-        <Route path={'/BankHome'} element={<BankHome/>}/>
+      
+        <Route path={'/BankHome'} element={<React.Suspense fallback='Loading ...'><LazyBankHome/></React.Suspense>}/>
         <Route path={'/jewellerhome'} element={<JewellerHome/>}/>
+       
         <Route path={'/request'} element={<Request/>}/>
         <Route path={'/settle'} element={<Settle/>}/>
         <Route path={'/CustomerLanding'} element={<CustomerLanding/>}/>

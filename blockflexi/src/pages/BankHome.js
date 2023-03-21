@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState ,useEffect} from "react";
 import {
   Table,
   TableBody,
@@ -14,9 +14,12 @@ import {
   DialogTitle,
   DialogContent,
   
-  DialogActions,Slide, DialogContentText
+  DialogActions,Slide, DialogContentText, Grid
 } from "@mui/material";
 import Header from "../components/Header";
+import {useCookies }from 'react-cookie'
+import {useNavigate} from 'react-router-dom'
+import jwt_decode from 'jwt-decode'
 
 function createData(Sno, name, Phone_No, Payment_Status, Months_paid, PANNo) {
   return { Sno, name, Phone_No, Payment_Status, Months_paid, PANNo };
@@ -31,15 +34,35 @@ const rows = [
   createData(4, "Logan", 9090990305, "No", 4, "SAQ999I"),
   createData(5, "Mike", 8918918936, "No", 3, "KIL913O"),
 ];
-
-export default function SimpleTable() {
+const highlightedRowStyle = {
+  backgroundColor:'pink',
+  transform: 'scale(1.02)',
+  transition:'all 0.3s ease-in-out'
+};
+export default function BankHome() {
   const [open, setOpen] = useState(false);
   const [selectedUser, setSelectedUser] = useState(null);
+  const[cookies,setCookie,removeCookie]=useCookies(['sessionId'])
+  const navigate=useNavigate()
+  const token=jwt_decode(cookies.sessionId)
+  
+  console.log(token)
 
+  useEffect(()=>{
+    if(token.name!=='YourBank'){
+      alert('you are not logged in , please login')
+      navigate('/')
+    }
+  },[token,navigate])
   function handleDialogOpen(user) {
     setOpen(true);
     setSelectedUser(user);
     
+  }
+  function handleLogout(){
+    removeCookie('sessionId');
+    navigate('/',{replace:true});
+
   }
 
   return (
@@ -59,6 +82,7 @@ export default function SimpleTable() {
       >
         <DialogTitle>
             <Typography variant='h5' sx={{fontWeight:'bold',fontFamily:'Roboto'}}>CUSTOMER DETAILS</Typography></DialogTitle>
+            
         <DialogContent>
           {selectedUser && (
            <DialogContentText>
@@ -81,6 +105,14 @@ export default function SimpleTable() {
           <Button variant='contained'  size='small'  onClick={() => setOpen(false)}>Ok</Button>
           </DialogActions>
       </Dialog>
+      <br/>
+      <br/>
+      <br/>
+      <br/>
+      <Grid container  direction="row"
+  justifyContent="center"
+  alignItems="center">
+      <Grid item xs={12}>
       <div
         style={{
           height: "140px",
@@ -90,91 +122,96 @@ export default function SimpleTable() {
           alignItems: "center",
         }}
       >
-        <Typography align="center" variant="h4" sx={{fontWeight:'bold'}}>
+        <Typography variant="h4" sx={{fontWeight:'bold',marginLeft:'395px'}}>
           INCOMING REQUESTS
         </Typography>
+        <Button variant="contained" onClick={handleLogout} sx={{margin:'0 0 0 400px'}}>Logout</Button>
       </div>
       
-      <TableContainer component={Paper} sx={{ maxHeight: "400px"}}>
-       
-        <Table aria-label="simple table" stickyHeader>
-          <TableHead>
-            <TableRow>
-              <TableCell sx={{ fontWeight: "bold", fontSize: "22px" }}>
-                S.No
-              </TableCell>
-              <TableCell
-                align="left"
-                sx={{ fontWeight: "bold", fontSize: "22px" }}
-              >
-                Name
-              </TableCell>
-              <TableCell
-                align="left"
-                sx={{ fontWeight: "bold", fontSize: "22px" }}
-              >
-                Phone No
-              </TableCell>
-              <TableCell
-                align="left"
-                sx={{ fontWeight: "bold", fontSize: "22px" }}
-              >
-                Payments
-              </TableCell>
-              <TableCell
-                align="left"
-                sx={{ fontWeight: "bold", fontSize: "22px"}}
-              >
-                Approval
-              </TableCell>
-              <TableCell
-                align="center"
-                sx={{ fontWeight: "bold", fontSize: "22px" }}
-              >
-                Payment Status
-              </TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {rows.map((row) => (
-              <TableRow key={row.name}>
-                <TableCell align="left" sx={{ fontSize: "18px" }}>
-                  {row.Sno}
-                </TableCell>
-                <TableCell align="left" sx={{ fontSize: "18px" }}>
-                  {row.name}
-                </TableCell>
-                <TableCell align="left" sx={{ fontSize: "18px" }}>
-                  {row.Phone_No}
-                </TableCell>
-                <TableCell align="left">
-                  <Button
-                    variant="contained"
-                    size="medium"
-                    onClick={() => handleDialogOpen(row)}
-                  >
-                    See Payments{" "}
-                  </Button>
-                </TableCell>
-                <TableCell align="center">
-                  <Stack direction="row" alignItems="center" spacing={3}>
-                    <Button variant="contained" color="success">
-                      Approve{" "}
-                    </Button>
-                    <Button variant="contained" color="error">
-                      Reject{" "}
-                    </Button>
-                  </Stack>
-                </TableCell>
-                <TableCell align="center" sx={{ fontSize: "18px" }}>
-                  {row.Payment_Status}
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
         
-      </TableContainer>
+        <TableContainer component={Paper} sx={{ maxHeight: "400px",maxWidth:'1100px',margin:'auto',borderRadius:'15px',display:'flex',flexDirection:'row'}} >
+       
+       <Table aria-label="simple table" >
+         <TableHead >
+           <TableRow>
+             <TableCell sx={{ fontWeight: "medium", fontSize: "22px",backgroundColor:'#9A1B56',color:'white' }}>
+               S.No
+             </TableCell>
+             <TableCell
+               align="left"
+               sx={{ fontWeight: "medium", fontSize: "22px" ,backgroundColor:'#9A1B56',color:'white'}}
+             >
+               Name
+             </TableCell>
+             <TableCell
+               align="left"
+               sx={{ fontWeight: "medium", fontSize: "22px" ,backgroundColor:'#9A1B56',color:'white'}}
+             >
+               Phone No
+             </TableCell>
+             <TableCell
+               align="left"
+               sx={{ fontWeight: "medium", fontSize: "22px",backgroundColor:'#9A1B56',color:'white' }}
+             >
+               Payments
+             </TableCell>
+             <TableCell
+               align='left'
+               sx={{ fontWeight: "medium", fontSize: "22px",backgroundColor:'#9A1B56',color:'white'}}
+             >
+               Approval
+             </TableCell>
+             <TableCell
+               align="center"
+               sx={{ fontWeight: "medium", fontSize: "22px" ,backgroundColor:'#9A1B56',color:'white'}}
+             >
+               Payment Status
+             </TableCell>
+           </TableRow>
+         </TableHead>
+         <TableBody>
+           {rows.map((row) => (
+             <TableRow key={row.name} sx={{ '&:hover': highlightedRowStyle }} >
+               <TableCell align="left" sx={{ fontSize: "18px" }}>
+                 {row.Sno}
+               </TableCell>
+               <TableCell align="left" sx={{ fontSize: "18px" }}>
+                 {row.name}
+               </TableCell>
+               <TableCell align="left" sx={{ fontSize: "18px" }}>
+                 {row.Phone_No}
+               </TableCell>
+               <TableCell align="left">
+                 <Button
+                   variant="contained"
+                   size="medium"
+                   onClick={() => handleDialogOpen(row)}
+                 >
+                   See Payments{" "}
+                 </Button>
+               </TableCell>
+               <TableCell align="center">
+                 <Stack direction="row" alignItems="center" spacing={3}>
+                   <Button variant="contained" color="success">
+                     Approve
+                   </Button>
+                   <Button variant="contained" color="error">
+                     Reject
+                   </Button>
+                 </Stack>
+               </TableCell>
+               <TableCell align="center" sx={{ fontSize: "18px" }}>
+                 {row.Payment_Status}
+               </TableCell>
+             </TableRow>
+           ))}
+         </TableBody>
+       </Table>
+       
+     </TableContainer>
+        </Grid>
+      </Grid>
+      
       
     </>
   );
