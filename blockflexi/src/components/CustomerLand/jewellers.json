@@ -1,0 +1,17 @@
+[
+  {
+    "name": "Jeweller A",
+    "logo": "../images/card4.png",
+    "description": "This is a description of Jeweller A."
+  },
+  {
+    "name": "Jeweller B",
+    "logo": "../images/card4.png",
+    "description": "This is a description of Jeweller B."
+  },
+  {
+    "name": "Jeweller C",
+    "logo": "../images/card4.png",
+    "description": "This is a description of Jeweller C."
+  }
+]

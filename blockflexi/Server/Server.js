@@ -82,22 +82,6 @@ app.post("/CustomerRegister", async (req, res) => {
 
 app.post("/scheme", async (req, res) => {
   const { JewellerID,SchemeID, SchemeName, SchemeDetails, MonthlyPayment } = req.body;
-//   const token = req.cookies.sessionId; // get the JWT token from the cookies
-// const decodedToken = jwt.verify(token, process.env.secret); // decode the JWT token
-// const JewellerID = decodedToken.id;
-  
-  // const JewellerID = decodedToken.id;
-
-  // const jewellerMaster = await jewellerMasterCollection.findOne({
-  //   JewellerID: JewellerID,
-  // });
-
-  // // Check if the JewellerMaster document exists
-  // if (!jewellerMaster) {
-  //   return res.status(400).json({
-  //     message: `JewellerMaster document with id ${JewellerID} not found`,
-  //   });
-  // }
 
   const scheme = {
     JewellerID: JewellerID,
@@ -134,6 +118,16 @@ app.get("/viewschemes", async (req, res) => {
     res.status(500).send("Internal Server Error");
   }
 });
+app.get("/viewjewellers", async (req, res) => {
+  try {
+    const jeweller = await jewellerMasterCollection.find({});
+    res.json(jeweller);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Internal Server Error");
+  }
+});
+
 
 app.post("/CustomerLogin", async (req, res) => {
   const { email, password } = req.body;

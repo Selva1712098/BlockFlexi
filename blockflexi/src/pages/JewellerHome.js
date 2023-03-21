@@ -4,15 +4,12 @@ import {useNavigate} from 'react-router-dom';
 import { useState } from 'react';
 import { Box, Card, CardContent, Typography, CardActions, Button, Modal,TextField } from '@mui/material';
 import JewellerSchemeTable from '../components/JewellerSchemeTable';
-<<<<<<< HEAD
 import axios from 'axios';
 import jwt_decode from 'jwt-decode'
 import {useCookies} from 'react-cookie'
-=======
 
 
 
->>>>>>> bf68908268cc7c3cc862ff713cfdaf0f9e6536ab
 // style
 
 const styles = {
@@ -58,7 +55,6 @@ const styles = {
 const JewellerHome = () => {
   const [open, setOpen] = useState(false);
   const [view,setView] = useState(false);
-<<<<<<< HEAD
   const [SchemeName, setSchemeName] = useState("");
   const [SchemeDetails, setSchemeDetails] = useState("");
   const [MonthlyPayment, setMonthlyPayment] = useState("");
@@ -68,19 +64,15 @@ const JewellerHome = () => {
   const token=jwt_decode(cookies.sessionId)
   const JewellerID=token.jid
   console.log(typeof(JewellerID))
-=======
   const[monthlyInstallment,setMonthlyInstallment]=useState(0)
   const[total,setTotal]=useState(0)
   const navigate=useNavigate()
->>>>>>> bf68908268cc7c3cc862ff713cfdaf0f9e6536ab
   const handleOpen = () => {
     setOpen(true);
   };
   
-<<<<<<< HEAD
   
   
-=======
   const handleClick=()=>{
     
     navigate('/request')
@@ -94,7 +86,6 @@ const JewellerHome = () => {
   
 
 
->>>>>>> bf68908268cc7c3cc862ff713cfdaf0f9e6536ab
   const handleClose = () => {
     setOpen(false);
   };

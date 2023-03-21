@@ -15,6 +15,7 @@ import Settle from './pages/Settle';
 import {Route,BrowserRouter as Router,Routes} from 'react-router-dom'
 import CustomerHome from './pages/CustomerHome';
 import CustomerScheme from './pages/CustomerScheme';
+import CustomerLanding from './pages/CustomerLanding';
 
 
 
@@ -35,6 +36,7 @@ root.render(
         <Route path={'/jewellerhome'} element={<JewellerHome/>}/>
         <Route path={'/request'} element={<Request/>}/>
         <Route path={'/settle'} element={<Settle/>}/>
+        <Route path={'/CustomerLanding'} element={<CustomerLanding/>}/>
         
       </Routes>
     </Router>
