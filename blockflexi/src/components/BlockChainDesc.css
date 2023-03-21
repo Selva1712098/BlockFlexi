@@ -1,0 +1,15 @@
+/* styles.css */
+
+@keyframes float-up-down {
+    0% {
+      transform: translateY(0);
+    }
+    100% {
+      transform: translateY(-20px);
+    }
+  }
+  
+  .container {
+    animation: float-up-down 2s ease-in-out infinite alternate;
+  }
+  

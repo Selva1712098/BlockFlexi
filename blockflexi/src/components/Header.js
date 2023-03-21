@@ -1,119 +1,138 @@
-import React from "react";
-import {
-  AppBar,
-  Toolbar,
-  Typography,
-  Button,
-  Popover,
-  List,
-  ListItem,
-  ListItemText,
-  Menu,
-  MenuItem,
- 
-} from "@mui/material";
-import { useNavigate } from "react-router-dom";
+import * as React from 'react';
+import AppBar from '@mui/material/AppBar';
+import Box from '@mui/material/Box';
+import Toolbar from '@mui/material/Toolbar';
+import IconButton from '@mui/material/IconButton';
+import Typography from '@mui/material/Typography';
+import Menu from '@mui/material/Menu';
+import MenuIcon from '@mui/icons-material/Menu';
+import Container from '@mui/material/Container';
+import Avatar from '@mui/material/Avatar';
+import Button from '@mui/material/Button';
+import Tooltip from '@mui/material/Tooltip';
+import MenuItem from '@mui/material/MenuItem';
+import { useNavigate } from 'react-router-dom';
+import AdbIcon from '@mui/icons-material/Adb';
+
+const pages = [ 'CONTACT', 'SCHEMES','GOLD PRICE','PROFILE'];
+const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 function Header() {
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const [isProfileOpen, setProfileOpen] = React.useState(null);
-  const navigate=useNavigate()
-  
+  const [anchorElNav, setAnchorElNav] = React.useState(null);
+  const [anchorElUser, setAnchorElUser] = React.useState(null);
 
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
+  const handleOpenNavMenu = (event) => {
+    setAnchorElNav(event.currentTarget);
+  };
+  const handleOpenUserMenu = (event) => {
+    setAnchorElUser(event.currentTarget);
   };
 
-  const handleClose = () => {
-    setAnchorEl(null);
+  const handleCloseNavMenu = () => {
+    setAnchorElNav(null);
   };
-  const handleProfile=(event)=>{
-    setProfileOpen(event.currentTarget);
-      }
-    
-      const handleProfileClose=()=>{
-        setProfileOpen(null);
-          };
-
-  const open = Boolean(anchorEl);
-  const opened = Boolean(isProfileOpen);
-  const id = open ? "dropdown-menu" : undefined;
-
-  const listitemtext = {
-    fontSize: "14px",
-    fontWeight: "bold",
-    color: "#000",
+  const Navigate=useNavigate()
+  const handleCloseUserMenu = () => {
+    setAnchorElUser(null);
   };
 
-  
-  
   return (
-    <div className="header">
-      <AppBar position="fixed"style={{ background: "#9A1B56",display:'flex',flexDirection:'column' }}>
-        <Toolbar style={{display:'flex',flexFlow: 'row wrap',justifyContent:'center',alignItems:'center'}}>
-          <Typography variant="h4" style={{ marginRight: "auto" }} onClick={()=>navigate('/')}>
-            BLOCKFLEXI
-          </Typography>
-          <Button color="inherit" onClick={()=>navigate('/')}>Home</Button>
-          <Button color="inherit">Contact</Button>
-          <Button color="inherit">Schemes </Button>
-          <Button color="inherit" onClick={handleClick}>
-            Gold Price
-          </Button>
-          <Popover
-            id={id}
-            open={open}
-            anchorEl={anchorEl}
-            onClose={handleClose}
-            anchorOrigin={{
-              vertical: "bottom",
-              horizontal: "center",
-            }}
-            transformOrigin={{
-              vertical: "top",
-              horizontal: "center",
+    <AppBar position="static" sx={{backgroundColor:'#9A1B56'}}>
+      <Container maxWidth="xl" >
+        <Toolbar >
+          
+          <Typography
+            variant="h4"
+           
+            component="a"
+            href="/"
+            sx={{
+              mr: 2,
+              display: { xs: 'none', md: 'flex' },
+              fontFamily: 'Montserrat', 
+              color: 'inherit',
+              textDecoration: 'none',
             }}
           >
-            <List>
-              <ListItem>
-                <ListItemText
-                  primary="Current Gold Price per gm"
-                  style={listitemtext}
-                />
-              </ListItem>
-              <ListItem>
-                <ListItemText primary="Rs.22,500" style={listitemtext} />
-              </ListItem>
-            </List>
-          </Popover>
+            BLOCKFLEXI
+          </Typography>
 
-          <Button color="inherit" id="basic-button"
-        aria-controls={opened ? 'basic-menu' : undefined}
-        aria-haspopup="true"
-        aria-expanded={opened ? 'true' : undefined}
-        onClick={handleProfile}
-      >
-        
-            Profile
-          </Button>
-          <Menu
-        id="basic-menu"
-        anchorEl={isProfileOpen}
-        open={opened}
-        onClose={handleProfileClose}
-        MenuListProps={{
-          'aria-labelledby': 'basic-button',
-        }}>
-          <p fontSize="50%" > Welcome to BLOCKFLEXI!</p>
-        <MenuItem onClick={handleProfileClose}>Login</MenuItem>
-        <MenuItem onClick={handleProfileClose}>Register</MenuItem>
-      </Menu>
+          <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
+            <IconButton
+              size="large"
+              aria-label="account of current user"
+              aria-controls="menu-appbar"
+              aria-haspopup="true"
+              onClick={handleOpenNavMenu}
+              
+            >
+              <MenuIcon />
+            </IconButton>
+            <Menu
+              id="menu-appbar"
+              anchorEl={anchorElNav}
+              anchorOrigin={{
+                vertical: 'bottom',
+                horizontal: 'left',
+              }}
+              keepMounted
+              transformOrigin={{
+                vertical: 'top',
+                horizontal: 'left',
+              }}
+              open={Boolean(anchorElNav)}
+              onClose={handleCloseNavMenu}
+              sx={{
+                display: { xs: 'block', md: 'none' },
+                
+              }}
+            >   <MenuItem>
+            <Typography textAlign="left" onClick={()=>Navigate('/')}>HOME</Typography>
+            </MenuItem>
+               
+              {pages.map((page) => (
+                <MenuItem key={page} onClick={handleCloseNavMenu}>
+                 
+                  <Typography textAlign="center">{page}</Typography>
+                </MenuItem>
+              ))}
+            </Menu>
+          </Box>
+          
+          <Typography
+            variant="h5"
+            noWrap
+            component="a"
+            href=""
+            sx={{
+              mr: 2,
+              display: { xs: 'flex', md: 'none' },
+              flexGrow: 1,
+              fontFamily: 'Montserrat',
+              
+              color: 'inherit',
+              textDecoration: 'none',
+            }}
+          >
+            BLOCKFLEXI
+          </Typography>
+          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' },marginLeft:'170px' }}>
+            <Button color='inherit' sx={{fontFamily:'Montserrat',fontWeight:'bold'}} onClick={()=>Navigate('/')}>Home</Button>
+            {pages.map((page) => (
+              <Button
+                key={page}
+                onClick={handleCloseNavMenu}
+                sx={{  color: 'white', display: 'flex',marginLeft:'80px',fontFamily:'Montserrat',fontWeight:'bold' }}
+              >
+                {page}
+              </Button>
+            ))}
+          </Box>
+
+          
         </Toolbar>
-      </AppBar>
-   
-    
-    </div>
+      </Container>
+    </AppBar>
   );
 }
-
 export default Header;

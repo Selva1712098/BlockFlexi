@@ -41,8 +41,8 @@ const JewellerLogin = () => {
         alert("wrong password")
       }
       else if(res.data.status==='not found'){
-        alert('No user found.Contact us to create an account')
-        navigate('/')
+        alert('No user found.Please Create an account')
+        navigate('/Jeweller/Register')
       }
     }).catch(e=>{
       alert('wrong details')
@@ -129,6 +129,8 @@ const JewellerLogin = () => {
               Login
             </Button>
           </form>
+          <Typography align='center' variant='body1'>Don't have an acount.<a href="/Jeweller/Register">Register here</a></Typography>
+
         </CardContent>
       </Card>
       </Grid>
