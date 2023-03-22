@@ -184,35 +184,45 @@ const CustomerSchemeSchema = new mongoose.Schema(
     JewellerID: {
       type: String,
       ref: "Jeweller_Master.JewellerID",
+      required:true,
+      maxLength: 25
     },
     SchemeID: {
       type: String,
       ref: "Jewellery_Scheme.SchemeID",
+      required:true
     },
     CustomerID: {
       type: String,
       ref: "Customer_Master.CustomerID",
-      require: true,
+      required: true,
+      maxLength: 10
     },
     DOJ: {
       type: Date,
+      default:new Date(Date.now())
     },
     LoanReq: {
       type: Boolean,
+      default:false
     },
     LoanRegDate: {
       type: Date,
-      require: true,
+      
+      default:null
     },
     LoanStatus_Jw: {
       type: String,
+      default:"Rejected"
     },
     LoanStatus_Jw_Date: {
       type: Date,
+      default:null
     },
     BankID: {
       type: String,
       ref: "Bank_Master.BankID",
+      maxLength: 25
     },
     LoanStatus_Bank: {
       type: String,
@@ -222,22 +232,27 @@ const CustomerSchemeSchema = new mongoose.Schema(
     },
     LoanAmount: {
       type: Number,
+      default:0
     },
     GoldClaimStatus: {
       type: Boolean,
+      default:false
     },
     GoldClaimDate: {
       type: Date,
+      default:null
     },
     GoldSettledStatus: {
       type: Boolean,
+      default:false
     },
     GoldSettledDate: {
       type: Date,
-    },
+      default:null
+    }
   },
   {
-    collection: "Customer_Scheme",
+    collection: "Customer_Scheme"
   }
 );
 
@@ -254,7 +269,7 @@ export const jewellerySchemeCollection = mongoose.model(
   "Jewellery_Scheme",
   schemeSchema
 );
-export const CustomerSchemeCollection = mongoose.model(
+export const customerSchemeCollection = mongoose.model(
   "Customer_Scheme",
   CustomerSchemeSchema
 );
