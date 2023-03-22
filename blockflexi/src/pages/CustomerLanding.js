@@ -3,30 +3,15 @@ import React, { useEffect, useState, useRef } from "react";
 import Carousel from "../components/CustomerLand/Carousel";
 import JewellerHero from "../components/CustomerLand/JewellerHero";
 import { useNavigate } from "react-router";
-<<<<<<< HEAD
 import {useCookies} from 'react-cookie';
 import jwtDecode from 'jwt-decode';
-=======
-import {useCookies} from 'react-cookie'
-import jwtDecode from 'jwt-decode'
-
->>>>>>> ed45431624bef1f5b2e9f5859a4fbe67601b2e03
 function CustomerLanding() {
   //   const jewellerHeroRef = useRef(null);
 
-<<<<<<< HEAD
   // const scrollToJewellerHero = () => {
   //   jewellerHeroRef.current.scrollIntoView({ behavior: 'smooth', block:'start' });
   // };
   const [cookies, setCookie, removeCookie] = useCookies(["sessionId"]);
-=======
-  const scrollToJewellerHero = () => {
-    jewellerHeroRef.current.scrollIntoView({ behavior: 'smooth' });
-  };
-  const [cookies, setCookie, removeCookie] = useCookies(["sessionId"]);
-
-  const [showSection, setShowSection] = useState(false);
->>>>>>> ed45431624bef1f5b2e9f5859a4fbe67601b2e03
   const navigate = useNavigate();
   const token = jwtDecode(cookies.sessionId);
 
@@ -38,17 +23,7 @@ function CustomerLanding() {
       navigate("/");
     }
   }, [token]);
-<<<<<<< HEAD
   const [showSection, setShowSection] = useState(false);
-=======
-  // const handleMouseEnter = () => {
-  //     setShowSection(true);
-  //   };
-
-  //   const handleMouseLeave = () => {
-  //     setShowSection(false);
-  //   };
->>>>>>> ed45431624bef1f5b2e9f5859a4fbe67601b2e03
   useEffect(() => {
     setShowSection(true);
   }, []);

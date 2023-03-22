@@ -23,8 +23,7 @@ function CustomerHome() {
   const [isModalOpen, setisModalOpen] = useState(false);
   const [cookies, setCookie, removeCookie] = useCookies(["sessionId"]);
   const navigate=useNavigate()
-  const jewellerid="80q6vbYm0"
- 
+  
   
   const token = jwtDecode(cookies.sessionId);
 
@@ -61,7 +60,7 @@ function CustomerHome() {
       <Header />
 
       <div>
-      {/* <h1>Welcome to {jeweller.JewellerName}'s page!</h1> */}
+      <h1>Welcome</h1>
         <ChakraProvider>
           <SimpleGrid
             mt="20"
@@ -120,7 +119,7 @@ function CustomerHome() {
                     isOpen={isModalOpen}
                     onClose={handleCloseSchemes}
                   />
-                  <Scheme isOpen={isOpen} onClose={handleCloseModal} jewellerid={jewellerid} customerid={token.id}  />
+                  <Scheme isOpen={isOpen} onClose={handleCloseModal} jewellerid={JewellerID} customerid={token.id}  />
                 </Stack>
               </CardFooter>
             </Card>

@@ -332,6 +332,21 @@ app.get('/CustomerHome/:JewellerID',async (req, res) => {
     res.status(500).send("Internal Error");
   }
 });
+app.post('/JewellerScheme',async(req,res)=>{
+  const{jewellerid}=req.body
+
+  try{
+    const schemes = await jewellerySchemeCollection.find({JewellerID:jewellerid})
+  if(schemes){
+    res.json({schemes,status:'success'})
+
+  }
+else{
+  res.json({status:'error'})
+}}catch(e){
+      console.log(e)
+    }
+})
 app.listen(5000, () => {
   console.log("Server Started!");
 })
