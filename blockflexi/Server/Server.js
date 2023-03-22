@@ -242,6 +242,15 @@ app.post("/scheme", async (req, res) => {
 })
 
 
+app.get("/viewjewellers", async (req, res) => {
+  try {
+    const jeweller = await jewellerMasterCollection.find({});
+    res.json(jeweller);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Internal Server Error");
+  }
+});
 app.post('/JoinScheme', async (req, res) => {
   const { jewellerid, schemeid, customerid } = req.body;
   const schemes = {
@@ -285,18 +294,21 @@ app.get('/CustomerHome/:JewellerID',async (req, res) => {
     res.status(500).send("Internal Error");
   }
 });
+app.post('/JewellerScheme',async(req,res)=>{
+  const{jewellerid}=req.body
 
+  try{
+    const schemes = await jewellerySchemeCollection.find({JewellerID:jewellerid})
+  if(schemes){
+    res.json({schemes,status:'success'})
 
-app.get("/viewschemes", async (req, res) => {
-  try {
-    const scheme = await jewellerySchemeCollection.find();
-    res.json(scheme);
-  } catch (err) {
-    console.error(err);
-    res.status(500).send("Internal Server Error");
   }
-});
-
+else{
+  res.json({status:'error'})
+}}catch(e){
+      console.log(e)
+    }
+})
 app.listen(5000, () => {
   console.log("Server Started!");
 })

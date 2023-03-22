@@ -53,7 +53,14 @@ function Scheme({isOpen, onClose,jewellerid,customerid }){
     async function fetchData() {
       try {
         // Make a GET request to the /schemes API endpoint
-        const response = await axios.get("http://localhost:5000/viewschemes");
+        const response = await axios.post("http://localhost:5000/JewellerScheme",{jewellerid}).then(res=>{
+          if(res.data.status==='success'){
+            setSchemes(res.data.schemes)
+          }
+          else{
+            alert("There is no jeweller ")
+          }
+        });
 
         // Set the retrieved schemes in the state
         setSchemes(response.data);
