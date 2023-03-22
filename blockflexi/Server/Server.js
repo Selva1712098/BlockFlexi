@@ -7,7 +7,8 @@ import {
   customerMasterCollection,
   jewellerMasterCollection,
   bankMasterCollection,
-  jewellerySchemeCollection
+  jewellerySchemeCollection,
+  customerSchemeCollection
 } from "./mongo.js";
 
 import dotenv from "dotenv";
@@ -103,6 +104,43 @@ app.post("/JewellerRegister", async (req, res) => {
   }
 });
 
+app.post('/CustomerLogin',async(req,res)=>{
+  const {email,password}=req.body
+
+
+  try{
+      const check= await customerMasterCollection.findOne({EmailID:email})
+      
+      if(check){
+          const isPasswordValid= bcrypt.compareSync(password,check.Password)
+
+          if(isPasswordValid){
+              const token=jwt.sign({
+                  name:check.CustomerName,
+                  id:check.CustomerID
+              },process.env.secret)
+              res.setHeader('Set-Cookie',`sessionId=${token}`)
+              res.cookie('sessionId',token,{
+                  httponly:true,
+                  maxAge:24*60*60*365
+              }).json({status:'ok'})
+               
+          }
+          else{
+              res.json({status:'error'})
+          }
+      }
+      else{
+          res.json({status:'not found'})
+      }
+
+
+  }
+  catch(e){
+      console.log("Something went Wrong.try again later")
+  }
+  
+})
 app.post('/JewellerLogin',async(req,res)=>{
     const {email,password}=req.body
 
@@ -146,7 +184,7 @@ app.post('/BankLogin',async(req,res)=>{
 
     try{
            const check= await bankMasterCollection.findOne({EmailID:email})
-           
+      
            if(check){
                const isPasswordValid= bcrypt.compareSync(password,check.Password)
    
@@ -212,6 +250,34 @@ app.get("/viewjewellers", async (req, res) => {
   }
 });
 
+app.post('/JoinScheme', async (req, res) => {
+  const { jewellerid, schemeid, customerid } = req.body;
+  const schemes = {
+    JewellerID: jewellerid,
+    SchemeID: schemeid,
+    CustomerID: customerid,
+    DOJ: new Date(Date.now())
+  };
+  console.log(schemes);
+  try {
+    const schemecheck = await customerSchemeCollection.findOne({
+      JewellerID: jewellerid,
+      SchemeID: schemeid,
+      CustomerID: customerid,
+    });
+    console.log(schemecheck);
+    if (schemecheck !== null) {
+      res.json({ status: 'exists' });
+    } else {
+      const addscheme = await customerSchemeCollection.insertMany([schemes]);
+      console.log(addscheme);
+      res.json({ status: 'success' });
+    }
+  } catch (e) {
+    console.log('Something Went Wrong. Try Again', e);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
 
 app.get("/viewschemes", async (req, res) => {
   try {

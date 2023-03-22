@@ -2,14 +2,30 @@ import Header from "../components/Header";
 import React, { useEffect, useState, useRef } from "react";
 import Carousel from "../components/CustomerLand/Carousel";
 import JewellerHero from "../components/CustomerLand/JewellerHero";
+import { useNavigate } from "react-router";
+import {useCookies} from 'react-cookie'
+import jwtDecode from 'jwt-decode'
+
 function CustomerLanding() {
     const jewellerHeroRef = useRef(null);
 
   const scrollToJewellerHero = () => {
     jewellerHeroRef.current.scrollIntoView({ behavior: 'smooth' });
   };
-  const [showSection, setShowSection] = useState(false);
+  const [cookies, setCookie, removeCookie] = useCookies(["sessionId"]);
 
+  const [showSection, setShowSection] = useState(false);
+  const navigate = useNavigate();
+  const token = jwtDecode(cookies.sessionId);
+
+  console.log(token);
+
+  useEffect(() => {
+    if (!token) {
+      alert("you are not logged in , please login");
+      navigate("/");
+    }
+  }, [token]);
   // const handleMouseEnter = () => {
   //     setShowSection(true);
   //   };

@@ -23,22 +23,32 @@ import {
   } from '@chakra-ui/react'
   import { Card, CardBody, CardFooter, Heading } from '@chakra-ui/react'
   import axios from "axios";
-function Scheme({isOpen, onClose }){
+function Scheme({isOpen, onClose,jewellerid,customerid }){
   const[schemes,setSchemes]=useState('');
+  // const[selectedScheme,setSelectedScheme]=useState(null);
   const [isJoined, setIsJoined] = useState(false);
-  // const handleJoinClick = (index) => {
-  //   setSchemes((schemes) =>
-  //   schemes.map((scheme, i) =>
-  //     i === index
-  //       ? {
-  //           ...scheme,
-  //           isJoined: true,
-  //           joinButtonText: "Joined",
-  //         }
-  //       : scheme
-  //   )
-  // );
-  // };
+  // const[schemeid,setSchemeId]=useState('')
+
+ 
+  async function joinscheme(schemes){
+    console.log(schemes)
+    const schemeid=schemes.SchemeID
+    console.log(schemeid)
+    
+
+    await axios.post('http://localhost:5000/JoinScheme',{
+    jewellerid,
+    customerid,schemeid
+    }).then(res=>{
+      if(res.data.status==='exists'){
+        alert("You have already joined this scheme")
+      }
+      else if(res.data.status==='success'){
+        alert("You have joined this scheme successfully.Go to your schemes to view them")
+        
+      }
+    })
+  }
   useEffect(() => {
     async function fetchData() {
       try {
@@ -85,7 +95,7 @@ function Scheme({isOpen, onClose }){
             Joined
           </Button>
         ) : ( */}
-          <Button variant='solid' bgColor={"#c17171"} mr={'4'} color={"#fff"}>
+          <Button variant='solid' onClick={()=>joinscheme(scheme)} bgColor={"#c17171"} mr={'4'} color={"#fff"}>
             Join
           </Button>
 

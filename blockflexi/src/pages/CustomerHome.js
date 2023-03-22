@@ -20,7 +20,10 @@ function CustomerHome() {
   const [isOpen, setIsOpen] = useState(false);
   const [isModalOpen, setisModalOpen] = useState(false);
   const [cookies, setCookie, removeCookie] = useCookies(["sessionId"]);
-  const navigate = useNavigate();
+  const navigate=useNavigate()
+  const jewellerid="80q6vbYm0"
+ 
+  
   const token = jwtDecode(cookies.sessionId);
 
   console.log(token);
@@ -31,6 +34,7 @@ function CustomerHome() {
       navigate("/");
     }
   }, [token]);
+
   const handleSchemes = () => {
     setisModalOpen(true);
   };
@@ -113,7 +117,7 @@ function CustomerHome() {
                     isOpen={isModalOpen}
                     onClose={handleCloseSchemes}
                   />
-                  <Scheme isOpen={isOpen} onClose={handleCloseModal} />
+                  <Scheme isOpen={isOpen} onClose={handleCloseModal} jewellerid={jewellerid} customerid={token.id}  />
                 </Stack>
               </CardFooter>
             </Card>
