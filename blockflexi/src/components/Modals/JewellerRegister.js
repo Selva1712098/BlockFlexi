@@ -10,11 +10,9 @@ import {useNavigate} from 'react-router-dom'
 import Header from '../Header'
 import axios from 'axios'
 
-const CustomerRegister = () => {
+const JewellerRegister = () => {
 const [name, setName] = useState('');
-const [address, setAddress] = useState('');
-const [mobile, setMobile] = useState('');
-const [PANNo, setPANNo] = useState('');
+
 const [email, setEmail] = useState('');
 const [password, setPassword] = useState('');
 const navigate=useNavigate()
@@ -22,17 +20,6 @@ const handleNameChange = (event) => {
 setName(event.target.value);
 };
 
-const handleAddressChange = (event) => {
-setAddress(event.target.value);
-};
-
-const handleMobileChange = (event) => {
-setMobile(event.target.value);
-};
-
-const handlePANNoChange = (event) => {
-setPANNo(event.target.value);
-};
 
 const handleEmailChange = (event) => {
 setEmail(event.target.value);
@@ -46,18 +33,17 @@ setPassword(event.target.value);
 
  async function register(event){
   event.preventDefault();
-  await axios.post("http://localhost:5000/CustomerRegister",{
+  await axios.post("http://localhost:5000/JewellerRegister",{
     name,
-    address,
-    mobile,PANNo,email,password
+    email,password
   }).then(res=>{
     if(res.data.status==='ok'){
       alert("Your account has been created successfully")
-      navigate('/Customer/login')
+      navigate('/Jeweller/login')
 }
     else if(res.data.status==='exists'){
       alert("You are already a part of us")
-      navigate('/Customer/login')
+      navigate('/Jeweller/login')
     }
   }).catch(e=>{
     alert("wrong details")
@@ -82,8 +68,8 @@ return (
             justifyContent: 'center',
           }}
         >
-<Typography variant="h5" component="h2" style={{ textAlign: 'center',color:'white' }}>
-CUSTOMER REGISTRATION
+<Typography variant="h5" component="h2" style={{ textAlign: 'center',color:'white',fontFamily:'roboto' }}>
+JEWELLER REGISTRATION
 </Typography>
 </div>
 <CardContent>
@@ -100,36 +86,8 @@ CUSTOMER REGISTRATION
            onChange={handleNameChange}
            margin="normal"
          />
-<TextField
-           id="address"
-           label="Address"
-           type="text"
-           variant="outlined"
-           fullWidth
-           value={address}
-           onChange={handleAddressChange}
-           margin="normal"
-         />
-<TextField
-           id="mobile"
-           label="Mobile No"
-           type="text"
-           variant="outlined"
-           fullWidth
-           value={mobile}
-           onChange={handleMobileChange}
-           margin="normal"
-         />
-<TextField
-           id="PAN No"
-           label="PAN No"
-           type="text"
-           variant="outlined"
-           fullWidth
-           value={PANNo}
-           onChange={handlePANNoChange}
-           margin="normal"
-         />
+
+
 <TextField
            id="email"
            label="Email ID"
@@ -161,4 +119,4 @@ Register
 );
 };
 
-export default CustomerRegister;
+export default JewellerRegister;

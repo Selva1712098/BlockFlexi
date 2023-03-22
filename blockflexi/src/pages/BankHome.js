@@ -35,9 +35,11 @@ const rows = [
   createData(5, "Mike", 8918918936, "No", 3, "KIL913O"),
 ];
 const highlightedRowStyle = {
-  backgroundColor:'pink',
-  transform: 'scale(1.02)',
-  transition:'all 0.3s ease-in-out'
+ 
+  // transform: 'scale(1.00)',
+  transition:'all 0.3s ease-in-out',
+
+  boxShadow:'0 0px 10px 15px rgba(0,0,0,0.1)'
 };
 export default function BankHome() {
   const [open, setOpen] = useState(false);
@@ -65,6 +67,9 @@ export default function BankHome() {
 
   }
 
+  // async function getusers(){
+  //   await axios.get('/leads').then()
+  // }
   return (
     <>
       <Header />
@@ -129,41 +134,41 @@ export default function BankHome() {
       </div>
       
         
-        <TableContainer component={Paper} sx={{ maxHeight: "400px",maxWidth:'1100px',margin:'auto',borderRadius:'15px',display:'flex',flexDirection:'row'}} >
+        <TableContainer component={Paper} sx={{ maxHeight: "400px",maxWidth:'1000px',margin:'auto',borderRadius:'15px',display:'grid'}} >
        
-       <Table aria-label="simple table" >
+       <Table aria-label="simple table"  >
          <TableHead >
            <TableRow>
-             <TableCell sx={{ fontWeight: "medium", fontSize: "22px",backgroundColor:'#9A1B56',color:'white' }}>
+             <TableCell sx={{ fontWeight: "medium", fontSize: "18px",backgroundColor:'#9A1B56',color:'white' }}>
                S.No
              </TableCell>
              <TableCell
                align="left"
-               sx={{ fontWeight: "medium", fontSize: "22px" ,backgroundColor:'#9A1B56',color:'white'}}
+               sx={{ fontWeight: "medium", fontSize: "18px" ,backgroundColor:'#9A1B56',color:'white'}}
              >
                Name
              </TableCell>
              <TableCell
                align="left"
-               sx={{ fontWeight: "medium", fontSize: "22px" ,backgroundColor:'#9A1B56',color:'white'}}
+               sx={{ fontWeight: "medium", fontSize: "18px" ,backgroundColor:'#9A1B56',color:'white'}}
              >
                Phone No
              </TableCell>
              <TableCell
                align="left"
-               sx={{ fontWeight: "medium", fontSize: "22px",backgroundColor:'#9A1B56',color:'white' }}
+               sx={{ fontWeight: "medium", fontSize: "18px",backgroundColor:'#9A1B56',color:'white' }}
              >
                Payments
              </TableCell>
              <TableCell
                align='left'
-               sx={{ fontWeight: "medium", fontSize: "22px",backgroundColor:'#9A1B56',color:'white'}}
+               sx={{ fontWeight: "medium", fontSize: "18px",backgroundColor:'#9A1B56',color:'white'}}
              >
                Approval
              </TableCell>
              <TableCell
                align="center"
-               sx={{ fontWeight: "medium", fontSize: "22px" ,backgroundColor:'#9A1B56',color:'white'}}
+               sx={{ fontWeight: "medium", fontSize: "18px" ,backgroundColor:'#9A1B56',color:'white'}}
              >
                Payment Status
              </TableCell>
@@ -172,35 +177,36 @@ export default function BankHome() {
          <TableBody>
            {rows.map((row) => (
              <TableRow key={row.name} sx={{ '&:hover': highlightedRowStyle }} >
-               <TableCell align="left" sx={{ fontSize: "18px" }}>
+               <TableCell align="left" sx={{ fontSize: "16px" }}>
                  {row.Sno}
                </TableCell>
-               <TableCell align="left" sx={{ fontSize: "18px" }}>
+               <TableCell align="left" sx={{ fontSize: "16px" }}>
                  {row.name}
                </TableCell>
-               <TableCell align="left" sx={{ fontSize: "18px" }}>
+               <TableCell align="left" sx={{ fontSize: "16px" }}>
                  {row.Phone_No}
                </TableCell>
                <TableCell align="left">
                  <Button
                    variant="contained"
-                   size="medium"
+                   size="small"
+                   sx={{padding:'8px'}}
                    onClick={() => handleDialogOpen(row)}
                  >
-                   See Payments{" "}
+                   See Payments
                  </Button>
                </TableCell>
                <TableCell align="center">
                  <Stack direction="row" alignItems="center" spacing={3}>
-                   <Button variant="contained" color="success">
+                   <Button variant="contained" size ="small" sx={{padding:'8px'}} color="success">
                      Approve
                    </Button>
-                   <Button variant="contained" color="error">
+                   <Button variant="contained" size ="small" sx={{padding:'8px'}} color="error">
                      Reject
                    </Button>
                  </Stack>
                </TableCell>
-               <TableCell align="center" sx={{ fontSize: "18px" }}>
+               <TableCell align="center" sx={{ fontSize: "16px" }}>
                  {row.Payment_Status}
                </TableCell>
              </TableRow>

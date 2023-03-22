@@ -8,6 +8,7 @@ import BankLogin from './components/Modals/BankLogin'
 import JewellerHome from './pages/JewellerHome';
 // import BankHome from './pages/BankHome';
 import CustomerRegister from './components/Modals/CustomerRegister';
+import JewellerRegister from './components/Modals/JewellerRegister';
 import Request from './pages/Request';
 import Settle from './pages/Settle';
 
@@ -32,6 +33,7 @@ root.render(
         <Route path={'/Customer/Register'} element={<CustomerRegister/>}/>
         <Route path={'/Jeweller/login'} element={<JewellerLogin/>}/>
         <Route path={'/Bank/login'} element={<BankLogin/>}/>
+        <Route path={'/Jeweller/Register'} element={<JewellerRegister/>}/>
       
         <Route path={'/BankHome'} element={<React.Suspense fallback='Loading ...'><LazyBankHome/></React.Suspense>}/>
         <Route path={'/jewellerhome'} element={<JewellerHome/>}/>

@@ -1,115 +1,127 @@
 import React from 'react'
-import {Grid,Typography,Stack,Button} from '@mui/material'
-import {Card,CardContent,CardActions,CardMedia} from '@mui/material';
+import {Grid,Typography,Stack,Button,Card} from '@mui/material'
 import {useNavigate} from 'react-router-dom'
+import { Swiper, SwiperSlide } from 'swiper/react'
+import { Navigation, Pagination, Scrollbar, A11y,Autoplay } from 'swiper'
+// import image from './images/banking-finance-technologyisometric-illustration-bank-600w-1982321081-transformed.jpg'
+import 'swiper/css'
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
+import 'swiper/css/scrollbar';
+import 'swiper/css/autoplay'
 
 function Description() {
-    const [activeButton, setActiveButton] = React.useState('customer');
+    // const [activeButton, setActiveButton] = React.useState('customer');
     const Navigate= useNavigate()
+   
   
-  let cardTitle;
-  let cardContent;
-  let cardMedia;
-  
-  if (activeButton === 'customer') {
-    cardTitle= <Typography variant="h5" component="h2" style={{marginRight:'370px',}}>Customer</Typography>
-    cardContent = <Typography variant="body1" component="p" style={{textAlign:'justify',margin:'3px 8px 3px 15px'}}>Unlock the Power of Gold with our Platform - Buy Now and Invest in Timeless Value. With our Secure and Reliable System, You Can Own Your Very Own Piece of History Today.</Typography>;
-    cardMedia=<CardMedia component='img' height='210' image='https://digitalmarketingdeal.com/blog/wp-content/uploads/2020/07/Top-10-Famous-Jewellers-in-India.jpg?x27618://img.etimg.com/thumb/msid-67738640,width-1200,height-900,imgsize-209853,overlay-economictimes/photo.jpg' alt='customer details'/>
-  } else if (activeButton === 'jeweller') {
-    cardTitle= <Typography variant="h5" component="h2" style={{marginRight:'380px'}}>Jeweller</Typography>
-    cardContent = <Typography variant="body1" component="p" style={{margin:'3px 8px 3px 15px',textAlign:'justify'}}>Revolutionize Your Gold Schemes with Our Secure and Transparent Blockchain Solution. Register Now for a Better Way to Do Business</Typography>;
-    cardMedia=<CardMedia component='img' height='210' image='https://www.designhill.com/design-blog/wp-content/uploads/2015/11/1-min.jpg' alt='customer details'/>
-  } else {
-    cardTitle= <Typography variant="h5" component="h2" style={{marginLeft:'15px',marginRight:'440px'}}>Bank</Typography>
-    cardContent = <Typography variant="body1" component="p" style={{margin:'3px 8px 3px 15px',textAlign:'justify'}}>Join the Blockchain Revolution with Our Platform - The Future of Secure and Profitable Investments. Partner with Us Today and Access a New World of Financial Opportunities</Typography>;
-    cardMedia=<CardMedia component='img' height='210' image='https://thumbs.dreamstime.com/b/bank-building-icon-isolated-black-background-bank-building-icon-isolated-black-background-simple-vector-logo-161293296.jpg' alt='customer details'/>
-  }
-  const customerActive=()=>{
-    setActiveButton('customer')
-    //Navigate('/Customer/login')
-    setTimeout(()=>{
-        Navigate('/Customer/login')
-    },1000)
-  }
-  const jewellerActive=()=>{
-    setActiveButton('jeweller')
-    //Navigate('/Jeweller/login')
-
-    setTimeout(()=>{
-        Navigate('/Jeweller/login')
-    },1000)
-  }
-  const bankActive=()=>{
-    setActiveButton('bank')
-    //Navigate('/Bank/login')
-    setTimeout(()=>{
-        Navigate('/Bank/login')
-    },1000)
-  }
   return (
     <div>
         
-        <Grid container >
-      <Grid item>    
-    <Card style={{ display: 'flex' ,flexDirection:'column',margin:'120px 0 0 40px',maxHeight:'248px',backgroundColor:' rgb(240,234,220)'}} variant="outlined" >
-        <CardContent>
-          <Typography variant="h4" component="h2" align='left' gutterBottom>
-            Welcome to BlockFlexi
-          </Typography>
-          <Typography variant="h6" component="h2" style={{ textAlign:'justify'  }}>
-          Introducing Block-Flexi: The Future of Jewellery Ownership. 
-          </Typography>
-          <Typography variant="h6" component="h2" style={{ textAlign:'justify'  }}>
-            A Revolutionary Blockchain Solution for a Flexible Jewellery Acquisition.
-          </Typography>
-  
-        </CardContent>
-        <CardActions>
-          <Stack spacing={3} direction='row'>
-            {/* <ToggleButtonGroup variant='contained'>
-              <ToggleButton size="medium" variant="contained" onClick={()=>setActiveButton('customer')}  style={{width:"200px"  }} >Customer</ToggleButton>
-              <ToggleButton size="medium"  variant="outlined" onClick={()=>setActiveButton('jeweller')}  style={{width:"200px"}}  >Jeweller</ToggleButton>
-              <ToggleButton size="medium"  variant="outlined" onClick={()=>setActiveButton('bank')}  style={{width:"200px"}} >Bank</ToggleButton>
-            </ToggleButtonGroup> */}
-      <Button size="large" variant="outlined" onClick={customerActive} value={activeButton} style={{width:"200px"  }}>
-            Customer
-          </Button>
-          <Button size="large"  variant="outlined" onClick={jewellerActive} value={activeButton} style={{width:"200px"}}>
-            Jeweller
-          </Button>
-          <Button size="large"  variant="outlined" onClick={bankActive} value={activeButton} style={{width:"200px"}}>
-            Bank
-          </Button>
-          </Stack>
-        </CardActions>
-        
-      </Card>
-      </Grid>
-      
-      <Grid item>
-      <Card style={{width:'500px',maxHeight:'380px',margin:'120px 0px 0px 80px', backgroundColor:' rgb(240,234,220)'}}  variant='outlined' >
-        {cardMedia}
-        {cardTitle}
-        {cardContent}
-      </Card>
-      </Grid>
-      </Grid>
-      
+        <Swiper
+      // install Swiper modules
+      modules={[Navigation, Pagination, Scrollbar, A11y,Autoplay]}
+      spaceBetween={50}
+      slidesPerView={1}
+      navigation
+      autoplay={{
+        delay: 2500,
+        disableOnInteraction: true,
+      }}
+      pagination={{ clickable: true }}
+      scrollbar={{ draggable: true }}
+      onSwiper={(swiper) => console.log(swiper)}
+      onSlideChange={() => console.log('slide change')}
+    >
+      <SwiperSlide>
+        <Grid container>
+        <Grid item sx={{backgroundImage:'url(https://wallpaperaccess.com/full/3713543.jpg)',backgroundSize:'cover',backgroundPosition: 'right',height:'550px',width:'100%', ':hover':{opacity:'1',transform: 'scale(1.01)', transition:'all 0.3s ease-in-out'}}} >
+        {/* <img src="https://wallpaperaccess.com/full/3713543.jpg" height="400" width="100%" /> */}
+        <div style={{margin:'4px 510px 0 10px',}}>
+        <Typography sx={{color:'white',fontFamily: 'Montserrat',fontStyle:'ital'}} variant='h4' align='left' >Customer</Typography>
+       
+        <Typography sx={{color:'white',fontFamily: 'Montserrat',fontStyle:'italic'}} variant='h5' align='left'>Invest in Timeless value with Secure Gold Ownership Through 
+        Our Reliable Platform.
+        <br/>
+        Buy Now and Own your Piece 
+       of History.</Typography>
+
+        </div>
+        <Button variant='standard' sx={{marginLeft:'-1250px',marginTop:'15px',color:'white',border:'solid 1px','&:hover':{
+        color:'black',
+        backgroundColor:'White',
+        transition:'all 0.3s linear'
+      }}} onClick={()=>{Navigate('/Customer/Login')}}>Login</Button>
+
+        </Grid>
+        </Grid>
+       
+      </SwiperSlide>
+      <SwiperSlide>
+        <Grid container>
+      <Grid item sx={{backgroundImage:'url(https://images.unsplash.com/photo-1599707367072-cd6ada2bc375?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1633&q=80)',height:'550px',width:'100%',backgroundSize:'cover',backgroundPosition: 'center', ':hover':{opacity:'1',transform: 'scale(1.01)', transition:'all 0.3s ease-in-out'}}} >
+       
+        <div style={{margin:'10px 0px 0 25px',}}>
+        <Typography sx={{color:'white',fontFamily:'Montserrat'}} variant='h4' align='left' gutterbottom>Jeweller</Typography>
+        <Typography sx={{color:'white',fontFamily: 'Montserrat',fontStyle:'italic'}} variant='h5' align='left'>Revolutionize Your Gold Schemes with Our Secure and Transparent Blockchain Solution. 
+        <br/>Register Now for a Better Way to Do Business</Typography>
+
+        </div>
+      <Button variant='standard' sx={{marginLeft:'-1220px',marginTop:'15px',color:'white',border:'solid 1px','&:hover':{
+        color:'black',
+        backgroundColor:'white',
+        transition:'all 0.3s linear'
+      }}} onClick={()=>{Navigate('/Jeweller/Login')}}>Login</Button>
+
+       
+        </Grid>
+        </Grid>
+      </SwiperSlide>
+      <SwiperSlide>
+        <Grid container>
+      <Grid item sx={{backgroundImage:`url(https://www.shutterstock.com/image-vector/internet-banking-technology-conceptisometric-illustration-260nw-1960426480.jpg)`,backgroundSize:'cover',height:'550px',width:'100%', ':hover':{opacity:'1',transform: 'scale(1.01)', transition:'all 0.3s ease-in-out'}}} >
+        {/* <img src="https://wallpaperaccess.com/full/3713543.jpg" height="400" width="100%" /> */}
+        <div style={{margin:'10px 320px 0 10px',backgroundColor:'rgba(0,0,0,0.1)'}}>
+        <Typography sx={{color:'white',fontFamily:'Montserrat'}} variant='h4' align='left' gutterbottom>Bank</Typography>
+        <Typography sx={{color:'white',fontFamily: 'Montserrat',fontStyle:'italic'}} variant='h5' align='left'>Join the Blockchain Revolution with Our Platform - The Future of Secure and Profitable Investments. Partner with Us Today and Access a New World of Financial Opportunities</Typography>
+        </div>
+        <Button variant='standard' sx={{marginLeft:'-1250px',marginTop:'15px',color:'white',border:'solid 1px','&:hover':{
+        color:'black',
+        backgroundColor:'white',
+        transition:'all 0.3s linear'
+      }}} onClick={()=>{Navigate('/Bank/Login')}}>Login</Button>
+
+        </Grid>
+        </Grid>
+      </SwiperSlide>
+    
+      ...
+    </Swiper>
+       
         <br/>
         <br/>
         <br/>
         <br/>
         <br/>
         <Grid container >
-            <Grid item>
-                <Typography variant='h4' component='h2' align='center' gutterBottom>
+            <Grid item sx={{'&:hover':{ transform: 'scale(1.03)',
+  transition:'all 0.3s ease-in-out'}}}>
+                <Typography variant='h4' component='h2' align='center' gutterBottom sx={{fontFamily:'Montserrat'}}>
                     What is BlockFlexi
                 </Typography>
-                <Typography variant='h6' component='h3'>
+                <Typography variant='h5' component='h3' sx={{fontFamily:'Montserrat'}}>
                 Block-Flexi is a blockchain-based solution designed to facilitate a flexible jewellery scheme. The system integrates with jewellery and banking institutions to provide customers with a secure and trustworthy way to acquire jewellery. 
                 </Typography>
+               
             </Grid>
+            {/* <Grid item sx={{display:'flex',justifyContent:'center',alignSelf:'center'}}>
+            <Typography  variant='h4' align='center'>
+              What is BlockChain?
+            </Typography>
             
+            </Grid> */}
+           
+           
         </Grid>
     </div>
   )
