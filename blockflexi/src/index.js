@@ -36,12 +36,14 @@ root.render(
         <Route path={'/Jeweller/login'} element={<JewellerLogin/>}/>
         <Route path={'/Bank/login'} element={<BankLogin/>}/>
         <Route path={'/Jeweller/Register'} element={<JewellerRegister/>}/>
+        
       
         <Route path={'/BankHome'} element={<React.Suspense fallback='Loading ...'><LazyBankHome/></React.Suspense>}/>
         <Route path={'/jewellerhome'} element={<JewellerHome/>}/>
        
         <Route path={'/request'} element={<Request/>}/>
         <Route path={'/settle'} element={<Settle/>}/>
+      
         <Route path={'/CustomerLanding'} element={<CustomerLanding/>}/>
         <Route path={'/CustomerHome/:JewellerID'} element={<CustomerHome/>}/>
         <Route path={'/AllJewellers'} element={<AllJewellers />}/>

@@ -8,9 +8,6 @@ import jwt_decode from 'jwt-decode'
 import {useCookies} from 'react-cookie'
 
 
-
-// style
-
 const styles = {
   text: {
     fontFamily: 'Arial, sans-serif', 
@@ -28,7 +25,7 @@ const styles = {
     backgroundColor:'white'
   },
 };
-// use state variable
+
 
 const JewellerHome = () => {
   const [open, setOpen] = useState(false);
@@ -46,21 +43,15 @@ const JewellerHome = () => {
     setOpen(true);
   };
   
-  
-  
   const handleClick=()=>{
-    
     navigate('/request')
     
   }
   const handleClick1=()=>{
-    
-    navigate('/settle')
+     navigate('/settle')
     
   }
   
-
-
   const handleClose = () => {
     setOpen(false);
   };
@@ -92,12 +83,10 @@ const JewellerHome = () => {
         if(res.data.status==='ok'){
           console.log(res.data)
           alert("Scheme Added")
-          // navigate('/Customer/login')
-    }
+          }
         else if(res.data.status==='exists'){
           alert("You are already a part of us")
-          // navigate('/Customer/login')
-        }
+          }
       }).catch(e=>{
         alert("wrong details")
         console.log(e);

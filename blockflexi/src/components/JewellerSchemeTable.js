@@ -50,40 +50,51 @@ function JewellerSchemeTable({jewellerid}) {
   }, [jewellerid]);
 
   return (
-    <div >
-      <Paper style={{overflow:'auto',maxHeight:'400px'}}>
-      <Grid container >
-      <Typography variant='h5' align='center' mb={2} sx={{fontWeight:'bold'}}>MY SCHEMES</Typography>
-      {Array.isArray(schemes) && schemes.map((scheme)=>(
-        
-        <Grid item >
-         
-         <Card variant='outlined' spacing={3} style={{minWidth:'400px',marginBottom:'15px'}}>
-         <CardContent>
-          <Typography variant='subtitle1' sx={{fontWeight:'bold',textTransform:'uppercase'}} gutterbottom>{scheme.SchemeName}
-          </Typography>
-          
+    <Box style={{backgroudImage:'linear-gradient(to bottom, #BF8F91, #CAA2A3, #D4B5B5, #DFC7C8)',borderRadius:'16px'}} sx={{ padding:"0px" }}>
+      <Button
+        style={{ margin:'0px 0px 30px 120px', fontWeight: "bold" }}
+        variant="contained"
+        color="success"
+        onClick={handleAddJewel}
+      >
+        ADD SCHEMES
+      </Button>
+      <TableContainer component={Paper} variant="outlined" style={{backgroundImage:'linear-gradient(to bottom, #BF8F91, #CAA2A3, #D4B5B5, #DFC7C8)'}}>
+        <Table>
+          <TableHead>
+            <TableRow >
+              <TableCell style={{ fontWeight: "bold" }}>SCHEMES</TableCell>
+              <TableCell style={{ fontWeight: "bold",margin:'0px 0px 0px 200px' }}>DELETE SCHEME</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {[...Array(5)].map((_, index) => (
+              <TableRow key={index}>
+                <TableCell style={{ fontSize: "16px" }}></TableCell>
+                <TableCell>
+                  {index > -1 && (
+                    <Button
+                      style={{
+                        fontSize: "13px",
+                        fontWeight: "bold",
+                        margin:'0px 0px 0px 100px',
+                        
+                      }}
+                      variant="contained"
+                      color="error"
+                      onClick={() => handleDeleteJewel(index)}
+                    >
+                      Delete
+                    </Button>
+                  )}
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </Box>
+  );
+}
 
-          <Typography variant='subtitle1' sx={{fontWeight:'medium-bold',textTransform:'uppercase'}} >Monthly Installment: {scheme.MonthlyPayment}
-            </Typography>
-          <Typography variant='subtitle1' sx={{fontWeight:'medium-bold',textTransform:'uppercase'}}  >Total : {scheme.MonthlyPayment*11}
-            </Typography></CardContent>
-     <CardActions >
-      <div style={{position:'relative',top:'0%',bottom:'0%',left:'75%'}}>
-      <Button variant='contained' size="small" sx={{padding:'7px'}} color='error' onClick={()=>deletescheme(scheme)}><Typography sx={{fontWeight:'medium-bold'}} variant='body2'>
-        DELETE</Typography></Button>
-        </div>
-     </CardActions>
-     
-     </Card>
-     </Grid>
-    
-      ))}
-       </Grid>
-      </Paper>
-      
-     
-</div>
-  )
-  }
 export default JewellerSchemeTable;

@@ -19,9 +19,14 @@ import {
   DialogActions,
   Typography,
 } from "@mui/material";
-import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
-import CancelRoundedIcon from "@mui/icons-material/CancelRounded";
-import "./Request.css";
+
+const rows = [
+  { id: 1, name: "SELVA KUMAR", phone: "8976567453",panno:"JCP54367",address:"BHARATHI NAGAR",payment:"5000"},
+  { id: 2, name: "ASHWATH KUMAR", phone: "6787653546" },
+  { id: 3, name: "SAURAV", phone: "7865430071" },
+  { id: 4, name: "DIWAKAR", phone: "9045387965" },
+  { id: 5, name: "VAITHEES", phone: "6334498760" },
+];
 
 
 
@@ -55,44 +60,23 @@ const MoreDetailsButton = ({ name, row }) => {
       >
         DETAILS
       </Button>
-      {selectedUser && (
-        <Dialog open={open} onClose={handleClose} >
-          <DialogTitle
-            style={{ fontWeight: "bold", margin: "0px 0px 0px 150px" }}
-          >
-            DETAILS
-          </DialogTitle>
-          <DialogContent sx={{height:'200px',width:'400px'}}>
-            <DialogContentText style={{ fontWeight: "bold"  }}>
-              <div style={{margin:'5px 0px 0px 60px'}}>
-              CUSTOMER NAME : {selectedUser.CustomerName}
-              <br /> <br /></div>
-              <div style={{margin:'0px 0px 0px 60px'}}>
-              PAN NO : {selectedUser.PANno}
-              <br /><br/></div>
-              <div style={{margin:'0px 0px 0px 60px'}}>
-              ADDRESS : {selectedUser.Address}
-              <br /><br/></div>
-              {/* <div style={{margin:'0px 0px 0px 60px'}}>
-              PAYMENT : {selectedUser.payment}
-              <br /><br/></div> */}
-            </DialogContentText>
-          </DialogContent>
-          <DialogActions>
-          <Button style={{
-  fontWeight: "bold",
-  padding: "8px 25px",
-  fontSize:"14px",
-  borderRadius: "5px",
-  backgroundColor: "#f34642",
-  color: "white"
-}} onClick={handleClose}>
-  Close
-</Button>
-
-          </DialogActions>
-        </Dialog>
-      )}
+      {selectedUser &&
+      <Dialog  open={open} onClose={handleClose}>
+        <DialogTitle style={{fontWeight:'bold',margin:'0px 0px 0px 90px'}}>DETAILS</DialogTitle>
+        <DialogContent>
+          <DialogContentText style={{fontWeight:'bold'}}>
+            CUSTOMER NAME : {selectedUser.name}<br/>
+            PAN NO : {selectedUser.panno}<br/>
+            ADDRESS : {selectedUser.address}<br/>
+            PAYMENT : {selectedUser.payment}<br/>
+            
+          </DialogContentText>
+        
+        </DialogContent>
+        <DialogActions>
+          <Button style={{fontWeight:'bold'}} onClick={handleClose}>Close</Button>
+        </DialogActions>
+      </Dialog>}
     </>
   );
 };
@@ -202,102 +186,40 @@ const handleUsers=(data)=>{
   };
 
   return (
-    <div style={{ display: "flex", flexDirection: "column"   }}>
-      <Header />
-      <Typography
-        variant="h4"
-        align="center"
-        style={{
-          marginTop: "5rem",
-          marginBottom: "0rem",
-          fontFamily: "Montserrat, sans-serif",
-          fontSize: "2.5rem",
-          fontWeight: "bold",
-          color: "black",
-          textTransform: "uppercase",
-          letterSpacing: "2px",
-          padding: "1rem",
-          
-        }}
-      >
-        WITHDRAW REQUESTS
-      </Typography>
-      <br/>
-      <br/>
-      <div
-        style={{
-          flex: 1,
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
-        <TableContainer
-          style={{ maxWidth: "80%", borderRadius: "20px", margin: "auto" }}
-          component={Paper}
-        >
-          <Table>
-            <TableHead>
-            <TableRow className="requestfont">
-  <TableCell style={{  backgroundColor: "#9a1b56", color: "white", fontSize: "1.2rem", fontFamily: "Poppins, sans-serif" }}>S.NO</TableCell>
-  <TableCell style={{  backgroundColor: "#9a1b56", color: "white", fontSize: "1.2rem", fontFamily: "Poppins, sans-serif" }}>CUSTOMER NAME</TableCell>
-  <TableCell style={{ backgroundColor: "#9a1b56", color: "white", fontSize: "1.2rem", fontFamily: "Poppins, sans-serif" }}>PHONE NO</TableCell>
-  <TableCell style={{  backgroundColor: "#9a1b56", color: "white", fontSize: "1.2rem", fontFamily: "Poppins, sans-serif" }}>MORE DETAILS</TableCell>
-  <TableCell style={{  backgroundColor: "#9a1b56", color: "white", fontSize: "1.2rem", fontFamily: "Poppins, sans-serif" }}>APPROVAL</TableCell>
-</TableRow>
+   <>
+   <Header/>
+    <TableContainer style={{marginTop:'150px',width:"1000px", marginLeft:"200px",borderRadius:"20px"}} component={Paper}>
+      <Table>
+        <TableHead>
+          <TableRow >
+            <TableCell style={{fontWeight:'bold',backgroundColor: '#9a1b56', color: 'white', fontSize: '1.5rem'}}>S.NO</TableCell>
+            <TableCell style={{fontWeight:'bold',backgroundColor: '#9a1b56', color: 'white', fontSize: '1.5rem'}}>CUSTOMER NAME</TableCell>
+            <TableCell style={{fontWeight:'bold',backgroundColor: '#9a1b56', color: 'white', fontSize: '1.5rem'}}>PHONE NO</TableCell>
+            <TableCell style={{fontWeight:'bold',backgroundColor: '#9a1b56', color: 'white', fontSize: '1.5rem'}}>MORE DETAILS</TableCell>
+            <TableCell style={{fontWeight:'bold',backgroundColor: '#9a1b56', color: 'white', fontSize: '1.5rem'}}>APPROVAL</TableCell>
+          </TableRow>
+        </TableHead>
+        
+        <TableBody>
 
-            </TableHead>
-            <TableBody>
-              {user.map((row,index) => (
-                <TableRow
-                  key={row._id}
-                  sx={{
-                    "&:hover": {
-                      boxShadow:
-                        hoveredRow === row
-                          ? "0px 0px 10px 5px rgba(0, 0, 0, 0.1)"
-                          : "none",
-                    },
-                  }}
-                  onMouseEnter={() => handleRowHover(row)}
-                  onMouseLeave={() => handleRowHoverLeave()}
-                >
-                  <TableCell>{index+1}</TableCell>
-                  <TableCell>{row.CustomerName}</TableCell>
-                  <TableCell>{row.MobileNo}</TableCell>
-                  <TableCell>
-                    <MoreDetailsButton name={row.CustomerName} row={row} />
-                  </TableCell>
-                  <TableCell>
-                  <div style={{ display: "flex" }}>
-  <Button
-    style={{ fontWeight: "bold" }}
-    variant="contained"
-    disabled={!hoveredRow || hoveredRow.id !== row.id}
-    color="success"
-    onClick={()=>fwdrequest(row)}
-  >
-    FORWARD <ArrowForwardIcon />
-  </Button>
-  <Button
-    style={{ fontWeight: "bold", marginLeft: "20px" }}
-    variant="contained"
-    disabled={!hoveredRow || hoveredRow.id !== row.id}
-    color="error"
-    onClick={()=>rjtrequest(row)}
-  >
-    REJECT<CancelRoundedIcon />
-  </Button>
-</div>
-
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
-      </div>
-    </div>
+          {rows.map((row) => (
+            <TableRow key={row.id}>
+              <TableCell>{row.id}</TableCell>
+              <TableCell>{row.name}</TableCell>
+              <TableCell>{row.phone}</TableCell>
+              <TableCell>
+                <MoreDetailsButton name={row.name} row={row} />
+              </TableCell>
+              <TableCell>
+                <ApprovalButtons />
+              </TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </TableContainer>
+    </>
+   
   );
 };
 
