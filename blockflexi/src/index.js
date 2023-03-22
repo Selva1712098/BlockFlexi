@@ -39,6 +39,7 @@ root.render(
         <Route path={'/request'} element={<Request/>}/>
         <Route path={'/settle'} element={<Settle/>}/>
         <Route path={'/CustomerLanding'} element={<CustomerLanding/>}/>
+        <Route path={'/CustomerHome/:JewellerID'} element={<CustomerHome/>}/>
         
       </Routes>
     </Router>

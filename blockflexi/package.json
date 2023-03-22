@@ -15,11 +15,8 @@
     "bcryptjs": "^2.4.3",
     "express-session": "^1.17.3",
     "framer-motion": "^10.0.1",
-<<<<<<< HEAD
     "jwt-decode": "^3.1.2",
-=======
    
->>>>>>> 6d2680e8da739622a659119eb901d214088c0198
     "material-react-table": "^1.8.4",
     "react": "^18.2.0",
     "react-bootstrap": "^2.7.2",

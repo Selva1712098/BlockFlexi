@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import jewellers from './jewellers.json'
+import React, { useEffect, useState, forwardRef, useNavigate } from "react";
+import { Link } from 'react-router-dom';
 import { 
   Box, 
   Flex, 
@@ -16,6 +16,8 @@ import styled from "@emotion/styled";
 import axios from "axios";
 
 function JewellerHero(){
+// const JewellerHero=forwardRef((props,ref)=>{
+
   const[jewellers,setJewellers]=useState('');
   useEffect(()=>{
     async function fetchData(){
@@ -31,14 +33,15 @@ function JewellerHero(){
   const ArticleCard = styled(Card)`
   background: #FFF;
   margin: 0 0 20px;
-  padding: 20px;
-  border-radius: 2px;
-  box-shadow: 0 2px 4px rgba(#000, 0.2);
+  padding: 16px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   cursor: pointer;
   transition: 0.3s ease;
 
   &:hover {
-    box-shadow: 0 2px 4px rgba(#000, 0.2), 0 4px 8px rgba(#000, 0.2);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    transform: translateY(-2px);
   }
 
   &:active {
@@ -52,21 +55,24 @@ function JewellerHero(){
       <h1>Trusted Jewellers</h1>
       <Box maxWidth="960px" margin="0 auto" display="grid" gridTemplateColumns="repeat(auto-fit, minmax(300px, 1fr))" gap={10}>
         {jewellers && jewellers.map((jeweller) => (
-          <ArticleCard key={jeweller.JewellerID} h={"300px"}>
+          <ArticleCard>
+          <Link to={`/CustomerHome/${jeweller.JewellerID}`}>
             <CardHeader>
-              <Heading size='md'>{jeweller.JewellerName}</Heading>
+              <Heading size='md'>{jeweller.JewellerID}</Heading>
             </CardHeader>
             <CardBody>
               <Text>hello</Text>
             </CardBody>
-            <CardFooter>
+            {/* <CardFooter>
               <Button>View here</Button>
-            </CardFooter>
+            </CardFooter> */}
+          </Link>
           </ArticleCard>
+          
         ))}
       </Box>
     </div>
   );
-}
 
+}
 export default JewellerHero;

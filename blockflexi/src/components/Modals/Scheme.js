@@ -23,7 +23,7 @@ import {
   } from '@chakra-ui/react'
   import { Card, CardBody, CardFooter, Heading } from '@chakra-ui/react'
   import axios from "axios";
-function Scheme({isOpen, onClose }){
+function Scheme({isOpen, onClose, jeweller }){
   const[schemes,setSchemes]=useState('');
   const [isJoined, setIsJoined] = useState(false);
   // const handleJoinClick = (index) => {
@@ -62,7 +62,7 @@ function Scheme({isOpen, onClose }){
           <ModalHeader>Schemes</ModalHeader>
           <ModalCloseButton />
           <ModalBody maxHeight="400px" overflowY="scroll">
-            {schemes && schemes.map((scheme,index)=>(
+            {jeweller && jeweller.map((scheme,index)=>(
  
           <Card
   direction={{ base: 'column', sm: 'row' }}

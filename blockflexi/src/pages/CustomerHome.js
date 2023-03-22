@@ -3,7 +3,7 @@ import Header from "../components/Header";
 import { useCookies } from "react-cookie";
 import { ChakraProvider, Stack } from "@chakra-ui/react";
 import { SimpleGrid } from "@chakra-ui/react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import {
   Card,
   CardHeader,
@@ -17,6 +17,8 @@ import Scheme from "../components/Modals/Scheme";
 import jwtDecode from "jwt-decode";
 import MySchemes from "../components/Modals/MySchemes";
 function CustomerHome() {
+  const {JewellerID}=useParams()
+  console.log(JewellerID)
   const [isOpen, setIsOpen] = useState(false);
   const [isModalOpen, setisModalOpen] = useState(false);
   const [cookies, setCookie, removeCookie] = useCookies(["sessionId"]);
@@ -55,6 +57,7 @@ function CustomerHome() {
       <Header />
 
       <div>
+      {/* <h1>Welcome to {jeweller.JewellerName}'s page!</h1> */}
         <ChakraProvider>
           <SimpleGrid
             mt="20"

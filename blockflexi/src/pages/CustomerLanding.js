@@ -2,21 +2,28 @@ import Header from "../components/Header";
 import React, { useEffect, useState, useRef } from "react";
 import Carousel from "../components/CustomerLand/Carousel";
 import JewellerHero from "../components/CustomerLand/JewellerHero";
+import { useNavigate } from "react-router";
+import {useCookies} from 'react-cookie';
+import jwtDecode from 'jwt-decode';
 function CustomerLanding() {
-    const jewellerHeroRef = useRef(null);
+  //   const jewellerHeroRef = useRef(null);
 
-  const scrollToJewellerHero = () => {
-    jewellerHeroRef.current.scrollIntoView({ behavior: 'smooth' });
-  };
+  // const scrollToJewellerHero = () => {
+  //   jewellerHeroRef.current.scrollIntoView({ behavior: 'smooth', block:'start' });
+  // };
+  const [cookies, setCookie, removeCookie] = useCookies(["sessionId"]);
+  const navigate = useNavigate();
+  const token = jwtDecode(cookies.sessionId);
+
+  console.log(token);
+
+  useEffect(() => {
+    if (!token) {
+      alert("you are not logged in , please login");
+      navigate("/");
+    }
+  }, [token]);
   const [showSection, setShowSection] = useState(false);
-
-  // const handleMouseEnter = () => {
-  //     setShowSection(true);
-  //   };
-
-  //   const handleMouseLeave = () => {
-  //     setShowSection(false);
-  //   };
   useEffect(() => {
     setShowSection(true);
   }, []);
@@ -26,10 +33,11 @@ function CustomerLanding() {
       <div
         style={{
           display: "flex",
+          flexDirection:"column",
           justifyContent: "center",
           backgroundSize: "cover",
           alignItems: "center",
-          height: "450px", // set the height of the banner
+          height: "550px", // set the height of the banner
           backgroundImage: `url("../images/banner2.png")`,
           zIndex: "1",
           //   #9A1B56
@@ -98,6 +106,7 @@ function CustomerLanding() {
               onMouseLeave={(e) => {
                 e.target.style.transform = "scale(1)";
               }}
+              // onClick={scrollToJewellerHero}
             >
               Explore
             </button>
@@ -107,7 +116,8 @@ function CustomerLanding() {
       <br />
       <br />
       <Carousel />
-      <JewellerHero />
+      <JewellerHero  />
+      {/* ref={jewellerHeroRef} */}
       <br />
       <br />
       <br />

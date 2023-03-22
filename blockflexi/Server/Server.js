@@ -2,40 +2,31 @@ import express, { request } from "express";
 
 import cors from "cors";
 import session from "express-session";
-// import passport from 'passport'
-import jwt from 'jsonwebtoken';
-import {customerMasterCollection,jewellerMasterCollection,bankMasterCollection} from './mongo.js'
-// import jwt from 'jsonwebtoken';
+import jwt from "jsonwebtoken";
 import {
   customerMasterCollection,
   jewellerMasterCollection,
   bankMasterCollection,
-  jewellerySchemeCollection,
+  jewellerySchemeCollection
 } from "./mongo.js";
-// import bankMasterCollection from './mongo.js'
-// import {jewellerMasterCollection} from './mongo.js'
+
 import dotenv from "dotenv";
-dotenv.config();
-import jwt from 'jsonwebtoken'
+
 import bcrypt from "bcryptjs";
-import { Schema } from "mongoose";
+dotenv.config();
 
 const app = express();
 
+app.use(
+  session({
+    secret: process.env.secret,
+    resave: true,
+    saveUninitialized: false,
+  })
+);
 
-
-app.use(express.json())
-app.use(session({
-    secret:process.env.secret,
-    resave:true,
-    saveUninitialized:false
-    
-}))
-
-app.use(cors({ origin: ["http://localhost:3000"], credentials: true }))
+app.use(cors({ origin: ["http://localhost:3000"], credentials: true }));
 app.use(express.json());
-
-
 
 app.use((req, res, next) => {
   res.header("Access-Control-Allow-Origin", "http://localhost:3000");
@@ -49,10 +40,6 @@ app.use((req, res, next) => {
     "GET, POST, PUT, PATCH, DELETE, OPTIONS"
   );
   next();
-});
-
-app.get("/", (req, res) => {
-  res.json({ message: "success" });
 });
 
 app.post("/CustomerRegister", async (req, res) => {
@@ -86,42 +73,35 @@ app.post("/CustomerRegister", async (req, res) => {
   }
 });
 
-app.post("/scheme", async (req, res) => {
-  const { JewellerID,SchemeID, SchemeName, SchemeDetails, MonthlyPayment } = req.body;
+app.post("/JewellerRegister", async (req, res) => {
+  const { name, email, password} = req.body;
 
+  const salt = bcrypt.genSaltSync(10);
+  const hash = bcrypt.hashSync(password, salt);
 
-    try{
-        const check= await customerMasterCollection.findOne({EmailID:email})
-        
-        if(check){
-            const isPasswordValid= bcrypt.compareSync(password,check.Password)
+  const datas = {
+    JewellerName: name,
+   
+    EmailID: email,
+    Password: hash,
+   
+    RowDate: new Date(Date.now()),
+    Status: true,
+  };
 
-            if(isPasswordValid){
-                const token=jwt.sign({
-                    name:check.CustomerName,
-                    id:check.CustomerID
-                },process.env.secret)
-                res.setHeader('Set-Cookie',`sessionId=${token}`)
-                res.cookie('sessionId',token,{
-                    httponly:true,
-                    maxAge:24*60*60*365*1000
-                }).json({status:'ok'})
-                 
-            }
-            else{
-                res.json({status:'error'})
-            }
-        }
-        else{
-            res.json({status:'not found'})
-        }
+  try {
+    const check = await jewellerMasterCollection.findOne({ EmailID: email });
 
-
+    if (check) {
+      res.json({ status: "exists" });
+    } else {
+      const check1 = await jewellerMasterCollection.insertMany([datas]);
+      return res.json({ message: "Jeweller Added", status: "ok" });
     }
-    catch(e){
-        console.log("Something went Wrong.try again later")
-    }
-})
+  } catch (e) {
+    res.json("Something went wrong try again");
+  }
+});
 
 app.post('/JewellerLogin',async(req,res)=>{
     const {email,password}=req.body
@@ -189,19 +169,15 @@ app.post('/BankLogin',async(req,res)=>{
            else{
                res.json({status:'not found'})
            }
-   
-   
-       }
-       catch(e){
-           console.log("Something went Wrong.try again later")
-       }
-   
-})
+          }catch(e){
+            console.log("Something Went wrong.Try again")
+          }
+        })
 
-
-app.listen(5000,()=>{
-    console.log("Server Started!")
-})
+  
+app.post("/scheme", async (req, res) => {
+  const { JewellerID, SchemeID, SchemeName, SchemeDetails, MonthlyPayment } =
+    req.body;
   const scheme = {
     JewellerID: JewellerID,
     SchemeID,
@@ -215,17 +191,64 @@ app.listen(5000,()=>{
     const check1 = await jewellerySchemeCollection.findOne({
       SchemeName: SchemeName,
     });
-   
     if (check1) {
       res.json({ status: "exists" });
     } else {
       const check = await jewellerySchemeCollection.insertMany([scheme]);
-      console.log(check)
+      console.log(check);
       res.json({ status: "ok" });
     }
   } catch (err) {
     res.json({ message: err.message, status: 400 });
   }
+})
+app.get("/viewjewellers", async (req, res) => {
+  try {
+    const jeweller = await jewellerMasterCollection.find({});
+    res.json(jeweller);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Internal Server Error");
+  }
+});
+app.post('/CustomerLogin',async(req,res)=>{
+  const {email,password}=req.body
+
+
+  try{
+      const check= await customerMasterCollection.findOne({EmailID:email})
+      
+      if(check){
+          const isPasswordValid= bcrypt.compareSync(password,check.Password)
+
+          if(isPasswordValid){
+              const token=jwt.sign({
+                  name:check.CustomerName,
+                  id:check.CustomerID
+              },process.env.secret)
+              res.setHeader('Set-Cookie',`sessionId=${token}`)
+              res.cookie('sessionId',token,{
+                  httponly:true,
+                  maxAge:24*60*60*365
+              }).json({status:'ok'})
+               
+          }
+          else{
+              res.json({status:'error'})
+          }
+      }
+      else{
+          res.json({status:'not found'})
+      }
+
+
+  }
+  catch(e){
+      console.log("Something went Wrong.try again later")
+  }
+  
+})
+
 
 
 app.get("/viewschemes", async (req, res) => {
@@ -237,116 +260,18 @@ app.get("/viewschemes", async (req, res) => {
     res.status(500).send("Internal Server Error");
   }
 });
-app.get("/viewjewellers", async (req, res) => {
-  try {
-    const jeweller = await jewellerMasterCollection.find({});
-    res.json(jeweller);
-  } catch (err) {
+app.get('/CustomerHome/:JewellerID',async (req, res) => {
+  console.log(req.params.JewellerID)
+  try{
+  const schemes = await jewellerySchemeCollection.find({JewellerID:req.params.JewellerID});
+  console.log(schemes)
+  res.json(schemes);
+  }catch(err){
     console.error(err);
-    res.status(500).send("Internal Server Error");
+    res.status(500).send("Internal Error");
   }
-});
-
-
-app.post("/CustomerLogin", async (req, res) => {
-  const { email, password } = req.body;
-
-  try {
-    const check = await customerMasterCollection.findOne({ EmailID: email });
-
-    if (check) {
-      const isPasswordValid = bcrypt.compareSync(password, check.Password);
-
-      if (isPasswordValid) {
-        res.setHeader("Set-Cookie", `sessionId=${check.CustomerID}`);
-        res
-          .cookie("sessionId", check.CustomerID, {
-            httponly: true,
-            maxAge: 24 * 60 * 60 * 1000,
-          })
-          .json({ status: "ok" });
-      } else {
-        res.json({ status: "error" });
-      }
-    } else {
-      res.json({ status: "not found" });
-    }
-  } catch (e) {
-    console.log("Something went Wrong.try again later");
-  }
-});
-
-app.post("/JewellerLogin", async (req, res) => {
-  const { email, password } = req.body;
-
-  try {
-    const check = await jewellerMasterCollection.findOne({ EmailID: email });
-    if (check) {
-      const isPasswordValid = bcrypt.compareSync(password, check.Password);
-      if (isPasswordValid) {
-        const token = jwt.sign(
-          {
-            name: check.JewellerName,
-            id: check._id,
-            jid:check.JewellerID
-          },
-          process.env.secret
-        );
-        res.setHeader("Set-Cookie", `sessionId=${token}`);
-        res.cookie("sessionId", token, {
-            httponly: true,
-            maxAge: 24 * 60 * 60 * 365,
-          })
-          .json({ status: "ok" });
-      } else {
-        res.json({ status: "error" });
-      }
-    } else {
-      res.json({ status: "not found" });
-    }
-  } catch (e) {
-    console.log("Something went Wrong.try again later");
-  }
-});
-
-app.post("/BankLogin", async (req, res) => {
-  const { email, password } = req.body;
-
-  try {
-    const check = await bankMasterCollection.findOne({ EmailID: email });
-
-    if (check) {
-      const isPasswordValid = bcrypt.compareSync(password, check.Password);
-
-      if (isPasswordValid) {
-        res.setHeader("Set-Cookie", `sessionId=${check.BankID}`);
-        res
-          .cookie("sessionId", check.BankID, {
-            httponly: true,
-            maxAge: 30000,
-          })
-          .json({ status: "ok" });
-      } else {
-        res.json({ status: "error" });
-      }
-    } else {
-      res.json({ status: "not found" });
-    }
-  } catch (e) {
-    console.log("Something went Wrong.try again later");
-  }
-});
-
-app.post("/logout", async (req, res) => {
-  req.session.destroy((err) => {
-    if (err) {
-      console.log(err);
-      return res.status(500).send("Internal server error");
-    }
-  });
-  res.clearCookie("sessionId").json({ status: "cleared" });
 });
 
 app.listen(5000, () => {
   console.log("Server Started!");
-});
+})
