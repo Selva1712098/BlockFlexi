@@ -30,9 +30,9 @@ function CustomerLanding() {
       navigate("/");
     }
   }, [token]);
-  useEffect(() => {
-    setShowSection(true);
-  }, []);
+  // useEffect(() => {
+  //   setShowSection(true);
+  // }, []);
   return (
     <div style={{ height: "50vh", background: "white"}}>
       <Header />
@@ -57,7 +57,6 @@ function CustomerLanding() {
             flexDirection: "column",
             marginLeft: "-350px",
             zIndex: "5",
-            opacity: showSection ? 2 : 0,
             transition: "opacity 1s ease-in-out",
           }}
         >
