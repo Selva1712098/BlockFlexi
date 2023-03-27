@@ -58,14 +58,13 @@ const JewellerHome = () => {
   const [SchemeName, setSchemeName] = useState("");
   const [SchemeDetails, setSchemeDetails] = useState("");
   const [MonthlyPayment, setMonthlyPayment] = useState("");
-  const[cookies,setCookie,removeCookie]=useCookies(['sessionId'])
+  const[cookies,setCookie,removeCookie]=useCookies(['jeweller_sessionId'])
   // const[monthlyInstallment,setMonthlyInstallment]=useState(0)
   // const[total,setTotal]=useState(0)
-  const token=jwt_decode(cookies.sessionId)
-  const JewellerID=token.jid
+  const token=jwt_decode(cookies.jeweller_sessionId)
+  const JewellerID=token.id
   console.log(typeof(JewellerID))
-  const[monthlyInstallment,setMonthlyInstallment]=useState(0)
-  const[total,setTotal]=useState(0)
+ 
   const navigate=useNavigate()
   const handleOpen = () => {
     setOpen(true);
@@ -129,34 +128,7 @@ const JewellerHome = () => {
       })
     }
   
-  // const calculateTotal = (event) => {
-  //   event.preventDefault()
-   
-   
-    
-  //   setTotal(monthlyInstallment*11);
-    
-  // };
-  // const handleSubmit=(event)=>{
-  //   event.preventDefault();
-  //   Axios();
-  //   const scheme = { SchemeName:SchemeName, SchemeDetails:SchemeDetails, MonthlyPayment:MonthlyPayment }
-
-
-  // fetch("/scheme", {
-  //   method: "POST",
-  //   headers: {
-  //     "Content-Type": "application/json",
-  //   },
-  //   body: JSON.stringify(scheme),
-  // })
-  //   .then((response) => response.json())
-  //   .then((scheme) => console.log(scheme))
-  //   .catch((error) => console.error(error));
-
-  // };
-// react code
-  return (
+    return (
     <div>
       <Header/>
       <Box sx={{ bgGradient:'linear( #00000 0%, #00000 100%)' }}>

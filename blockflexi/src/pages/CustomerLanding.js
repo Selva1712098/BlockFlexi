@@ -12,11 +12,11 @@ function CustomerLanding() {
   // const scrollToJewellerHero = () => {
   //   jewellerHeroRef.current.scrollIntoView({ behavior: 'smooth', block:'start' });
   // };
-  const [cookies, setCookie, removeCookie] = useCookies(["sessionId"]);
+  const [cookies, setCookie, removeCookie] = useCookies(["customer_sessionId"]);
  
   const [showSection, setShowSection] = useState(false);
   const navigate = useNavigate();
-  const token = jwtDecode(cookies.sessionId);
+  const token = jwtDecode(cookies.customer_sessionId);
 
   console.log(token);
 
