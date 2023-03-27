@@ -32,12 +32,15 @@ function JewellerHero(){
   },[]);
   const ArticleCard = styled(Card)`
   background: #FFF;
-  margin: 0 0 20px;
-  padding: 16px;
+  display: inline-block;
+  height: 250px;
+  
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   cursor: pointer;
   transition: 0.3s ease;
+
+ 
 
   &:hover {
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
@@ -53,12 +56,12 @@ function JewellerHero(){
   return (
      <div style={{textAlign: 'center'}}>
       <h1>Trusted Jewellers</h1>
-      <Box maxWidth="960px" margin="0 auto" display="grid" gridTemplateColumns="repeat(auto-fit, minmax(300px, 1fr))" gap={10}>
+      <Box margin="40px 70px 60px 70px" gap="30px" display={"grid"} gridTemplateColumns="repeat(auto-fit, minmax(300px, 1fr))" >
         {jewellers && jewellers.map((jeweller) => (
           <ArticleCard>
           <Link to={`/CustomerHome/${jeweller.JewellerID}`}>
             <CardHeader>
-              <Heading size='md'>{jeweller.JewellerID}</Heading>
+              <Heading size='md'>{jeweller.JewellerName}</Heading>
             </CardHeader>
             <CardBody>
               <Text>hello</Text>

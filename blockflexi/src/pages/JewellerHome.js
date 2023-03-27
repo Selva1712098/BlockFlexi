@@ -62,7 +62,7 @@ const JewellerHome = () => {
   // const[monthlyInstallment,setMonthlyInstallment]=useState(0)
   // const[total,setTotal]=useState(0)
   const token=jwt_decode(cookies.sessionId)
-  const JewellerID=token.jid
+  const JewellerID=token.id
   console.log(typeof(JewellerID))
   const[monthlyInstallment,setMonthlyInstallment]=useState(0)
   const[total,setTotal]=useState(0)

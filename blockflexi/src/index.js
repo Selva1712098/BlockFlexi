@@ -11,12 +11,14 @@ import CustomerRegister from './components/Modals/CustomerRegister';
 import JewellerRegister from './components/Modals/JewellerRegister';
 import Request from './pages/Request';
 import Settle from './pages/Settle';
-
+import Pay from './pages/Pay';
 
 import {Route,BrowserRouter as Router,Routes} from 'react-router-dom'
 import CustomerHome from './pages/CustomerHome';
 import CustomerScheme from './pages/CustomerScheme';
 import CustomerLanding from './pages/CustomerLanding';
+import AllJewellers from './pages/AllJewellers';
+import JewellerProfile from './pages/JewellerProfile';
 
 
 const LazyBankHome=React.lazy(()=>import ('./pages/BankHome'))
@@ -42,6 +44,9 @@ root.render(
         <Route path={'/settle'} element={<Settle/>}/>
         <Route path={'/CustomerLanding'} element={<CustomerLanding/>}/>
         <Route path={'/CustomerHome/:JewellerID'} element={<CustomerHome/>}/>
+        <Route path={'/AllJewellers'} element={<AllJewellers />}/>
+        <Route path={'/Pay'} element={<Pay/>}></Route>
+        <Route path={'/JewellerProfile'} element={<JewellerProfile/>}></Route>
         
       </Routes>
     </Router>
