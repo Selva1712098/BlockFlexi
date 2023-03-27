@@ -44,9 +44,9 @@ const highlightedRowStyle = {
 export default function BankHome() {
   const [open, setOpen] = useState(false);
   const [selectedUser, setSelectedUser] = useState(null);
-  const[cookies,setCookie,removeCookie]=useCookies(['sessionId'])
+  const[cookies,setCookie,removeCookie]=useCookies(['bank_sessionId'])
   const navigate=useNavigate()
-  const token=jwt_decode(cookies.sessionId)
+  const token=jwt_decode(cookies.bank_sessionId)
   
   console.log(token)
 
@@ -62,7 +62,7 @@ export default function BankHome() {
     
   }
   function handleLogout(){
-    removeCookie('sessionId');
+    removeCookie('bank_sessionId');
     navigate('/',{replace:true});
 
   }

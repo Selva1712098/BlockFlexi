@@ -20,7 +20,7 @@ function CustomerLanding() {
   };
   const [cookies, setCookie, removeCookie] = useCookies(["sessionId"]);
   const navigate = useNavigate();
-  const token = jwtDecode(cookies.sessionId);
+  const token = jwtDecode(cookies.customer_sessionId);
 
   console.log(token);
 
@@ -30,7 +30,6 @@ function CustomerLanding() {
       navigate("/");
     }
   }, [token]);
-  const [showSection, setShowSection] = useState(false);
   useEffect(() => {
     setShowSection(true);
   }, []);

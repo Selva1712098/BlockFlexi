@@ -119,8 +119,8 @@ app.post('/CustomerLogin',async(req,res)=>{
                   name:check.CustomerName,
                   id:check.CustomerID
               },process.env.secret)
-              res.setHeader('Set-Cookie',`sessionId=${token}`)
-              res.cookie('sessionId',token,{
+              res.setHeader('Set-Cookie',`customer_sessionId=${token}`)
+              res.cookie('customer_sessionId',token,{
                   httponly:true,
                   maxAge:24*60*60*365
               }).json({status:'ok'})
@@ -156,8 +156,8 @@ app.post('/JewellerLogin',async(req,res)=>{
                     name:check.JewellerName,
                     id:check.JewellerID
                 },process.env.secret)
-                res.setHeader('Set-Cookie',`sessionId=${token}`)
-                res.cookie('sessionId',token,{
+                res.setHeader('Set-Cookie',`jeweller_sessionId=${token}`)
+                res.cookie('jeweller_sessionId',token,{
                     httponly:true,
                     maxAge:24*60*60*365
                 }).json({status:'ok'})
@@ -193,9 +193,9 @@ app.post('/BankLogin',async(req,res)=>{
                     name:check.BankName,
                     id:check.BankID,
                 },process.env.secret)
-                res.setHeader('Set-Cookie',`sessionId=${token}`)
+                res.setHeader('Set-Cookie',`bank_sessionId=${token}`)
                 req.session.authorized=true;
-                res.cookie('sessionId',token,{
+                res.cookie('bank_sessionId',token,{
                     httponly:true,
                     maxAge:24*60*60*365*1000
                 }).json({status:'ok',authorized:true})
@@ -240,6 +240,8 @@ app.post("/scheme", async (req, res) => {
     res.json({ message: err.message, status: 400 });
   }
 })
+
+
 app.get("/viewjewellers", async (req, res) => {
   try {
     const jeweller = await jewellerMasterCollection.find({});
@@ -249,6 +251,43 @@ app.get("/viewjewellers", async (req, res) => {
     res.status(500).send("Internal Server Error");
   }
 });
+app.post('/GetScheme',async(req,res)=>{
+  const{schemeid}=req.body
+ 
+  
+  try{
+    const schemecheck=await jewellerySchemeCollection.findOne({SchemeID:schemeid},{RowDate:0,Status:0,JewellerID:0,__v:0})
+   
+    if(schemecheck){
+      
+      res.json({schemecheck })
+    }
+    
+  }
+  catch(e){
+    console.log(e)
+  }
+
+})
+app.post('/GetSchemeID',async(req,res)=>{
+  const { jewellerid, customerid } = req.body;
+  
+  
+  try {
+    const schemecheck = await customerSchemeCollection.find({
+      JewellerID: jewellerid,
+     
+      CustomerID: customerid
+    },{SchemeID:1});
+    
+
+      res.json({ schemecheck});
+    
+  } catch (e) {
+    console.log('Something Went Wrong. Try Again', e);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+})
 app.post('/JoinScheme', async (req, res) => {
   const { jewellerid, schemeid, customerid } = req.body;
   const schemes = {
@@ -266,61 +305,21 @@ app.post('/JoinScheme', async (req, res) => {
     });
     console.log(schemecheck);
     if (schemecheck !== null) {
-      res.json({ status: 'exists' });
+      res.json({ status: 'exists' ,schemecheck});
     } else {
       const addscheme = await customerSchemeCollection.insertMany([schemes]);
       console.log(addscheme);
-      res.json({ status: 'success' });
+      res.json({ status: 'success',addscheme });
     }
   } catch (e) {
     console.log('Something Went Wrong. Try Again', e);
     res.status(500).json({ error: 'Internal Server Error' });
   }
 });
-app.post('/CustomerLogin',async(req,res)=>{
-  const {email,password}=req.body
-  try{
-      const check= await customerMasterCollection.findOne({EmailID:email})
-      
-      if(check){
-          const isPasswordValid= bcrypt.compareSync(password,check.Password)
-
-          if(isPasswordValid){
-              const token=jwt.sign({
-                  name:check.CustomerName,
-                  id:check.CustomerID
-              },process.env.secret)
-              res.setHeader('Set-Cookie',`sessionId=${token}`)
-              res.cookie('sessionId',token,{
-                  httponly:true,
-                  maxAge:24*60*60*365
-              }).json({status:'ok'})
-               
-          }
-          else{
-              res.json({status:'error'})
-          }
-      }
-      else{
-          res.json({status:'not found'})
-      }
 
 
-  }
-  catch(e){
-      console.log("Something went Wrong.try again later")
-  }
-  
-})
-app.get("/viewschemes", async (req, res) => {
-  try {
-    const scheme = await jewellerySchemeCollection.find();
-    res.json(scheme);
-  } catch (err) {
-    console.error(err);
-    res.status(500).send("Internal Server Error");
-  }
-});
+
+
 app.get('/CustomerHome/:JewellerID',async (req, res) => {
   console.log(req.params.JewellerID)
   try{

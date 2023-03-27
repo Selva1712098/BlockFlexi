@@ -21,11 +21,17 @@ function CustomerHome() {
   console.log(JewellerID)
   const [isOpen, setIsOpen] = useState(false);
   const [isModalOpen, setisModalOpen] = useState(false);
-  const [cookies, setCookie, removeCookie] = useCookies(["sessionId"]);
+  const [cookies, setCookie, removeCookie] = useCookies(["customer_sessionId"]);
   const navigate=useNavigate()
+  // const [schemeid,setSchemeId]=useState('')
+
+  // const handleSchemeidChange=(sid)=>{
+  //   setSchemeId(sid)
+  //   console.log(sid)
+  // }
   
   
-  const token = jwtDecode(cookies.sessionId);
+  const token = jwtDecode(cookies.customer_sessionId);
 
   console.log(token);
 
@@ -44,7 +50,7 @@ function CustomerHome() {
   };
 
   const logout = () => {
-    removeCookie('sessionId');
+    removeCookie('customer_sessionId');
     navigate('/',{replace:true});
 
   };
@@ -118,8 +124,11 @@ function CustomerHome() {
                   <MySchemes
                     isOpen={isModalOpen}
                     onClose={handleCloseSchemes}
+                    jewellerid={JewellerID}
+                    customerid={token.id}
+                    
                   />
-                  <Scheme isOpen={isOpen} onClose={handleCloseModal} jewellerid={JewellerID} customerid={token.id}  />
+                  <Scheme isOpen={isOpen} onClose={handleCloseModal} jewellerid={JewellerID} customerid={token.id} />
                 </Stack>
               </CardFooter>
             </Card>

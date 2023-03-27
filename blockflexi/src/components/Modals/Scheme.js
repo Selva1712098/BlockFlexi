@@ -23,7 +23,7 @@ import {
   } from '@chakra-ui/react'
   import { Card, CardBody, CardFooter, Heading } from '@chakra-ui/react'
   import axios from "axios";
-function Scheme({isOpen, onClose,jewellerid,customerid }){
+function Scheme({isOpen, onClose,jewellerid,customerid,onSchemeidChange }){
   const[schemes,setSchemes]=useState('');
   // const[selectedScheme,setSelectedScheme]=useState(null);
   const [isJoined, setIsJoined] = useState(false);
@@ -31,9 +31,9 @@ function Scheme({isOpen, onClose,jewellerid,customerid }){
 
  
   async function joinscheme(schemes){
-    console.log(schemes)
+   
     const schemeid=schemes.SchemeID
-    console.log(schemeid)
+   
     
 
     await axios.post('http://localhost:5000/JoinScheme',{
@@ -63,14 +63,14 @@ function Scheme({isOpen, onClose,jewellerid,customerid }){
         });
 
         // Set the retrieved schemes in the state
-        setSchemes(response.data);
+       
       } catch (err) {
         console.error(err);
       }
     }
 
     fetchData();
-  }, []);
+  }, [jewellerid]);
     return(
 <div>
 <Modal isOpen={isOpen} onClose={onClose}>
