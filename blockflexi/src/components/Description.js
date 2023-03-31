@@ -2,23 +2,43 @@ import React,{useState} from 'react'
 import {Grid,Typography,Stack,Button,Card} from '@mui/material'
 import {useNavigate} from 'react-router-dom'
 import { Swiper, SwiperSlide } from 'swiper/react'
-import { Navigation, Pagination, Scrollbar, A11y,Autoplay } from 'swiper'
+import SwiperCore,{ Navigation, Pagination, Scrollbar, A11y,Autoplay } from 'swiper'
 // import image from './images/banking-finance-technologyisometric-illustration-bank-600w-1982321081-transformed.jpg'
 import 'swiper/css'
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/css/scrollbar';
 import 'swiper/css/autoplay'
+import 'swiper/swiper.min.css'
+import 'swiper/swiper-bundle.min.css'
 
+SwiperCore.use([Navigation, Pagination, Scrollbar, A11y, Autoplay]);
 function Description() {
     // const [activeButton, setActiveButton] = React.useState('customer');
     const Navigate= useNavigate()
-    // const [currentSlideIndex, setCurrentSlideIndex] = useState(0)
+    const [activeIndex, setActiveIndex] = useState(0);
 
-    // const handleSlideChange = (swiper) => {
-    //   setCurrentSlideIndex(swiper.activeIndex);
-    // };
+  //   function goToNextSlide() {
+  //     console.log('nextslide')
+  //     if (activeIndex < 2) {
+  //       setActiveIndex(activeIndex + 1);
+      
+  //     }
+      
+  //   }
   
+  //   function goToPrevSlide() {
+  //     console.log('prevslide')
+  //     if (activeIndex > 0) {
+  //       setActiveIndex(activeIndex - 1);
+  //     }
+
+  //   }
+  //   function onSlideChange(swiper){
+  //     console.log('Active index:', activeIndex);
+  // console.log('Swiper active index:', swiper.activeIndex);
+  // setActiveIndex(swiper.activeIndex);
+  //   }
   return (
     <div>
       
@@ -26,31 +46,46 @@ function Description() {
      
        
        
-      
+     
     <Swiper
-    modules={[Navigation, Pagination, Scrollbar, A11y,Autoplay]}
+    //key={activeIndex}
+    modules={[ Pagination, Scrollbar, A11y,Autoplay]}
     spaceBetween={100}
-    
-    navigation
+    // initialSlide={activeIndex}    
+   autoplay={
+    {delay:3000,
+
+    }
+   }
+   navigation
+   // onSlideChange={onSlideChange}
    
    pagination={{clickable:true}}
     scrollbar={{ draggable: true }}
     grabCursor={true}>
       
       <SwiperSlide> <Grid container>
-      <Grid item sx={{backgroundImage:`url(https://www.shutterstock.com/image-vector/internet-banking-technology-conceptisometric-illustration-260nw-1960426480.jpg)`,backgroundSize:'cover',height:'550px',width:'100%', ':hover':{opacity:'1',transform: 'scale(1.01)', transition:'all 0.3s ease-in-out'}}} >
-        <div style={{margin:'10px 320px 0 10px',backgroundColor:'rgba(0,0,0,0.1)'}}>
-        <Typography sx={{color:'white',fontFamily:'Montserrat'}} variant='h4' align='left' gutterbottom>Bank</Typography>
-        <Typography sx={{color:'white',fontFamily: 'Montserrat',fontStyle:'italic'}} variant='h5' align='left'>Join the Blockchain Revolution with Our Platform - The Future of Secure and Profitable Investments. Partner with Us Today and Access a New World of Financial Opportunities</Typography>
+        <Grid item sx={{backgroundImage:'url(https://wallpaperaccess.com/full/3713543.jpg)',backgroundSize:'cover',backgroundPosition: 'right',height:'550px',width:'100%', ':hover':{opacity:'1',transform: 'scale(1.01)', transition:'all 0.3s ease-in-out'}}} >
+        <div style={{margin:'4px 510px 0 10px',}}>
+        <Typography sx={{color:'white',fontFamily: 'Montserrat',fontStyle:'ital'}} variant='h4' align='left' >Customer</Typography>
+       
+        <Typography sx={{color:'white',fontFamily: 'Montserrat',fontStyle:'italic'}} variant='h5' align='left'>Invest in Timeless value with Secure Gold Ownership Through 
+        Our Reliable Platform.
+        <br/>
+        Buy Now and Own your Piece 
+       of History.</Typography>
+
         </div>
         <Button variant='standard' sx={{marginLeft:'-1250px',marginTop:'15px',color:'white',border:'solid 1px','&:hover':{
         color:'black',
-        backgroundColor:'white',
+        backgroundColor:'White',
         transition:'all 0.3s linear'
-      }}} onClick={()=>{Navigate('/Bank/Login')}}>Login</Button>
+      }}} onClick={()=>{Navigate('/Customer/Login')}} >Login</Button>
 
         </Grid>
-        </Grid></SwiperSlide>
+        </Grid>
+        
+ </SwiperSlide>
         <SwiperSlide>
         <Grid container>
       <Grid item sx={{backgroundImage:'url(https://images.unsplash.com/photo-1599707367072-cd6ada2bc375?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1633&q=80)',height:'550px',width:'100%',backgroundSize:'cover',backgroundPosition: 'center', ':hover':{opacity:'1',transform: 'scale(1.01)', transition:'all 0.3s ease-in-out'}}} >
@@ -72,33 +107,30 @@ function Description() {
         </Grid>
        
         </SwiperSlide>
-        <SwiperSlide>   
-          <Grid container>
-        <Grid item sx={{backgroundImage:'url(https://wallpaperaccess.com/full/3713543.jpg)',backgroundSize:'cover',backgroundPosition: 'right',height:'550px',width:'100%', ':hover':{opacity:'1',transform: 'scale(1.01)', transition:'all 0.3s ease-in-out'}}} >
-        <div style={{margin:'4px 510px 0 10px',}}>
-        <Typography sx={{color:'white',fontFamily: 'Montserrat',fontStyle:'ital'}} variant='h4' align='left' >Customer</Typography>
-       
-        <Typography sx={{color:'white',fontFamily: 'Montserrat',fontStyle:'italic'}} variant='h5' align='left'>Invest in Timeless value with Secure Gold Ownership Through 
-        Our Reliable Platform.
-        <br/>
-        Buy Now and Own your Piece 
-       of History.</Typography>
-
+        <SwiperSlide>  
+        <Grid container>
+      <Grid item sx={{backgroundImage:`url(https://www.shutterstock.com/image-vector/internet-banking-technology-conceptisometric-illustration-260nw-1960426480.jpg)`,backgroundSize:'cover',height:'550px',width:'100%', ':hover':{opacity:'1',transform: 'scale(1.01)', transition:'all 0.3s ease-in-out'}}} >
+        <div style={{margin:'10px 320px 0 10px',backgroundColor:'rgba(0,0,0,0.1)'}}>
+        <Typography sx={{color:'white',fontFamily:'Montserrat'}} variant='h4' align='left' gutterbottom>Bank</Typography>
+        <Typography sx={{color:'white',fontFamily: 'Montserrat',fontStyle:'italic'}} variant='h5' align='left'>Join the Blockchain Revolution with Our Platform - The Future of Secure and Profitable Investments. Partner with Us Today and Access a New World of Financial Opportunities</Typography>
         </div>
         <Button variant='standard' sx={{marginLeft:'-1250px',marginTop:'15px',color:'white',border:'solid 1px','&:hover':{
         color:'black',
-        backgroundColor:'White',
+        backgroundColor:'white',
         transition:'all 0.3s linear'
-      }}} onClick={()=>{Navigate('/Customer/Login')}} >Login</Button>
+      }}} onClick={()=>{Navigate('/Bank/Login')}}>Login</Button>
 
         </Grid>
-        </Grid>
-        
-       </SwiperSlide>
+        </Grid> 
+                </SwiperSlide>
       
         ...
     </Swiper>
        
+            
+      
+      
+     
         <br/>
         <br/>
         <br/>

@@ -11,6 +11,10 @@ import Hero from "../components/CustomerLand/Hero";
 import './CustomerLanding.css';
 
 function CustomerLanding() {
+
+  const [cookies, setCookie, removeCookie] = useCookies(["customer_sessionId"]);
+ 
+  const [showSection, setShowSection] = useState(false);
     const HeroRef = useRef(null);
 
   const scrollToHero = () => {
@@ -18,7 +22,7 @@ function CustomerLanding() {
       HeroRef.current.scrollIntoView({ behavior: 'smooth' });
     
   };
-  const [cookies, setCookie, removeCookie] = useCookies(["sessionId"]);
+  
   const navigate = useNavigate();
   const token = jwtDecode(cookies.customer_sessionId);
 

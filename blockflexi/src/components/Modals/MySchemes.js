@@ -31,7 +31,21 @@ function MySchemes({ isOpen, onClose,jewellerid,customerid }){
     onClose()
     handleScheme()
 }
-const handleSchemes = (data) => {
+async function getScheme() {
+  const schemeIds = schemeId.map(scheme => scheme.SchemeID);
+  try {
+    const promises = schemeIds.map(id =>
+      axios.post('http://localhost:5000/GetScheme', { schemeid: id })
+    );
+    const responses = await Promise.all(promises);
+    const schemes = responses.map(res => res.data.schemecheck);
+    handleSchemeName(schemes);
+  } catch (e) {
+    console.log(e);
+  }
+}
+const handleSchemes =
+ (data) => {
   console.log('id',data)
   if (data && data.length > 0) {
     setSchemeId([...data]);
@@ -49,8 +63,8 @@ if (data && data.length > 0) {
 }
 
 }
-   
-    useEffect(()=>{
+
+useEffect(()=>{
       async function getSchemeID(){
         try{
           await axios.post('http://localhost:5000/GetSchemeID',{
@@ -77,21 +91,31 @@ if (data && data.length > 0) {
       }
       getSchemeID()})
       useEffect(() => {
-        async function getScheme() {
-          const schemeIds = schemeId.map(scheme => scheme.SchemeID);
-          try {
-            const promises = schemeIds.map(id =>
-              axios.post('http://localhost:5000/GetScheme', { schemeid: id })
-            );
-            const responses = await Promise.all(promises);
-            const schemes = responses.map(res => res.data.schemecheck);
-            handleSchemeName(schemes);
-          } catch (e) {
-            console.log(e);
-          }
-        }
+       
         getScheme();
       }, [schemeId]);
+
+      const loanRequest=async(scheme)=>{
+        const schemeid=scheme.SchemeID
+        await axios.put('http://localhost:5000/CustomerSchemeEdit',{
+          customerid,
+          schemeid,
+          loanreq:true
+
+        }).then(res=>{
+          try{
+            if(res.data.Status==='done'){
+              alert("Your Request has been sent successfully")
+            }
+            else{
+              alert("Something went wrong.Try Again later")
+            }
+          }catch(e){
+            console.log(e)
+          }
+          
+        })
+      }
          
     return (
   
@@ -101,7 +125,7 @@ if (data && data.length > 0) {
     <ModalContent maxW="50%">
           <ModalHeader>My Schemes</ModalHeader>
           <ModalCloseButton />
-          <Button variant='contained' >Refresh</Button>
+          <Button variant='contained' onClick={()=>getScheme()} >Refresh</Button>
           <ModalBody maxHeight="400px" overflowY="scroll">
          
           
@@ -117,8 +141,8 @@ if (data && data.length > 0) {
       <Heading size='md'>{scheme.SchemeName}</Heading>
 
       <Text py='2'>
-       Monthly= 5000/month
-       Total= 55000
+       Monthly= {scheme.MonthlyPayment}
+       Total= {scheme.MonthlyPayment * 11} 
       </Text>
     </CardBody>
 
@@ -126,7 +150,7 @@ if (data && data.length > 0) {
       <Button variant='solid' mr={4} bgColor={"#c17171"} color={"#fff"}>
         Pay
       </Button>
-      <Button variant='solid' bgColor={"#c17171"} color={"#fff"}>
+      <Button variant='solid' bgColor={"#c17171"} color={"#fff"} onClick={()=>loanRequest(scheme)}>
         Withdraw
       </Button>
     </CardFooter>

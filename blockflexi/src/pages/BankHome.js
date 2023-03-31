@@ -20,6 +20,7 @@ import Header from "../components/Header";
 import {useCookies }from 'react-cookie'
 import {useNavigate} from 'react-router-dom'
 import jwt_decode from 'jwt-decode'
+import axios from "axios";
 
 function createData(Sno, name, Phone_No, Payment_Status, Months_paid, PANNo) {
   return { Sno, name, Phone_No, Payment_Status, Months_paid, PANNo };
@@ -27,13 +28,7 @@ function createData(Sno, name, Phone_No, Payment_Status, Months_paid, PANNo) {
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
   });
-const rows = [
-  createData(1, "John", 9191919159, "No", 3, "ALD0901W"),
-  createData(2, "Bob", 8181818137, "No", 5, "LOK114P"),
-  createData(3, "Alice", 7474747262, "No", 6, "SCS00124O"),
-  createData(4, "Logan", 9090990305, "No", 4, "SAQ999I"),
-  createData(5, "Mike", 8918918936, "No", 3, "KIL913O"),
-];
+
 const highlightedRowStyle = {
  
   // transform: 'scale(1.00)',
@@ -43,13 +38,15 @@ const highlightedRowStyle = {
 };
 export default function BankHome() {
   const [open, setOpen] = useState(false);
+  
   const [selectedUser, setSelectedUser] = useState(null);
+  const[userid,setUserId]=useState([])
+  const[user,setUser]=useState([])
   const[cookies,setCookie,removeCookie]=useCookies(['bank_sessionId'])
   const navigate=useNavigate()
   const token=jwt_decode(cookies.bank_sessionId)
+  const bankid=token.id
   
-  console.log(token)
-
   useEffect(()=>{
     if(token.name!=='YourBank'){
       alert('you are not logged in , please login')
@@ -66,15 +63,104 @@ export default function BankHome() {
     navigate('/',{replace:true});
 
   }
-
-  // async function getusers(){
-  //   await axios.get('/leads').then()
-  // }
+  function handleuserid(data){
+    setUserId(data)
+  }
+  const handleUsers=(data)=>{
+    setUser(data)
+  }
+  const apprequest=async(row)=>{
+    console.log(row)
+    const schemeid=userid.find(user=>user.CustomerID===row.CustomerID)
+    await axios.put("http://localhost:5000/CustomerSchemeEdit",{
+  customerid:row.CustomerID,
+  jewellerid:schemeid.JewellerID,
+  schemeid:schemeid.SchemeID,
+  loanstatus_bank:"yes",
+  bankid
+  }).then(res=>{
+  if(res.data.status==='approved'){
+    alert(`${row.CustomerName}'s request has been approved`)
+    window.location.reload()
+  }
+  else{
+    alert(`No change has been made to ${row.CustomerName}`)
+    window.location.reload()
+  
+  }
+  })
+  }
+  const rjtrequest=async(row)=>{
+   // console.log(row)
+    const schemeid=userid.find(user=>user.CustomerID===row.CustomerID)
+    console.log(schemeid)
+    await axios.put("http://localhost:5000/CustomerSchemeEdit",{
+    customerid:row.CustomerID,
+    jewellerid:schemeid.JewellerID,
+    schemeid:schemeid.SchemeID,
+  loanstatus_bank:"no",
+  bankid
+    }).then(res=>{
+    if(res.data.status==='rejected'){
+      alert(`${row.CustomerName}'s request has been rejected`)
+      window.location.reload()
+  
+    }
+    else{
+      alert(`No change has been made to ${row.CustomerName}`)
+      window.location.reload()
+  
+    }
+    })
+    }
+  useEffect(()=>{
+    
+    async function getUserID(){
+      try{
+      await axios.post("http://localhost:5000/CustomerSchemesJwStatus",{
+         bankid
+       }).then(res=>{
+        if(res.data.response3){
+          console.log('id',res.data.response3)
+          handleuserid(res.data.response3)
+          
+          
+        }
+        else{
+          alert('no new leads')
+        }
+       })
+     
+  }catch(e){
+      console.log(e)
+  }
+}
+ getUserID()
+})
+useEffect(()=>{
+  async function getUsers() {
+          const userIds =userid.map(user => user.CustomerID);
+          try {
+            const promises = userIds.map(id =>
+              axios.post('http://localhost:5000/GetUsers', { customerid: id })
+            );
+            const responses = await Promise.all(promises);
+            
+            const users = responses.map(res => res.data.usercheck);
+            console.log('user',users)
+            handleUsers(users)
+          } catch (e) {
+            console.log(e);
+          }
+        }
+        getUsers();
+      }, [userid])
+ 
   return (
     <>
       <Header />
 
-      <Dialog
+      {/* <Dialog
         open={open}
         onClose={() => setOpen(false)}
         aria-labelledby="dialog-title"
@@ -109,7 +195,7 @@ export default function BankHome() {
             <DialogActions>
           <Button variant='contained'  size='small'  onClick={() => setOpen(false)}>Ok</Button>
           </DialogActions>
-      </Dialog>
+      </Dialog> */}
       <br/>
       <br/>
       <br/>
@@ -140,51 +226,51 @@ export default function BankHome() {
          <TableHead >
            <TableRow>
              <TableCell sx={{ fontWeight: "medium", fontSize: "18px",backgroundColor:'#9A1B56',color:'white' }}>
-               S.No
+               S.NO
              </TableCell>
              <TableCell
                align="left"
                sx={{ fontWeight: "medium", fontSize: "18px" ,backgroundColor:'#9A1B56',color:'white'}}
              >
-               Name
+               NAME
              </TableCell>
              <TableCell
                align="left"
                sx={{ fontWeight: "medium", fontSize: "18px" ,backgroundColor:'#9A1B56',color:'white'}}
              >
-               Phone No
+              PHONE NO
              </TableCell>
              <TableCell
                align="left"
                sx={{ fontWeight: "medium", fontSize: "18px",backgroundColor:'#9A1B56',color:'white' }}
              >
-               Payments
+              PAYMENTS
              </TableCell>
              <TableCell
                align='left'
                sx={{ fontWeight: "medium", fontSize: "18px",backgroundColor:'#9A1B56',color:'white'}}
              >
-               Approval
+              APPROVAL
              </TableCell>
              <TableCell
                align="center"
                sx={{ fontWeight: "medium", fontSize: "18px" ,backgroundColor:'#9A1B56',color:'white'}}
              >
-               Payment Status
+               PAYMENT STATUS
              </TableCell>
            </TableRow>
          </TableHead>
          <TableBody>
-           {rows.map((row) => (
-             <TableRow key={row.name} sx={{ '&:hover': highlightedRowStyle }} >
+           {user.map((row,index) => (
+             <TableRow key={row.CustomerName} sx={{ '&:hover': highlightedRowStyle }} >
                <TableCell align="left" sx={{ fontSize: "16px" }}>
-                 {row.Sno}
+                 {index+1}
                </TableCell>
                <TableCell align="left" sx={{ fontSize: "16px" }}>
-                 {row.name}
+                 {row.CustomerName}
                </TableCell>
                <TableCell align="left" sx={{ fontSize: "16px" }}>
-                 {row.Phone_No}
+                 {row.MobileNo}
                </TableCell>
                <TableCell align="left">
                  <Button
@@ -198,10 +284,10 @@ export default function BankHome() {
                </TableCell>
                <TableCell align="center">
                  <Stack direction="row" alignItems="center" spacing={3}>
-                   <Button variant="contained" size ="small" sx={{padding:'8px'}} color="success">
+                   <Button variant="contained" size ="small" sx={{padding:'8px'}} color="success" onClick={()=>{apprequest(row)}}>
                      Approve
                    </Button>
-                   <Button variant="contained" size ="small" sx={{padding:'8px'}} color="error">
+                   <Button variant="contained" size ="small" sx={{padding:'8px'}} color="error" onClick={()=>{rjtrequest(row)}}>
                      Reject
                    </Button>
                  </Stack>

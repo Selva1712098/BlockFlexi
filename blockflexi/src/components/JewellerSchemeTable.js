@@ -1,27 +1,53 @@
-import React, { useState } from "react";
-import {
-  Button,
-  Box,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  Paper
-} from "@mui/material";
+import React, { useState,useEffect } from "react";
 
-function JewellerSchemeTable() {
-  const [jewels, setJewels] = useState([]);
+import {  Card, CardContent, Typography, CardActions, Button,Paper,Grid } from '@mui/material';
 
-  const handleAddJewel = () => {
-    setJewels([...jewels, ""]);
-  };
+import axios from "axios";
 
-  const handleDeleteJewel = (index) => {
-    const updatedJewels = jewels.filter((jewel, i) => i !== index);
-    setJewels(updatedJewels);
-  };
+function JewellerSchemeTable({jewellerid}) {
+  
+  const[schemes,setSchemes]=useState('');
+  async function deletescheme(scheme){
+    const schemeid=scheme.SchemeID
+    console.log(jewellerid,schemeid)
+    await axios.delete('http://localhost:5000/DeleteScheme',{data:{
+    jewellerid:jewellerid,schemeid:schemeid
+    }}).then(res=>{
+      try{
+      if(res.data.status==='Deleted'){
+        alert('Your scheme has been deleted')
+        window.location.reload()
+      }
+      else{
+        console.log(res.data.response)
+        alert('Something went wrong.Try again')
+      }}catch(e){
+        console.log(e)
+      }
+    })
+  }
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        // Make a GET request to the /schemes API endpoint
+        const response = await axios.post("http://localhost:5000/JewellerScheme",{jewellerid}).then(res=>{
+          if(res.data.status==='success'){
+            setSchemes(res.data.schemes)
+          }
+          else{
+            alert("There is no jeweller ")
+          }
+        });
+
+        // Set the retrieved schemes in the state
+       
+      } catch (err) {
+        console.error(err);
+      }
+    }
+
+    fetchData();
+  }, [jewellerid]);
 
   return (
     <Box style={{backgroudImage:'linear-gradient(to bottom, #BF8F91, #CAA2A3, #D4B5B5, #DFC7C8)',borderRadius:'16px'}} sx={{ padding:"0px" }}>

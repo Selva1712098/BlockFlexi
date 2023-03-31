@@ -1,5 +1,8 @@
-import Header from '../components/Header';
-import React, { useState } from "react";
+import Header from "../components/Header";
+import React, { useEffect, useState } from "react";
+import jwt_Decode from 'jwt-decode'
+import { useCookies } from "react-cookie";
+import axios from "axios";
 import {
   Table,
   TableBody,
@@ -14,6 +17,7 @@ import {
   DialogContent,
   DialogContentText,
   DialogActions,
+  Typography,
 } from "@mui/material";
 
 const rows = [
@@ -24,24 +28,19 @@ const rows = [
   { id: 5, name: "VAITHEES", phone: "6334498760" },
 ];
 
-const ApprovalButtons = () => {
-  return (
 
-    <>
-    
-      <Button variant="contained" color="success">
-        Forward
-      </Button>{" "}
-      <Button variant="contained" color="error">
-        Reject
-      </Button>
-    </>
-  );
-};
 
-const MoreDetailsButton = ({ name ,row}) => {
+const MoreDetailsButton = ({ name, row }) => {
   const [open, setOpen] = useState(false);
-  const[selectedUser,setSelectedUser]=useState(null)
+  const [selectedUser, setSelectedUser] = useState(null);
+  const [hoveredRow, setHoveredRow] = useState(null);
+  const handleRowHover = (row) => {
+    setHoveredRow(row);
+  };
+
+  const handleRowHoverLeave = () => {
+    setHoveredRow(null);
+  };
 
   const handleClose = () => {
     setOpen(false);
@@ -49,14 +48,17 @@ const MoreDetailsButton = ({ name ,row}) => {
 
   const handleOpen = (user) => {
     setOpen(true);
-    setSelectedUser(user)
+    setSelectedUser(user);
   };
 
   return (
     <>
-   
-      <Button style={{fontWeight:'bold'}} variant="contained" onClick={()=>handleOpen(row)}>
-        More details
+      <Button
+        style={{ fontWeight: "bold", margin: "0px 0px 0px 30px" }}
+        variant="contained"
+        onClick={() => handleOpen(row)}
+      >
+        DETAILS
       </Button>
       {selectedUser &&
       <Dialog  open={open} onClose={handleClose}>
@@ -80,6 +82,109 @@ const MoreDetailsButton = ({ name ,row}) => {
 };
 
 const TableExample = () => {
+  const [hoveredRow, setHoveredRow] = useState(null);
+  const[userid,setUserId]=useState([])
+  const[user,setUser]=useState([])
+  const[cookies,setCookie,removeCookie]=useCookies(['jeweller_sessionId'])
+  const token=jwt_Decode(cookies.jeweller_sessionId)
+  const jewellerid=token.id
+  const setrows=(data)=>{
+    setUserId(data)
+  }
+  useEffect(()=>{
+    
+    async function getUserID(){
+      console.log(jewellerid)
+      try{
+      await axios.post("http://localhost:5000/CustomerSchemesLoanReq",{
+         jewellerid
+       }).then(res=>{
+        if(res.data.response1){
+          console.log(res.data.response1)
+          setrows(res.data.response1)
+          
+        }
+        else{
+          console.log("No CustomerLoanRequest")
+        }
+       })
+     
+  }catch(e){
+      console.log(e)
+  }
+}
+ getUserID()
+},[])
+useEffect(()=>{
+  async function getUsers() {
+          const userIds =userid.map(user => user.CustomerID);
+          try {
+            const promises = userIds.map(id =>
+              axios.post('http://localhost:5000/GetUsers', { customerid: id })
+            );
+            const responses = await Promise.all(promises);
+            
+            const users = responses.map(res => res.data.usercheck);
+            console.log(users)
+            handleUsers(users)
+          } catch (e) {
+            console.log(e);
+          }
+        }
+        getUsers();
+      }, [userid])
+const fwdrequest=async(row)=>{
+  console.log(row)
+  const schemeid=userid.find(user=>user.CustomerID===row.CustomerID)
+  await axios.put("http://localhost:5000/CustomerSchemeEdit",{
+customerid:row.CustomerID,
+jewellerid,
+schemeid:schemeid.SchemeID,
+loanstatus_jw:"yes"
+}).then(res=>{
+if(res.data.status==='approved'){
+  alert(`${row.CustomerName}'s request has been approved`)
+  window.location.reload()
+}
+else{
+  alert(`No change has been made to ${row.CustomerName}`)
+  window.location.reload()
+
+}
+})
+}
+const rjtrequest=async(row)=>{
+  const schemeid=userid.find(user=>user.CustomerID===row.CustomerID)
+  await axios.put("http://localhost:5000/CustomerSchemeEdit",{
+  customerid:row.CustomerID,
+  jewellerid,
+  schemeid:schemeid.SchemeID,
+loanstatus_jw:"no"
+  }).then(res=>{
+  if(res.data.status==='rejected'){
+    alert(`${row.CustomerName}'s request has been rejected`)
+    window.location.reload()
+
+  }
+  else{
+    alert(`No change has been made to ${row.CustomerName}`)
+    window.location.reload()
+
+  }
+  })
+  }
+const handleUsers=(data)=>{
+  setUser(data)
+}
+ 
+  const handleRowHover = (row) => {
+    setHoveredRow(row);
+  };
+
+  const handleRowHoverLeave = () => {
+    setHoveredRow(null);
+  };
+
   return (
    <>
    <Header/>

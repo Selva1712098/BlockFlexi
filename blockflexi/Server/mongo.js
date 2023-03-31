@@ -147,12 +147,14 @@ const schemeSchema = new mongoose.Schema(
     JewellerID: {
       type: String,
       ref: "Jeweller_Master.JewellerID",
+      index:true
     },
     SchemeID: {
       type: String,
       unique: true,
       default: shortid.generate,
       required: true,
+     
     },
     SchemeName: {
       type: String,
@@ -213,7 +215,7 @@ const CustomerSchemeSchema = new mongoose.Schema(
     },
     LoanStatus_Jw: {
       type: String,
-      default:"Rejected"
+      default:null
     },
     LoanStatus_Jw_Date: {
       type: Date,
@@ -226,9 +228,11 @@ const CustomerSchemeSchema = new mongoose.Schema(
     },
     LoanStatus_Bank: {
       type: String,
+      default:null,
     },
     LoanStatus_Bank_Date: {
       type: Date,
+      default:null
     },
     LoanAmount: {
       type: Number,
