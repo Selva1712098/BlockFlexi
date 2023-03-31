@@ -7,11 +7,7 @@ import {useCookies} from 'react-cookie'
 import jwtDecode from 'jwt-decode'
 
 function CustomerLanding() {
-  //   const jewellerHeroRef = useRef(null);
 
-  // const scrollToJewellerHero = () => {
-  //   jewellerHeroRef.current.scrollIntoView({ behavior: 'smooth', block:'start' });
-  // };
   const [cookies, setCookie, removeCookie] = useCookies(["customer_sessionId"]);
  
   const [showSection, setShowSection] = useState(false);
@@ -26,13 +22,7 @@ function CustomerLanding() {
       navigate("/");
     }
   }, [token]);
-  // const handleMouseEnter = () => {
-  //     setShowSection(true);
-  //   };
-
-  //   const handleMouseLeave = () => {
-  //     setShowSection(false);
-  //   };
+ 
   useEffect(() => {
     setShowSection(true);
   }, []);

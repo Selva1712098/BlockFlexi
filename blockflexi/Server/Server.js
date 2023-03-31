@@ -226,6 +226,9 @@ app.post("/scheme", async (req, res) => {
     Status: true,
   };
   try {
+    if(!JewellerID) {
+      throw new Error("Missing Required field")
+    }
     const check1 = await jewellerySchemeCollection.findOne({
       SchemeName: SchemeName,
     });
@@ -245,7 +248,7 @@ app.post("/scheme", async (req, res) => {
 app.get("/viewjewellers", async (req, res) => {
   try {
     const jeweller = await jewellerMasterCollection.find({});
-    res.json(jeweller);
+    res.json({jeweller});
   } catch (err) {
     console.error(err);
     res.status(500).send("Internal Server Error");
@@ -331,6 +334,148 @@ app.get('/CustomerHome/:JewellerID',async (req, res) => {
     res.status(500).send("Internal Error");
   }
 });
+app.post('/CustomerSchemesLoanReq',async(req,res)=>{
+  const{jewellerid}=req.body;
+  try{
+    const response1= await customerSchemeCollection.find({JewellerID:jewellerid,LoanReq:true,LoanStatus_Jw:null},{CustomerID:1,SchemeID:1,LoanReq:1})
+    console.log(response1)
+    if(response1){
+      
+      res.json({response1})
+    }
+    else{
+      res.json({message:'no new requests'})
+    }
+    }catch(e){
+      console.log(e)
+    }
+})
+app.post('/CustomerSchemesJwStatus',async(req,res)=>{
+  const {bankid}=req.body
+  try{
+    if(bankid){
+    const response3= await customerSchemeCollection.find({LoanReq:true,LoanStatus_Jw:"Approved",LoanStatus_Bank:null},{CustomerID:1,JewellerID:1,SchemeID:1,LoanStatus_Jw:1})
+    if(response3){
+      res.json({
+        response3
+      })
+    }
+  else{
+    res.json({status:'not found'})
+  }}
+    else{
+      throw new Error('Required Fields missing')
+    }
+  }
+  catch(e){
+    console.log(e)
+  }
+})
+app.post('/GetUsers',async(req,res)=>{
+  const{customerid}=req.body
+  try{
+    const usercheck=await customerMasterCollection.findOne({CustomerID: customerid})
+    if(usercheck){
+      res.json({usercheck})
+    }
+    else{
+      res.json({
+      status:'not found'
+      })
+    }
+  }catch(e){
+    console.log(e)
+  }
+})
+app.put('/CustomerSchemeEdit',async(req,res)=>{
+  const{customerid,jewellerid,bankid,schemeid,loanreq,loanstatus_jw,loanstatus_bank,goldclaimstatus,goldsettledstatus}=req.body
+
+  if(loanreq){
+      const response=await customerSchemeCollection.findOneAndUpdate({CustomerID:customerid,SchemeID:schemeid,LoanReq:false},{$set:{LoanReq:true,LoanRegDate:new Date(Date.now())}})
+      console.log(response)
+      if(response){
+        res.json({Status:'done'})
+      }
+      else{
+        res.json({Status:'error',Message:response})
+      }
+  }
+ 
+
+   else if(jewellerid && customerid && schemeid && loanstatus_jw ){
+      try{
+        if(loanstatus_jw==='yes'){
+        const response2 =await customerSchemeCollection.findOneAndUpdate({JewellerID:jewellerid ,CustomerID:customerid,SchemeID:schemeid,LoanReq:true},{$set:{LoanStatus_Jw:"Approved",LoanStatus_Jw_Date:new Date(Date.now())}})
+        if(response2){
+          res.json({response2,status:"approved"})
+        }
+      }
+      else if(loanstatus_jw==='no'){
+        const response2 =await customerSchemeCollection.findOneAndUpdate({JewellerID:jewellerid ,CustomerID:customerid,SchemeID:schemeid,LoanReq:true},{$set:{LoanStatus_Jw:"Rejected",LoanReq:false,LoanStatus_Jw_Date:new Date(Date.now())}})
+        if(response2){
+          res.json({response2,status:"rejected"})
+        }
+      }
+        else{
+          throw new Error('Required Fields missing')
+        }
+      }catch(e){
+        console.log(e)
+      }
+    }
+  
+
+ 
+   else if(loanstatus_bank && bankid && jewellerid && schemeid && customerid){
+      try{
+        if(loanstatus_bank==='yes'){
+          const response4=await customerSchemeCollection.findOneAndUpdate({JewellerID:jewellerid, SchemeID: schemeid,CustomerID:customerid,LoanStatus_Jw:"Approved"},{$set:{LoanStatus_Bank:"Approved",BankID:bankid,LoanStatus_Bank_Date:new Date(Date.now())}})
+        if(response4){
+          res.json({response4,status:"approved"})
+        }
+        else{
+          res.json({status:'not found'})
+        }
+
+        }
+        else if(loanstatus_bank==='no'){
+          const response4=await customerSchemeCollection.findOneAndUpdate({JewellerID:jewellerid, SchemeID: schemeid,CustomerID:customerid,LoanStatus_Jw:"Approved"},{$set:{LoanStatus_Bank:"Rejected",BankID:bankid,LoanStatus_Bank_Date:new Date(Date.now())}})
+          if(response4){
+            res.json({response4,status:"rejected"})
+          }
+          else{
+          res.json({status:'not found'})
+        }
+        }
+        
+      }catch(e){
+        console.log(e)
+      }
+    }
+
+
+
+    
+
+})
+app.delete('/DeleteScheme',async(req,res)=>{
+  const {jewellerid,schemeid}=req.body;
+   console.log(jewellerid,schemeid)
+
+  try{
+   
+    const response =await jewellerySchemeCollection.findOneAndDelete({JewellerID:jewellerid,SchemeID:schemeid})
+    if(response){
+      res.json({status:'Deleted'})
+    }
+    else{
+      res.json({status:'error',response})
+    }
+  }catch(e){
+    console.log(e)
+  }
+
+})
 app.post('/JewellerScheme',async(req,res)=>{
   const{jewellerid}=req.body
 
