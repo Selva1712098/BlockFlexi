@@ -19,6 +19,7 @@ import CustomerScheme from './pages/CustomerScheme';
 import CustomerLanding from './pages/CustomerLanding';
 import AllJewellers from './pages/AllJewellers';
 import JewellerProfile from './pages/JewellerProfile';
+import Juck from './pages/Juck';
 
 
 const LazyBankHome=React.lazy(()=>import ('./pages/BankHome'))
@@ -47,6 +48,7 @@ root.render(
         <Route path={'/AllJewellers'} element={<AllJewellers />}/>
         <Route path={'/Pay'} element={<Pay/>}></Route>
         <Route path={'/JewellerProfile'} element={<JewellerProfile/>}></Route>
+        <Route path={'/Juck'} element={<Juck />}></Route>
         
       </Routes>
     </Router>

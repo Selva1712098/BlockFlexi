@@ -49,15 +49,6 @@ if (data && data.length > 0) {
 }
 
 }
-
-
-    
-      
-    
-     
-     
-   
-      
    
     useEffect(()=>{
       async function getSchemeID(){

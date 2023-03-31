@@ -1,0 +1,63 @@
+.topbar {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 1200px;
+    padding: 0 20px;
+  }
+  .btn1{
+   margin-right: 30px;
+   margin-left: 90%;
+  }
+
+.chcard{
+  display: flex;
+    flex-direction: column;
+    border-radius: 10px;
+    box-shadow: 0 24px 64px #26214a1a;
+    width: 700px;
+    margin-left: 290px;
+    transition: transform 0.3s ease-in-out;
+}
+
+.chcard:hover{
+  transform: scale(1.1);
+}
+
+.chcard {
+  animation: translateIn 0.5s ease-out;
+}
+
+@keyframes translateIn {
+  from {
+    transform: translateX(-20%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+.chbtt{
+  margin-left: 120px;
+  gap: 20px;
+  font-size: 90px;
+}
+
+.chbtt1{
+  margin-left: 55px;
+  margin-right: 40px;
+
+}
+
+  .tpb{
+    font-size: 30px;
+    margin-left: 40px;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+  }
+
+  .cht{
+    display: flex;
+    flex-direction: row;
+  }

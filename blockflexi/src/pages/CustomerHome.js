@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
 import Header from "../components/Header";
+import { Link } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import { ChakraProvider, Stack } from "@chakra-ui/react";
 import { SimpleGrid } from "@chakra-ui/react";
 import { useNavigate, useParams } from "react-router-dom";
+import './CustomerHome.css';
 import {
   Card,
   CardHeader,
@@ -16,6 +18,7 @@ import {
 import Scheme from "../components/Modals/Scheme";
 import jwtDecode from "jwt-decode";
 import MySchemes from "../components/Modals/MySchemes";
+import Pay from "./Pay";
 function CustomerHome() {
   const {JewellerID}=useParams()
   console.log(JewellerID)
@@ -23,7 +26,9 @@ function CustomerHome() {
   const [isModalOpen, setisModalOpen] = useState(false);
   const [cookies, setCookie, removeCookie] = useCookies(["customer_sessionId"]);
   const navigate=useNavigate()
-  // const [schemeid,setSchemeId]=useState('')
+  const [isActive, setIsActive] = useState(false);
+
+  
 
   // const handleSchemeidChange=(sid)=>{
   //   setSchemeId(sid)
@@ -61,13 +66,25 @@ function CustomerHome() {
   const handleCloseModal = () => {
     setIsOpen(false);
   };
+
+  const handleButtonPay = () => {
+    setIsActive(!isActive);
+  };
   return (
     <>
+    <div >
       <Header />
+      <br/>
+      <br/>
 
-      <div>
-      <h1>Welcome</h1>
-        <ChakraProvider>
+      
+        
+      <h1 className="tpb">Welcome!!!</h1>
+      {/* <Button className="btn1" bgColor={"blue"} color="white"_hover={{bgColor:'white',color:'blue'}}  onClick={logout}>Logout</Button> */}
+      </div>
+      <br/>
+      <br/>
+        {/* <ChakraProvider>
           <SimpleGrid
             mt="20"
            
@@ -76,11 +93,11 @@ function CustomerHome() {
             alignItems={"right"}
             spacing="60px"
           >
-            <Button bgColor={"blue"} color="white"_hover={{bgColor:'white',color:'blue'}} sx={{margin:'10px 20px 0 0'}} onClick={logout}>Logout</Button>
+            
           </SimpleGrid>
-        </ChakraProvider>
+        </ChakraProvider> */}
         <ChakraProvider>
-          <SimpleGrid
+          {/* <SimpleGrid
             mt="20"
             mx="auto"
             mr={25}
@@ -89,9 +106,9 @@ function CustomerHome() {
             alignItems={"center"}
             spacing="60px"
             templateColumns="repeat(auto-fill, minmax(200px, 1fr))"
-            style={{ margin: "60px 100px 145px 90px" }}
-          >
-            <Card
+            style={{ margin: "60px 100px 145px 90px" }} */}
+          
+            <Card className="chcard"
               size={"lg"}
               bgGradient="linear( #fadecb 0%, #fff8e3 100%)"
               h={"300px"}
@@ -101,25 +118,28 @@ function CustomerHome() {
               </CardHeader>
               <CardBody>
                 <Text>
-                  View all the schemes and join the scheme of your wish
+                Join the future of finance with Blockflexi, pay and withdraw with the power of blockchain!
                 </Text>
               </CardBody>
               <CardFooter>
-                <Stack spacing={1} direction="row">
-                  <Button
+                {/* <Stack direction="row"> */}
+                <div className="cht">
+                  <Button className="chbtt"
                     bgGradient="linear(to-b, #BF8F91, #CAA2A3, #D4B5B5, #DFC7C8)"
                     onClick={handleSchemes}
-                    sx={{ margin: "0 0 0 -15px" }}
+                   
                   >
-                    View
+                    View all your Schemes
                   </Button>
-                  <Button
+                  <Button className="chbtt1"
                     bgGradient="linear(to-b, #BF8F91, #CAA2A3, #D4B5B5, #DFC7C8)"
                     onClick={handleOpenModal}
                     size="md"
+                    
                   >
                     Join Scheme
                   </Button>
+
 
                   <MySchemes
                     isOpen={isModalOpen}
@@ -129,10 +149,11 @@ function CustomerHome() {
                     
                   />
                   <Scheme isOpen={isOpen} onClose={handleCloseModal} jewellerid={JewellerID} customerid={token.id} />
-                </Stack>
+                {/* </Stack> */}
+             </div>
               </CardFooter>
             </Card>
-            <Card
+            {/* <Card
               size={"lg"}
               bgGradient="linear( #fadecb 0%, #fff8e3 100%)"
               h={"300px"}
@@ -144,12 +165,17 @@ function CustomerHome() {
                 <Text>Pay your monthly payment</Text>
               </CardBody>
               <CardFooter justifyContent="center">
+                
                 <Button
                   bgGradient="linear(to-b, #BF8F91, #CAA2A3, #D4B5B5, #DFC7C8)"
-                  alignContent={"center"}
+                  alignContent={"center"} onClick={handleButtonPay}
                 >
                   Pay
                 </Button>
+                <section className={`${isActive ? 'active' : ''}`}>
+                  <Pay />
+                  </section>
+               
               </CardFooter>
             </Card>
             <Card
@@ -187,10 +213,10 @@ function CustomerHome() {
                   Claim
                 </Button>
               </CardFooter>
-            </Card>
-          </SimpleGrid>
+            </Card> */}
+          {/* </SimpleGrid> */}
         </ChakraProvider>
-      </div>
+    
     </>
   );
 }
