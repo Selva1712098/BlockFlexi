@@ -1,0 +1,141 @@
+/* .container {
+    display: flex;
+    flex-direction:column;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+  } */
+  
+  .card1 {
+    display: inline-block ;
+    align-items: center;
+    
+width: 300px;
+height: 250px;
+/* margin: 5px auto; */
+/* margin: 40px 50px 60px 50px; */
+
+background-color: #fff;
+border: 1px solid #ddd;
+border-radius: 5px;
+box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+transition: all 0.3s ease-in-out;
+text-align: center;
+
+  }
+  
+  .card1:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+  }
+  
+  .card1 h2 {
+    font-size: 24px;
+    margin: 0;
+    padding: 10px;
+  }
+  
+  .card1 p {
+    font-size: 16px;
+    margin: 0;
+    padding: 10px;
+  }
+
+  .row1{
+    display: flex;
+    flex-direction: columns;
+   /* margin: 40px 80px 60px -40px; */
+   margin-right: 200px;
+   margin-left: 160px;
+   gap: 20px;
+  }
+.button1{
+    border: #ddd;
+    border-radius: 3px;
+    /* padding: 10px 15px 10px 15px; */
+    background: #E1CBBD;
+    font-size: 20px;
+      margin-top: 77px;
+    cursor: pointer;
+    box-shadow: 2px 2px 5px #f5f3f3;
+}
+
+.button1:hover{
+background-color:rgb(237, 203, 187);
+transform: translate3d(2px, 2px, 0);
+}
+
+
+  @media (max-width: 768px) {
+    .row1 {
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+    }
+  
+    .card1 {
+      max-width: 100%;
+    }
+  }
+
+
+  .cta {
+    position: relative;
+    margin-left: 45%;
+    padding: 12px 18px;
+    transition: all 0.2s ease;
+    border: none;
+    background: none;
+    cursor: pointer;
+   }
+   
+   .cta:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: block;
+    border-radius: 50px;
+    background: #D1B6B6;
+    width: 45px;
+    height: 45px;
+    transition: all 0.3s ease;
+   }
+   
+   .cta span {
+    position: relative;
+    font-family: "Ubuntu", sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    color: #234567;
+   }
+   
+   .cta svg {
+    position: relative;
+    top: 0;
+    margin-left: 10px;
+    fill: none;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke: #234567;
+    stroke-width: 2;
+    transform: translateX(-5px);
+    transition: all 0.3s ease;
+   }
+   
+   .cta:hover:before {
+    width: 100%;
+    background: #D1B6B6;
+   }
+   
+   .cta:hover svg {
+    transform: translateX(0);
+   }
+   
+   .cta:active {
+    transform: scale(0.95);
+   }
+  .oneline{
+    text-align: center;
+  }
