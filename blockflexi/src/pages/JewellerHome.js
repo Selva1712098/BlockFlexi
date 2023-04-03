@@ -8,9 +8,6 @@ import jwt_decode from 'jwt-decode'
 import {useCookies} from 'react-cookie'
 
 
-
-// style
-
 const styles = {
   text: {
     fontFamily: 'Arial, sans-serif', 
@@ -28,7 +25,7 @@ const styles = {
     backgroundColor:'white'
   },
 };
-// use state variable
+
 
 const JewellerHome = () => {
   const [open, setOpen] = useState(false);
@@ -53,8 +50,6 @@ const JewellerHome = () => {
   
   
   
-
-
   const handleClose = () => {
     setOpen(false);
   };

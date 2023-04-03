@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
 import Header from "../components/Header";
+import { Link } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import { ChakraProvider, Stack } from "@chakra-ui/react";
 import { SimpleGrid } from "@chakra-ui/react";
 import { useNavigate, useParams } from "react-router-dom";
+import './CustomerHome.css';
 import {
   Card,
   CardHeader,
@@ -24,7 +26,9 @@ function CustomerHome() {
   const [isModalOpen, setisModalOpen] = useState(false);
   const [cookies, setCookie, removeCookie] = useCookies(["customer_sessionId"]);
   const navigate=useNavigate()
-  // const [schemeid,setSchemeId]=useState('')
+  const [isActive, setIsActive] = useState(false);
+
+  
 
   // const handleSchemeidChange=(sid)=>{
   //   setSchemeId(sid)
@@ -62,6 +66,10 @@ function CustomerHome() {
   const handleCloseModal = () => {
     setIsOpen(false);
   };
+
+  const handleButtonPay = () => {
+    setIsActive(!isActive);
+  };
   return (
     <>
       <div >
@@ -81,9 +89,9 @@ function CustomerHome() {
             alignItems={"right"}
             spacing="60px"
           >
-            <Button bgColor={"blue"} color="white"_hover={{bgColor:'white',color:'blue'}} sx={{margin:'10px 20px 0 0'}} onClick={logout}>Logout</Button>
+            
           </SimpleGrid>
-        </ChakraProvider>
+        </ChakraProvider> */}
         <ChakraProvider>
         
             <Card
@@ -114,9 +122,11 @@ function CustomerHome() {
                     bgGradient="linear(to-b, #BF8F91, #CAA2A3, #D4B5B5, #DFC7C8)"
                     onClick={handleOpenModal}
                     size="md"
+                    
                   >
                     Join Scheme
                   </Button>
+
 
                   <MySchemes
                     isOpen={isModalOpen}

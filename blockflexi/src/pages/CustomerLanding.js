@@ -60,15 +60,16 @@ function CustomerLanding() {
         <div
           style={{
             display: "flex",
-            flexDirection: "column",
+            flexDirection:"column",
             marginLeft: "-350px",
             zIndex: "5",
             transition: "opacity 1s ease-in-out",
           }}
         >
+          
           <h1 className="header"
             style={{
-              
+              display:"flex",
               marginBottom: "20px",
               fontSize: "40px",
               transition: "all 0.3s ease-in-out",
@@ -85,6 +86,7 @@ function CustomerLanding() {
           <p className="para"
             style={{
               marginTop:"1px",
+              display:"flex",
               maxWidth: "700px",
               fontSize: "25px",
               transition: "all 0.3s ease-in-out",
@@ -104,6 +106,7 @@ function CustomerLanding() {
           <div style={{ marginTop: "auto" }}>
             <button 
               style={{
+                display:"flex",
                 backgroundColor: "#D1B6B6",
                 color: "black",
                 padding: "10px 20px",
@@ -127,6 +130,7 @@ function CustomerLanding() {
           </div>
         </div>
       </div>
+    
       <br />
       <br />
       {/* <Carousel /> */}

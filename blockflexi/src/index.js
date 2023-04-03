@@ -19,6 +19,7 @@ import CustomerScheme from './pages/CustomerScheme';
 import CustomerLanding from './pages/CustomerLanding';
 import AllJewellers from './pages/AllJewellers';
 import JewellerProfile from './pages/JewellerProfile';
+import Juck from './pages/Juck';
 
 
 const LazyBankHome=React.lazy(()=>import ('./pages/BankHome'))
@@ -36,17 +37,20 @@ root.render(
         <Route path={'/Jeweller/login'} element={<JewellerLogin/>}/>
         <Route path={'/Bank/login'} element={<BankLogin/>}/>
         <Route path={'/Jeweller/Register'} element={<JewellerRegister/>}/>
+        
       
         <Route path={'/BankHome'} element={<React.Suspense fallback='Loading ...'><LazyBankHome/></React.Suspense>}/>
         <Route path={'/jewellerhome'} element={<JewellerHome/>}/>
        
         <Route path={'/request'} element={<Request/>}/>
         <Route path={'/settle'} element={<Settle/>}/>
+      
         <Route path={'/CustomerLanding'} element={<CustomerLanding/>}/>
         <Route path={'/CustomerHome/:JewellerID'} element={<CustomerHome/>}/>
         <Route path={'/AllJewellers'} element={<AllJewellers />}/>
         <Route path={'/Pay'} element={<Pay/>}></Route>
         <Route path={'/JewellerProfile'} element={<JewellerProfile/>}></Route>
+        <Route path={'/Juck'} element={<Juck />}></Route>
         
       </Routes>
     </Router>

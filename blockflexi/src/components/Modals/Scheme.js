@@ -192,7 +192,7 @@ function Scheme({isOpen, onClose,jewellerid,customerid,onSchemeidChange }){
 
           </ModalBody>
           <ModalFooter>
-            <Button variant='ghost'mr={3} >Go to MySchemes</Button>
+            {/* <Button variant='ghost'mr={3} >Go to MySchemes</Button> */}
             
             <Button bgColor={"#9A1B56"} color={"#fff"}  onClick={onClose}>
               Close

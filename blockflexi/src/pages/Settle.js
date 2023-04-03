@@ -19,7 +19,7 @@ import {
   DialogContentText,
   DialogActions,
   Paper,
-  Typography
+  Typography,
 } from "@mui/material";
 
 
@@ -152,25 +152,28 @@ value={isloading}
     <div>
       <Header title="Settle Accounts" />
 
-      <Typography 
-        variant="h4" 
-        align="center" 
-        style={{ 
-          marginTop: '2rem', 
-          marginBottom: '2rem',
-          fontFamily: 'Montserrat, sans-serif',
-          fontSize: '2.5rem',
-          fontWeight: 'bold',
-          color: 'black',
-          textTransform: 'uppercase',
-          letterSpacing: '2px',
-          padding: '1rem'
+      <Typography
+        variant="h4"
+        align="center"
+        style={{
+          marginTop: "5rem",
+          marginBottom: "2rem",
+          fontFamily: "Montserrat, sans-serif",
+          fontSize: "2.5rem",
+          fontWeight: "bold",
+          color: "black",
+          textTransform: "uppercase",
+          letterSpacing: "2px",
+          padding: "1rem",
         }}
       >
         Approved Customers
       </Typography>
 
-      <TableContainer component={Paper} style={{ maxWidth: '90%', margin: 'auto', borderRadius: '10px' }}>
+      <TableContainer
+        component={Paper}
+        style={{ maxWidth: "80%", borderRadius: "10px", margin: "auto" }}
+      >
         <Table>
           <TableHead>
         
@@ -195,12 +198,10 @@ value={isloading}
                 onMouseEnter={() => handleRowHover(row)}
                 onMouseLeave={() => handleRowHoverLeave()}
           >
-            <TableCell>{index+1}</TableCell>
-            <TableCell>{row.CustomerName}</TableCell>
-          
-
-            <TableCell>Yes</TableCell>
-            <TableCell>Done</TableCell>
+            <TableCell>{row.id}</TableCell>
+            <TableCell>{row.name}</TableCell>
+            <TableCell>YES</TableCell>
+            <TableCell>{row.Bankpayment}</TableCell>
             <TableCell>
               <Button
                 variant="contained"
@@ -222,11 +223,11 @@ value={isloading}
   {selectedRow && (
     <Dialog  open={openDialog} onClose={handleCloseDialog} maxWidth='40px'>
     <DialogTitle style={{ textAlign: 'center' }}>
-      <strong>SETTLE GOLD FOR {selectedRow.CustomerName}</strong>
+      <strong>SETTLE GOLD FOR {selectedRow.name}</strong>
     </DialogTitle>
     <DialogContent>
       <DialogContentText style={{ textAlign: 'center' }}>
-        Are you sure you want to settle gold for {selectedRow.CustomerName}?
+        Are you sure you want to settle gold for {selectedRow.name}?
       </DialogContentText>
     </DialogContent>
     <DialogActions style={{ justifyContent: 'center' }}>
@@ -248,7 +249,7 @@ value={isloading}
       <Button
         variant="contained"
         color="secondary"
-        onClick={()=>settlegold(selectedRow)}
+        onClick={handleCloseDialog}
         style={{
           backgroundColor: '#4caf50',
           color: '#fff',
@@ -256,8 +257,6 @@ value={isloading}
           borderRadius: '4px',
           padding: '8px 16px',
         }}
-
-       
       >
         Confirm
       </Button>
