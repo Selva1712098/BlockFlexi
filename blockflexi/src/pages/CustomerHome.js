@@ -91,7 +91,7 @@ function CustomerHome() {
           >
             
           </SimpleGrid>
-        </ChakraProvider> */}
+        </ChakraProvider> 
         <ChakraProvider>
         
             <Card
