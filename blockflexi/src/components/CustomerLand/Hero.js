@@ -7,12 +7,15 @@ import "./Hero.css";
 function Hero() {
   // const JewellerHero=forwardRef((props,ref)=>{
   const navigate = useNavigate();
+  const [jewellers, setJewellers] = useState([]);
   const handleButton = () => {
     navigate("/AllJewellers");
   };
 
   const [jewellerSchemes, setJewellerSchemes] = useState(false);
-
+  const jeweller=(data)=>{
+    setJewellers(data)
+  }
   const handleschemebody=()=>{
     setJewellerSchemes(true)
   }
@@ -22,12 +25,13 @@ function Hero() {
   }
 }
 
-  const [jewellers, setJewellers] = useState("");
+  
   useEffect(() => {
     async function fetchData() {
       try {
         const response = await axios.get("http://localhost:5000/viewjewellers");
-        setJewellers(response.data);
+        jeweller(response.data.jeweller);
+       
       } catch (err) {
         console.error(err);
       }
@@ -41,7 +45,7 @@ function Hero() {
       </h1>
       <h2 className="oneline">"Your investment is in safe hands with our trusted jewellers on BlockFlexi."</h2>
       <div className="row1">
-        {jewellers &&
+        {Array.isArray(jewellers) &&
           jewellers.map((jeweller) => (
             <Link to={`/CustomerHome/${jeweller.JewellerID}`}>
               <div className="column1">

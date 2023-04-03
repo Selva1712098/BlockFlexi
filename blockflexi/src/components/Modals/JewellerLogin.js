@@ -56,17 +56,24 @@ const JewellerLogin = () => {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        height: '100vh',
+        height: '90vh',
         backgroundColor: '#f5f5f5',
+        
       }}
     >
      <Grid container spacing={1} style={{
-      margin:'20px 10px 10px 470px'
+       display:'flex',
+       alignItems:'center',
+       justifyContent:'center',
+       
+       
+      
      }}>
       <Grid item >
       <Card
         style={{
-          width: '400px',
+         
+          maxWidth: '400px',
           borderRadius: '10px',
           boxShadow: '0px 10px 20px rgba(0, 0, 0, 0.1)',
           overflow: 'hidden', 

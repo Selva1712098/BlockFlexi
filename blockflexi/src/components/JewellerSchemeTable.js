@@ -3,9 +3,10 @@ import React, { useState,useEffect } from "react";
 import {  Card, CardContent, Typography, CardActions, Button,Paper,Grid } from '@mui/material';
 
 import axios from "axios";
+import { Circles } from "react-loader-spinner";
 
 function JewellerSchemeTable({jewellerid}) {
-  
+  const[isloading,setisLoading]=useState(true)
   const[schemes,setSchemes]=useState('');
   async function deletescheme(scheme){
     const schemeid=scheme.SchemeID
@@ -17,6 +18,7 @@ function JewellerSchemeTable({jewellerid}) {
       if(res.data.status==='Deleted'){
         alert('Your scheme has been deleted')
         window.location.reload()
+        
       }
       else{
         console.log(res.data.response)
@@ -29,13 +31,17 @@ function JewellerSchemeTable({jewellerid}) {
   useEffect(() => {
     async function fetchData() {
       try {
+        setisLoading(true)
         // Make a GET request to the /schemes API endpoint
-        const response = await axios.post("http://localhost:5000/JewellerScheme",{jewellerid}).then(res=>{
+        await axios.get("http://localhost:5000/JewellerScheme",).then(res=>{
           if(res.data.status==='success'){
-            setSchemes(res.data.schemes)
+            const scheme=res.data.schemes.filter(sc=>sc.JewellerID === jewellerid)
+            setSchemes(scheme)
+            setisLoading(false)
           }
           else{
             alert("There is no jeweller ")
+            setisLoading(false)
           }
         });
 
@@ -48,11 +54,26 @@ function JewellerSchemeTable({jewellerid}) {
 
     fetchData();
   }, [jewellerid]);
+  if(isloading){
+    return <div style={{display:'flex',justifyContent:'center',alignItems:'center'}}>
+     <Circles
+   height="40"
+   width="40"
+   color="#9A1B56"
+   ariaLabel="circles-loading"
+   wrapperStyle={{}}
+   wrapperClass=""
+   visible={true}
+   value={isloading}
+   
+   
+   /></div>
+    }
 
   return (
     <div >
-      <Paper style={{overflow:'auto',maxHeight:'400px'}}>
-      <Grid container >
+      <Paper style={{overflow:'auto',maxHeight:'400px',maxWidth:'400px',minWidth:'300px'}}>
+      <Grid container  >
       <Typography variant='h5' align='center' mb={2} sx={{fontWeight:'bold'}}>MY SCHEMES</Typography>
       {Array.isArray(schemes) && schemes.map((scheme)=>(
         

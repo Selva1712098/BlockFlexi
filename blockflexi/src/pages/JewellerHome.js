@@ -46,18 +46,12 @@ const JewellerHome = () => {
     setOpen(true);
   };
   
+  const logout=()=>{
+    removeCookie(cookies.jeweller_sessionId)
+    navigate('/')
+  }
   
   
-  const handleClick=()=>{
-    
-    navigate('/request')
-    
-  }
-  const handleClick1=()=>{
-    
-    navigate('/settle')
-    
-  }
   
 
 
@@ -92,10 +86,12 @@ const JewellerHome = () => {
         if(res.data.status==='ok'){
           console.log(res.data)
           alert("Scheme Added")
+          window.location.reload()
           // navigate('/Customer/login')
     }
         else if(res.data.status==='exists'){
           alert("You are already a part of us")
+          window.location.reload()
           // navigate('/Customer/login')
         }
       }).catch(e=>{
@@ -107,7 +103,13 @@ const JewellerHome = () => {
     return (
       <div>
         <Header/>
-        <br/> <br/><br/>
+        <br/>
+        <div style={{display:'flex',justifyContent:'flex-end',alignItems:'center',marginRight:'30px'}}>
+        <Button variant='contained' style={{backgroundColor:'#9A1B56'}}  onClick={logout}> <b>LOGOUT</b></Button> <br/>
+
+        </div>
+       
+        
         <Box sx={{ display: 'flex',flexDirection: 'column', gap: '16px' }}>
     <Card sx={{ flex: 1}}>
       <CardContent>
@@ -288,7 +290,8 @@ const JewellerHome = () => {
       aria-describedby='modal-description'>
   
       <Box sx={styles.modal} style={{borderRadius:'16px'}} >
-        <JewellerSchemeTable jewellerid={JewellerID}/>
+        <div style={{display:'flex',justifyContent:'center',alignItems:'center',flexDirection:'row',minWidth:'400px'}}>
+        <JewellerSchemeTable jewellerid={JewellerID}/></div>
        <Typography id='modal-description' sx={{ mt: 2 }}>
        </Typography>
       </Box>

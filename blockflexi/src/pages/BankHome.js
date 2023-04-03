@@ -21,6 +21,7 @@ import {useCookies }from 'react-cookie'
 import {useNavigate} from 'react-router-dom'
 import jwt_decode from 'jwt-decode'
 import axios from "axios";
+import { Circles } from  'react-loader-spinner'
 
 function createData(Sno, name, Phone_No, Payment_Status, Months_paid, PANNo) {
   return { Sno, name, Phone_No, Payment_Status, Months_paid, PANNo };
@@ -46,6 +47,7 @@ export default function BankHome() {
   const navigate=useNavigate()
   const token=jwt_decode(cookies.bank_sessionId)
   const bankid=token.id
+  const [isloading,setisLoading]=useState(true)
   
   useEffect(()=>{
     if(token.name!=='YourBank'){
@@ -117,9 +119,7 @@ export default function BankHome() {
     
     async function getUserID(){
       try{
-      await axios.post("http://localhost:5000/CustomerSchemesJwStatus",{
-         bankid
-       }).then(res=>{
+      await axios.get("http://localhost:5000/CustomerSchemesJwStatus").then(res=>{
         if(res.data.response3){
           console.log('id',res.data.response3)
           handleuserid(res.data.response3)
@@ -136,31 +136,53 @@ export default function BankHome() {
   }
 }
  getUserID()
-})
+},[])
 useEffect(()=>{
   async function getUsers() {
-          const userIds =userid.map(user => user.CustomerID);
+    setisLoading(true)
           try {
-            const promises = userIds.map(id =>
-              axios.post('http://localhost:5000/GetUsers', { customerid: id })
-            );
-            const responses = await Promise.all(promises);
+            const userIds=userid.map(user=>user.CustomerID)
+           
+           await axios.get('http://localhost:5000/GetUsers').then(res=>{
+              const response =res.data.usercheck
+              console.log(response)
+              const users = response.filter(user => userIds.includes(user.CustomerID));
+
+                console.log(users)
+          handleUsers(users)
+          setisLoading(false)
+            })
+          
             
-            const users = responses.map(res => res.data.usercheck);
-            console.log('user',users)
-            handleUsers(users)
-          } catch (e) {
-            console.log(e);
-          }
+          //const users = responses.map(res => res.data.usercheck);
+          
+        } catch (e) {
+          console.log(e);
+        }
         }
         getUsers();
       }, [userid])
+      if(isloading){
+        return <div style={{display:'flex',justifyContent:'center',alignItems:'center'}}>
+         <Circles
+       height="40"
+       width="40"
+       color="#9A1B56"
+       ariaLabel="circles-loading"
+       wrapperStyle={{}}
+       wrapperClass=""
+       visible={true}
+      
+       
+       /></div>
+        }
+       
  
   return (
     <>
       <Header />
 
-      {/* <Dialog
+      <Dialog
         open={open}
         onClose={() => setOpen(false)}
         aria-labelledby="dialog-title"
@@ -178,24 +200,22 @@ useEffect(()=>{
           {selectedUser && (
            <DialogContentText>
               <Typography variant="h6"  gutterBottom>
-                Name: {selectedUser.name}
+                Name: {selectedUser.CustomerName}
               </Typography>
               <Typography variant="h6"  gutterBottom>
-                Phone: {selectedUser.Phone_No}
+                Phone: {selectedUser.MobileNo}
               </Typography>
               <Typography variant="h6"   gutterBottom>
-                PAN: {selectedUser.PANNo}
+                PAN: {selectedUser.PANno}
               </Typography>
-              <Typography variant="h6"  gutterBottom>
-                Months Paid: {selectedUser.Months_paid}
-              </Typography>
+              
               </DialogContentText>
           )}
         </DialogContent>
             <DialogActions>
           <Button variant='contained'  size='small'  onClick={() => setOpen(false)}>Ok</Button>
           </DialogActions>
-      </Dialog> */}
+      </Dialog>
       <br/>
       <br/>
       <br/>
@@ -209,14 +229,14 @@ useEffect(()=>{
           height: "140px",
           display: "flex",
           flexFlow: "row wrap",
-          justifyContent: "center",
+          justifyContent: "space-around",
           alignItems: "center",
         }}
       >
         <Typography variant="h4" sx={{fontWeight:'bold',marginLeft:'395px'}}>
           INCOMING REQUESTS
         </Typography>
-        <Button variant="contained" onClick={handleLogout} sx={{margin:'0 0 0 400px'}}>Logout</Button>
+        <Button variant="contained" onClick={handleLogout} sx={{backgroundColor:'#9A1B56'}}>Logout</Button>
       </div>
       
         
@@ -293,7 +313,7 @@ useEffect(()=>{
                  </Stack>
                </TableCell>
                <TableCell align="center" sx={{ fontSize: "16px" }}>
-                 {row.Payment_Status}
+                 TBD
                </TableCell>
              </TableRow>
            ))}

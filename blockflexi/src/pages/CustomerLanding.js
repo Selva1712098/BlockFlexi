@@ -1,7 +1,6 @@
 import Header from "../components/Header";
 import React, { useEffect, useState, useRef } from "react";
-import Carousel from "../components/CustomerLand/Carousel";
-import JewellerHero from "../components/CustomerLand/JewellerHero";
+
 import { useNavigate } from "react-router";
 import {useCookies} from 'react-cookie';
 import jwtDecode from 'jwt-decode';
@@ -13,6 +12,8 @@ import './CustomerLanding.css';
 function CustomerLanding() {
 
   const [cookies, setCookie, removeCookie] = useCookies(["customer_sessionId"]);
+  
+
  
   const [showSection, setShowSection] = useState(false);
     const HeroRef = useRef(null);
@@ -25,6 +26,7 @@ function CustomerLanding() {
   
   const navigate = useNavigate();
   const token = jwtDecode(cookies.customer_sessionId);
+  const customerid=token.id
 
   console.log(token);
 
@@ -134,7 +136,7 @@ function CustomerLanding() {
       </div>
       <br/>
       <br />
-      <JewellerHero2 />
+      <JewellerHero2 customerid={customerid}/>
       {/* ref={jewellerHeroRef} */}
       <br />
       <br />

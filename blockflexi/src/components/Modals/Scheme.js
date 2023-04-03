@@ -20,42 +20,51 @@ import {
     AccordionButton,
     AccordionPanel,
     AccordionIcon,
+   
   } from '@chakra-ui/react'
   import { Card, CardBody, CardFooter, Heading } from '@chakra-ui/react'
   import axios from "axios";
+  
+  // CircularProgress component 
+
 function Scheme({isOpen, onClose,jewellerid,customerid,onSchemeidChange }){
   const[schemes,setSchemes]=useState('');
   // const[selectedScheme,setSelectedScheme]=useState(null);
   const [isJoined, setIsJoined] = useState(false);
   // const[schemeid,setSchemeId]=useState('')
+   const[isLoading, setIsLoading] = useState(false)
 
  
   async function joinscheme(schemes){
    
     const schemeid=schemes.SchemeID
-   
-    
-
+    // console.log(schemeid,jewellerid,customerid)
     await axios.post('http://localhost:5000/JoinScheme',{
-    jewellerid,
-    customerid,schemeid
-    }).then(res=>{
+    jewellerid:jewellerid,customerid:customerid,
+    schemeid:schemeid
+    },).then(res=>{
       if(res.data.status==='exists'){
         alert("You have already joined this scheme")
+        window.location.reload()
       }
       else if(res.data.status==='success'){
         alert("You have joined this scheme successfully.Go to your schemes to view them")
+        window.location.reload()
         
       }
     })
   }
   useEffect(() => {
     async function fetchData() {
+     
       try {
         // Make a GET request to the /schemes API endpoint
-        const response = await axios.post("http://localhost:5000/JewellerScheme",{jewellerid}).then(res=>{
+        await axios.get("http://localhost:5000/JewellerScheme").then(res=>{
           if(res.data.status==='success'){
-            setSchemes(res.data.schemes)
+            const sc1=res.data.schemes.filter(sc=>sc.JewellerID===jewellerid)
+            console.log(sc1)
+            setSchemes(sc1)
+            
           }
           else{
             alert("There is no jeweller ")
@@ -71,6 +80,8 @@ function Scheme({isOpen, onClose,jewellerid,customerid,onSchemeidChange }){
 
     fetchData();
   }, [jewellerid]);
+  
+ 
     return(
 <div>
 <Modal isOpen={isOpen} onClose={onClose}>
@@ -78,6 +89,7 @@ function Scheme({isOpen, onClose,jewellerid,customerid,onSchemeidChange }){
     <ModalContent maxW="50%">
           <ModalHeader>Schemes</ModalHeader>
           <ModalCloseButton />
+         
           <ModalBody maxHeight="400px" overflowY="scroll">
             {schemes && schemes.map((scheme,index)=>(
  

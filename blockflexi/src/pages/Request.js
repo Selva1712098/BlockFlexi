@@ -22,6 +22,7 @@ import {
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import CancelRoundedIcon from "@mui/icons-material/CancelRounded";
 import "./Request.css";
+import { Circles } from "react-loader-spinner";
 
 
 
@@ -29,6 +30,7 @@ const MoreDetailsButton = ({ name, row }) => {
   const [open, setOpen] = useState(false);
   const [selectedUser, setSelectedUser] = useState(null);
   const [hoveredRow, setHoveredRow] = useState(null);
+  
   const handleRowHover = (row) => {
     setHoveredRow(row);
   };
@@ -73,9 +75,7 @@ const MoreDetailsButton = ({ name, row }) => {
               <div style={{margin:'0px 0px 0px 60px'}}>
               ADDRESS : {selectedUser.Address}
               <br /><br/></div>
-              {/* <div style={{margin:'0px 0px 0px 60px'}}>
-              PAYMENT : {selectedUser.payment}
-              <br /><br/></div> */}
+             
             </DialogContentText>
           </DialogContent>
           <DialogActions>
@@ -91,6 +91,7 @@ const MoreDetailsButton = ({ name, row }) => {
 </Button>
 
           </DialogActions>
+         
         </Dialog>
       )}
     </>
@@ -101,6 +102,7 @@ const TableExample = () => {
   const [hoveredRow, setHoveredRow] = useState(null);
   const[userid,setUserId]=useState([])
   const[user,setUser]=useState([])
+  const[isloading,setisLoading]=useState(true);
   const[cookies,setCookie,removeCookie]=useCookies(['jeweller_sessionId'])
   const token=jwt_Decode(cookies.jeweller_sessionId)
   const jewellerid=token.id
@@ -110,14 +112,14 @@ const TableExample = () => {
   useEffect(()=>{
     
     async function getUserID(){
-      console.log(jewellerid)
+      
       try{
-      await axios.post("http://localhost:5000/CustomerSchemesLoanReq",{
-         jewellerid
-       }).then(res=>{
+      await axios.get("http://localhost:5000/CustomerSchemesLoanReq").then(res=>{
         if(res.data.response1){
-          console.log(res.data.response1)
-          setrows(res.data.response1)
+          console.log('loanreq',res.data.response1)
+          const row=res.data.response1.filter(r=>r.JewellerID === jewellerid)
+          console.log('filtered',row)
+          setrows(row)
           
         }
         else{
@@ -133,16 +135,24 @@ const TableExample = () => {
 },[])
 useEffect(()=>{
   async function getUsers() {
-          const userIds =userid.map(user => user.CustomerID);
+          
           try {
-            const promises = userIds.map(id =>
-              axios.post('http://localhost:5000/GetUsers', { customerid: id })
-            );
-            const responses = await Promise.all(promises);
-            
-            const users = responses.map(res => res.data.usercheck);
-            console.log(users)
+            setisLoading(true)
+              const userIds=userid.map(user=>user.CustomerID)
+             
+             await axios.get('http://localhost:5000/GetUsers').then(res=>{
+                const response =res.data.usercheck
+                console.log(response)
+                const users = response.filter(user => userIds.includes(user.CustomerID));
+
+                  console.log(users)
             handleUsers(users)
+            setisLoading(false)
+              })
+            
+              
+            //const users = responses.map(res => res.data.usercheck);
+            
           } catch (e) {
             console.log(e);
           }
@@ -159,7 +169,7 @@ schemeid:schemeid.SchemeID,
 loanstatus_jw:"yes"
 }).then(res=>{
 if(res.data.status==='approved'){
-  alert(`${row.CustomerName}'s request has been approved`)
+  alert(`${row.CustomerName}'s Loan request for ${schemeid.SchemeID} has been approved`)
   window.location.reload()
 }
 else{
@@ -178,7 +188,7 @@ const rjtrequest=async(row)=>{
 loanstatus_jw:"no"
   }).then(res=>{
   if(res.data.status==='rejected'){
-    alert(`${row.CustomerName}'s request has been rejected`)
+    alert(`${row.CustomerName}'s request for ${schemeid.SchemeID} has been rejected`)
     window.location.reload()
 
   }
@@ -190,6 +200,7 @@ loanstatus_jw:"no"
   })
   }
 const handleUsers=(data)=>{
+  
   setUser(data)
 }
  
@@ -200,7 +211,22 @@ const handleUsers=(data)=>{
   const handleRowHoverLeave = () => {
     setHoveredRow(null);
   };
-
+  if(isloading){
+    return <div style={{display:'flex',justifyContent:'center',alignItems:'center'}}>
+     <Circles
+   height="40"
+   width="40"
+   color="#9A1B56"
+   ariaLabel="circles-loading"
+   wrapperStyle={{}}
+   wrapperClass=""
+   visible={true}
+   value={isloading}
+   
+   
+   /></div>
+    }
+   
   return (
     <div style={{ display: "flex", flexDirection: "column"   }}>
       <Header />
