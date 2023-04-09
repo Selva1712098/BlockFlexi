@@ -49,7 +49,9 @@ function Settle() {
 
   const settlegold=async(row)=>{
     console.log('settlegold',row)
-    const schemeid=userid.find(user=>user.CustomerID===row.CustomerID)
+   
+    const schemeid=userid.find(user=>user.CustomerID===row.CustomerID )
+    console.log(row.CustomerID,jewellerid,schemeid.SchemeID)
     await axios.put("http://localhost:5000/CustomerSchemeEdit",{
   customerid:row.CustomerID,
   jewellerid,
@@ -88,7 +90,8 @@ function Settle() {
       await axios.get("http://localhost:5000/CustomerSchemesBankStatus").then(res=>{
         if(res.data.response){
           console.log('id',res.data.response)
-          handleuserid(res.data.response)
+          const response= res.data.response.filter(user=>user.JewellerID===jewellerid)
+          handleuserid(response)
           
           
         }

@@ -208,6 +208,9 @@ useEffect(()=>{
               <Typography variant="h6"   gutterBottom>
                 PAN: {selectedUser.PANno}
               </Typography>
+              <Typography variant="h6"   gutterBottom>
+                Months Paid:3
+              </Typography>
               
               </DialogContentText>
           )}
@@ -236,7 +239,7 @@ useEffect(()=>{
         <Typography variant="h4" sx={{fontWeight:'bold',marginLeft:'395px'}}>
           INCOMING REQUESTS
         </Typography>
-        <Button variant="contained" onClick={handleLogout} sx={{backgroundColor:'#9A1B56'}}>Logout</Button>
+        <Button variant="contained" onClick={handleLogout} sx={{backgroundColor:'#9A1B56'}}><b>Logout</b></Button>
       </div>
       
         

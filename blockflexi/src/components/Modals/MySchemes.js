@@ -103,7 +103,7 @@ function MySchemes({ isOpen, onClose, jewellerid, customerid }) {
             alert("Your Request has been sent successfully");
           } else {
             alert(
-              "You have already requested to withdraw, Please wait for confrimation"
+              "You have already requested to withdraw, Please wait for confirmation"
             );
           }
         } catch (e) {
@@ -122,9 +122,9 @@ function MySchemes({ isOpen, onClose, jewellerid, customerid }) {
         <ModalContent maxW="50%">
           <ModalHeader>My Schemes</ModalHeader>
           <ModalCloseButton />
-          <Button variant="contained" onClick={() => getScheme()}>
+          {/* <Button variant="contained" onClick={() => getScheme()}>
             Refresh
-          </Button>
+          </Button> */}
           <ModalBody maxHeight="400px" overflowY="scroll">
             {Array.isArray(schemes) &&
               schemes.map((scheme, index) => (
@@ -167,10 +167,7 @@ function MySchemes({ isOpen, onClose, jewellerid, customerid }) {
               ))}
           </ModalBody>
           <ModalFooter>
-            <Button variant="ghost" mr={3} onClick={handleCloseAndOpenScheme}>
-              Join New Scheme
-            </Button>
-
+           
             <Button bgColor={"#9A1B56"} color={"#fff"} onClick={onClose}>
               Close
             </Button>

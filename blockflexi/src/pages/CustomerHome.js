@@ -82,23 +82,24 @@ function CustomerHome() {
         
         <ChakraProvider>
           <SimpleGrid
-            mt="20"
+            mt="10"
            
             mx="auto"
             justifyContent="right"
             alignItems={"right"}
             spacing="60px"
           >
-            
+             <Button color={'white'} _hover={{backgroundColor:'white',color:'#9a1b56'}} sx={{margin:'0px 40px 20px 0',backgroundColor:'#9a1b56'}} onClick={logout}>LOGOUT</Button>
           </SimpleGrid>
         </ChakraProvider> 
         <ChakraProvider>
-        
+        <div style={{display:'flex',justifyContent:'center',alignItems:'center'}}>
             <Card
               size={"sm"}
               bgGradient="linear( #fadecb 0%, #fff8e3 100%)"
               h={"300px"}
               className="chcard"
+              
 
             >
               <CardHeader>
@@ -139,7 +140,7 @@ function CustomerHome() {
                   </div>
               </CardFooter>
             </Card>
-           
+            </div>
            
          
         </ChakraProvider>

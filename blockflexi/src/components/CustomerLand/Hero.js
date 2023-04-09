@@ -3,11 +3,12 @@ import { Link } from "react-router-dom";
 import { useNavigate } from "react-router";
 import axios from "axios";
 import "./Hero.css";
-
+import { Circles } from "react-loader-spinner";
 function Hero() {
   // const JewellerHero=forwardRef((props,ref)=>{
   const navigate = useNavigate();
   const [jewellers, setJewellers] = useState([]);
+  const [isloading,setLoading]=useState(true)
   const handleButton = () => {
     navigate("/AllJewellers");
   };
@@ -29,15 +30,33 @@ function Hero() {
   useEffect(() => {
     async function fetchData() {
       try {
+        setLoading(true)
         const response = await axios.get("http://localhost:5000/viewjewellers");
         jeweller(response.data.jeweller);
+        setLoading(false)
        
       } catch (err) {
         console.error(err);
+        setLoading(false)
       }
     }
     fetchData();
   }, []);
+  if(isloading){
+    return <div style={{display:'flex',justifyContent:'center',alignItems:'center'}}>
+     <Circles
+   height="40"
+   width="40"
+   color="#9A1B56"
+   ariaLabel="circles-loading"
+   wrapperStyle={{}}
+   wrapperClass=""
+   visible={true}
+  
+   
+   /></div>
+    
+}
   return (
     <div>
       <h1 style={{ textAlign: "center", fontFamily: "sans-serif" }}>

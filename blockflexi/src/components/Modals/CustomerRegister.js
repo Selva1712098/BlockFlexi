@@ -150,7 +150,7 @@ CUSTOMER REGISTRATION
            onChange={handlePasswordChange}
            margin="normal"
          />
-<Button  sx={{ margin: '10px 0px 0px 120px', bgcolor: '#9A1B56' }} variant="contained" color="primary" type="submit">
+<Button  sx={{ margin: '10px 0px 0px 120px', backgroundColor: '#9AB156' }} variant="contained"  type="submit">
 Register
 </Button>
 </form>

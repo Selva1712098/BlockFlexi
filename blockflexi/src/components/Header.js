@@ -14,8 +14,10 @@ import MenuItem from '@mui/material/MenuItem';
 import { useNavigate } from 'react-router-dom';
 import AdbIcon from '@mui/icons-material/Adb';
 
-const pages = [ 'CONTACT', 'SCHEMES','GOLD PRICE','PROFILE'];
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
+
+
+const pages = [ 'CONTACT', 'SCHEMES'];
+const settings = [ 'Account', 'Dashboard', 'Logout'];
 
 function Header() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
@@ -36,6 +38,18 @@ function Header() {
     setAnchorElUser(null);
   };
 
+  // const goldprice=async ()=>{
+   
+
+  //   const data=await fetch(`https://api.metalpriceapi.com/v1/latest
+  //   ?api_key=${process.env.privatekey}
+  //   &base=USD
+  //   &currencies=XAU`)
+  //   const xau=await data.json()
+  //   console.log(xau)
+
+
+  // }
   return (
     <AppBar position="static" sx={{backgroundColor:'#9A1B56'}}>
       <Container maxWidth="xl" >
@@ -126,7 +140,10 @@ function Header() {
               >
                 {page}
               </Button>
+              
             ))}
+          <Button color='inherit' sx={{fontFamily:'Montserrat',fontWeight:'bold',marginLeft:'80px'}} >GOLD PRICE</Button>
+
           </Box>
 
           

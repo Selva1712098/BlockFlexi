@@ -1,11 +1,12 @@
 import React,{useState,useEffect} from "react";
 import './JewellerHero2.css';
 import axios from "axios";
+import { Circles } from "react-loader-spinner";
 
 function JewellerHero2({customerid}){
   const [yourschemeid, setyourSchemeid] = useState([]);
   const [yourscheme, setyourScheme] = useState([]);
-  
+  const [isloading,setLoading]=useState(true)
   useEffect(()=>{
     async function getSchemeId(){
       try{
@@ -26,6 +27,7 @@ function JewellerHero2({customerid}){
     async function getScheme(){
 
       try{
+        setLoading(true)
         await axios.get("http://localhost:5000/GetScheme").then(res=>{
           if(res.data.schemecheck){
             const response = res.data.schemecheck;
@@ -34,6 +36,7 @@ function JewellerHero2({customerid}){
             });
             //const scheme=res.data.schemecheck.filter(r=>r.SchemeID === yourschemeid.SchemeID)
             setyourScheme(schemes)
+            setLoading(false)
 
           }
         })
@@ -43,6 +46,22 @@ function JewellerHero2({customerid}){
     }
     getScheme()
   },[yourschemeid])
+  
+    if(isloading){
+      return <div style={{display:'flex',justifyContent:'center',alignItems:'center'}}>
+       <Circles
+     height="40"
+     width="40"
+     color="#9A1B56"
+     ariaLabel="circles-loading"
+     wrapperStyle={{}}
+     wrapperClass=""
+     visible={true}
+    
+     
+     /></div>
+      
+  }
     return(
         <div>
           <h1 style={{textAlign:"center"}}>Your schemes</h1>

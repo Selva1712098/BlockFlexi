@@ -55,10 +55,10 @@ return (
     <br/>
     <br/>
     <br/>
-<div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}>
+<div style={{ display: 'flex', flexWrap: 'column wrap', justifyContent: 'center',height:'80vh' }}>
     
 
-<Card sx={{ bgcolor: '#f5f5f5', width: '400px', margin: '50px' }}>
+<Card sx={{ bgcolor: 'white', maxWidth: '400px', margin: '50px' }}>
 <div
           style={{
             backgroundColor: '#9A1B56',
@@ -66,6 +66,8 @@ return (
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
+            borderRadius: '10px',
+          boxShadow: '0px 10px 20px rgba(0, 0, 0, 0.1)',
           }}
         >
 <Typography variant="h5" component="h2" style={{ textAlign: 'center',color:'white',fontFamily:'roboto' }}>
@@ -108,7 +110,7 @@ JEWELLER REGISTRATION
            onChange={handlePasswordChange}
            margin="normal"
          />
-<Button  sx={{ margin: '10px 0px 0px 120px', bgcolor: '#9A1B56' }} variant="contained" color="primary" type="submit">
+<Button  style={{ margin: '10px 0px 0px 120px', backgroundColor: '#9A1B56' }} variant="contained"  type="submit">
 Register
 </Button>
 </form>
