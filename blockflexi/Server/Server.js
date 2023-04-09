@@ -442,12 +442,16 @@ app.put('/CustomerSchemeEdit',async(req,res)=>{
  
    else if(loanstatus_bank && bankid && jewellerid && schemeid && customerid){
       try{
+       
         if(loanstatus_bank==='yes'){
           const response4=await customerSchemeCollection.findOneAndUpdate({JewellerID:jewellerid, SchemeID: schemeid,CustomerID:customerid,LoanStatus_Jw:"Approved"},{$set:{LoanStatus_Bank:"Approved",BankID:bankid,LoanStatus_Bank_Date:new Date(Date.now())}})
+         
         if(response4){
           res.json({response4,status:"approved"})
+
         }
         else{
+          
           res.json({status:'not found'})
         }
 
@@ -469,6 +473,7 @@ app.put('/CustomerSchemeEdit',async(req,res)=>{
     else if(goldsettle_status && jewellerid && schemeid && customerid){
       try{
         if(goldsettle_status==='yes'){
+          
           const response4=await customerSchemeCollection.findOneAndUpdate({JewellerID:jewellerid, SchemeID: schemeid,CustomerID:customerid,LoanStatus_Bank:"Approved"},{$set:{GoldSettledStatus:true,GoldSettledDate:new Date(Date.now())}})
           console.log(response4)
           if(response4){
