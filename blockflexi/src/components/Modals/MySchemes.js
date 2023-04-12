@@ -13,6 +13,7 @@ import {
 } from "@chakra-ui/react";
 import { Card, CardBody, CardFooter, Heading } from "@chakra-ui/react";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 
 function MySchemes({ isOpen, onClose, jewellerid, customerid }) {
@@ -145,6 +146,7 @@ function MySchemes({ isOpen, onClose, jewellerid, customerid }) {
                     </CardBody>
 
                     <CardFooter>
+                      <Link to={`/Pay/${customerid}/${jewellerid}/${scheme.SchemeID}`}>
                       <Button
                         variant="solid"
                         mr={4}
@@ -153,6 +155,7 @@ function MySchemes({ isOpen, onClose, jewellerid, customerid }) {
                       >
                         Pay
                       </Button>
+                      </Link>
                       <Button
                         variant="solid"
                         bgColor={"#c17171"}

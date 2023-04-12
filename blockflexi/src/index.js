@@ -48,7 +48,7 @@ root.render(
         <Route path={'/CustomerLanding'} element={<CustomerLanding/>}/>
         <Route path={'/CustomerHome/:JewellerID'} element={<CustomerHome/>}/>
         <Route path={'/AllJewellers'} element={<AllJewellers />}/>
-        <Route path={'/Pay'} element={<Pay/>}></Route>
+        <Route path={'/Pay/:CustomerID/:JewellerID/:SchemeID'} element={<Pay/>}></Route>
         <Route path={'/JewellerProfile'} element={<JewellerProfile/>}></Route>
        
         

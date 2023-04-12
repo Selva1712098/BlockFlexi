@@ -41,8 +41,8 @@ text-align: center;
   .row{
     display: flex;
     flex-direction: columns;
-   margin: 40px 50px 60px 180px;
-   gap: 30px;
+  justify-content: center;
+   margin-top:50px;
   }
 .card button{
     border: #ddd;

@@ -239,7 +239,7 @@ useEffect(()=>{
         <Typography variant="h4" sx={{fontWeight:'bold',marginLeft:'395px'}}>
           INCOMING REQUESTS
         </Typography>
-        <Button variant="contained" onClick={handleLogout} sx={{backgroundColor:'#9A1B56'}}><b>Logout</b></Button>
+        <Button variant="contained" onClick={handleLogout} style={{backgroundColor:'#9A1B56'}}><b>Logout</b></Button>
       </div>
       
         
