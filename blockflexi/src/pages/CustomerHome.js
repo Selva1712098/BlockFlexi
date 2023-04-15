@@ -20,7 +20,7 @@ import jwtDecode from "jwt-decode";
 import MySchemes from "../components/Modals/MySchemes";
 import './CustomerHome.css'
 function CustomerHome() {
-  const {JewellerID}=useParams()
+  const {JewellerName,JewellerID}=useParams()
   console.log(JewellerID)
   const [isOpen, setIsOpen] = useState(false);
   const [isModalOpen, setisModalOpen] = useState(false);
@@ -136,7 +136,7 @@ function CustomerHome() {
                     customerid={token.id}
                     
                   />
-                  <Scheme isOpen={isOpen} onClose={handleCloseModal} jewellerid={JewellerID} customerid={token.id} />
+                  <Scheme isOpen={isOpen} onClose={handleCloseModal} jewellerid={JewellerID} jewellername={JewellerName} customerid={token.id} />
                   </div>
               </CardFooter>
             </Card>

@@ -3,20 +3,23 @@ import Header from "../components/Header";
 import axios from "axios";
 import './pay.css';
 import { useParams } from "react-router-dom";
-import Web3 from 'web3'
-import { Button } from "@mui/material";
-import contract from '../contracts/Flexi.json'
-// import dotenv from 'dotenv'
+import contract from '../contracts/FlexiScheme.json'
+//import { Button } from "@mui/material";
+
+//  import dotenv from 'dotenv'
 
 // import {getWeb3Modal, createWeb3Provider,  createContractInstance, log } from 'react-solidity-xdc3'
-// dotenv.config()
+ //dotenv.config()
 
 function Pay(){
   const{CustomerID,JewellerID,SchemeID}=useParams()
   console.log(CustomerID,JewellerID,SchemeID)
   const[schemeId,setSchemeId]=useState([])
   const[schemes,setSchemes]=useState([])
-
+  //const[currentAccount,setCurrentAccount]=useState(null)
+  const contractaddress="0x90A1499CC18aB124813BDa3F96daC66741f39F6b";
+  const abi=contract.abi
+  console.log(abi,contractaddress)
   // const connectOptions = {
   //   rpcObj: {
   //     50: "https://erpc.xinfin.network",
@@ -27,30 +30,22 @@ function Pay(){
   // }
 
   
-  
-  // const [ethereumContext, setethereumContext] = useState({});
-  // const web3Modal = getWeb3Modal(connectOptions);
+  // const connect=async()=>{
+  //   const {ethereum}=window
 
-  // const connect = async (event) => {
-  //   event.preventDefault();
-  //   const instance = await web3Modal.connect();
-  //   const { provider, signer } = await createWeb3Provider(instance);
-  //   const Contract= await createContractInstance(process.env.contractaddress, contract.abi, provider);
-    
-  //   const account = signer.getAddress();
-  //   setethereumContext({ provider,  account,Contract})
-  //   console.log(" Contract:", Contract)
-  //   log("Connect", "Get Address", await signer.getAddress());
-   
+  //   if(!ethereum){
+  //     alert("Please install metamask")
+  //   }
+  //   try{
+  //     const accounts=await ethereum.request({method:'eth_requestAccounts'})
+  //     console.log(accounts[0])
+  //     setCurrentAccount(accounts[0])
+
+  //   }catch(err){
+  //     console.log(err)
+  //   }
   // }
-  const connect=async()=>{
-    const web3 = new Web3('https://rpc.apothem.network');
-
-    web3.eth.net.getId().then(console.log);
-
-    web3.eth.getBalance('0xa8eab7a263b2da64143d27e2770539609960a386').then(console.log);
-
-  }
+  
   const handleSchemes = (data) => {
     console.log('id',data)
     if (data && data.length > 0) {
@@ -109,6 +104,19 @@ function Pay(){
 // useEffect(()=>{
 //  connect() 
 // },[])
+// useEffect(()=>{
+//   const checkWallet=()=>{
+//     const {ethereum}= window
+
+//     if(!ethereum){
+//       alert("Please connect your wallet")
+//     }
+//     else{
+//       alert("Wallet exists")
+//     }
+//   }
+//   checkWallet()
+// },[])
   useEffect(() => {
     getSchemeID();
   }, []);
@@ -120,15 +128,16 @@ function Pay(){
         <div>
              <Header/>
             <div style={{display:'flex',justifyContent:'flex-end',marginTop:'13px',marginRight:'10px'}}>
-            <Button variant='contained' size='sm' style={{backgroundColor:'#9A1B56'}} onClick={connect} >Connect </Button>
+            {/* <Button variant='contained' size='sm' style={{backgroundColor:'#9A1B56'}} onClick={connect} >Connect </Button> */}
               </div>
              
             <div className="row">
             {schemes && schemes.map((scheme)=>(
   <div className="column">
     <div className="card">
-      <input value={scheme.SchemeName}/>
+     <h2>{scheme.SchemeName}</h2>
     <p>{scheme.MonthlyPayment}</p>
+    <input placeholder='Enter amount'/>
     <button>Pay</button>
     </div>
   </div>

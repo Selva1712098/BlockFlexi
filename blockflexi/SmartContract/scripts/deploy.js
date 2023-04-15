@@ -7,7 +7,7 @@ async function deploy(name, ...params) {
 }
 
 async function main() {
-  const BlockFlexi = await deploy('Flexi');
+  const BlockFlexi = await deploy('FlexiScheme');
   console.log("BlockFlexi deployed to:", BlockFlexi.address);
   
   writeFileSync('output.json', JSON.stringify({

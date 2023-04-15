@@ -66,7 +66,7 @@ function Hero() {
       <div className="row1">
         {Array.isArray(jewellers) &&
           jewellers.map((jeweller) => (
-            <Link to={`/CustomerHome/${jeweller.JewellerID}`}>
+            <Link to={`/CustomerHome/${jeweller.JewellerID}/${jeweller.JewellerName}`}>
               <div className="column1">
                 <div className="card1">
                   <h2>{jeweller.JewellerName}</h2>

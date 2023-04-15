@@ -24,15 +24,22 @@ import {
   } from '@chakra-ui/react'
   import { Card, CardBody, CardFooter, Heading } from '@chakra-ui/react'
   import axios from "axios";
+  import contract from '../../contracts/FlexiScheme.json'
+  import {ethers} from 'ethers';
+  //import {utils} from 'ethers'
+  import {Web3Provider} from '@ethersproject/providers'
   
-  // CircularProgress component 
 
-function Scheme({isOpen, onClose,jewellerid,customerid,onSchemeidChange }){
+function Scheme({isOpen, onClose,jewellerid,customerid,jewellername}){
   const[schemes,setSchemes]=useState('');
+  
   // const[selectedScheme,setSelectedScheme]=useState(null);
   const [isJoined, setIsJoined] = useState(false);
   // const[schemeid,setSchemeId]=useState('')
    const[isLoading, setIsLoading] = useState(false)
+   const contractaddress="0x90A1499CC18aB124813BDa3F96daC66741f39F6b"
+  const abi=contract.abi
+  console.log(contractaddress,abi)
 
  
   async function joinscheme(schemes){
@@ -45,14 +52,61 @@ function Scheme({isOpen, onClose,jewellerid,customerid,onSchemeidChange }){
     },).then(res=>{
       if(res.data.status==='exists'){
         alert("You have already joined this scheme")
-        window.location.reload()
+       // window.location.reload()
       }
       else if(res.data.status==='success'){
         alert("You have joined this scheme successfully.Go to your schemes to view them")
-        window.location.reload()
+     //   window.location.reload()
         
       }
     })
+  }
+  async function addschemebc(scheme){
+    try{
+      const {ethereum}= window
+      
+      if(ethereum){
+        const provider=new ethers.providers.Web3Provider(ethereum)
+        
+        const signer=provider.getSigner()
+        console.log(await signer.getAddress())
+        const contract=new ethers.Contract(contractaddress,abi,provider)
+        const bfcontract=contract.connect(signer)
+        console.log(bfcontract)
+        try{
+        //  // const value = ethers.hexlify(ethers.parseUnits("0.00000000000001", "ether"));
+        const _jewellerName=jewellername
+        const _schemeName=scheme.SchemeName
+        const _totalAmount=scheme.MonthlyPayment * 11
+        const _monthlyAmount=scheme.MonthlyPayment
+        // console.log(_jewellerName,_schemeName,_totalAmount,_monthlyAmount)
+        // const encodedargs=ethers.utils.defaultAbiCoder.encode(["string", "string", "uint", "uint"],
+        // [_jewellerName, _schemeName, _totalAmount, _monthlyAmount])
+        try{
+          const addscheme = await bfcontract.createScheme(
+            _jewellerName,
+            _schemeName,
+            _totalAmount,
+            _monthlyAmount
+          );
+          console.log('addscheme',addscheme)
+        }catch(e){
+          console.log(e)
+        }
+       
+        
+          // let getscheme=await bfcontract.getScheme(1)
+          // console.log(getscheme)
+        }
+        catch(e){
+          console.error(e)
+        }
+       
+        
+      }
+    }catch(e){
+      console.error(e)
+    }
   }
   useEffect(() => {
     async function fetchData() {
@@ -97,6 +151,7 @@ function Scheme({isOpen, onClose,jewellerid,customerid,onSchemeidChange }){
   direction={{ base: 'column', sm: 'row' }}
   overflow='hidden'
   variant='outline'
+  key={scheme.SchemeID}
 >
 
     <Stack>
@@ -114,7 +169,7 @@ function Scheme({isOpen, onClose,jewellerid,customerid,onSchemeidChange }){
             Joined
           </Button>
         ) : ( */}
-          <Button variant='solid' onClick={()=>joinscheme(scheme)} bgColor={"#c17171"} mr={'4'} color={"#fff"}>
+          <Button variant='solid' onClick={()=>{addschemebc(scheme); joinscheme(scheme)}} bgColor={"#c17171"} mr={'4'} color={"#fff"}>
             Join
           </Button>
 

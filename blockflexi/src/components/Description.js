@@ -1,5 +1,5 @@
 import React,{useState} from 'react'
-import {Grid,Typography,Stack,Button,Card} from '@mui/material'
+import {Grid,Typography,Button} from '@mui/material'
 import {useNavigate} from 'react-router-dom'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import SwiperCore,{ Navigation, Pagination, Scrollbar, A11y,Autoplay } from 'swiper'
@@ -16,7 +16,7 @@ SwiperCore.use([Navigation, Pagination, Scrollbar, A11y, Autoplay]);
 function Description() {
     // const [activeButton, setActiveButton] = React.useState('customer');
     const Navigate= useNavigate()
-    const [activeIndex, setActiveIndex] = useState(0);
+    //const [activeIndex, setActiveIndex] = useState(0);
 
   //   function goToNextSlide() {
   //     console.log('nextslide')
@@ -76,7 +76,7 @@ function Description() {
        of History.</Typography>
 
         </div>
-        <Button variant='standard' sx={{marginLeft:'-1250px',marginTop:'15px',color:'white',border:'solid 1px','&:hover':{
+        <Button variant='standard' sx={{marginLeft:'12px',marginTop:'15px',color:'white',border:'solid 1px','&:hover':{
         color:'black',
         backgroundColor:'White',
         transition:'all 0.3s linear'
@@ -96,7 +96,7 @@ function Description() {
         <br/>Register Now for a Better Way to Do Business</Typography>
 
         </div>
-      <Button variant='standard' sx={{marginLeft:'-1220px',marginTop:'15px',color:'white',border:'solid 1px','&:hover':{
+      <Button variant='standard' sx={{marginLeft:'25px',marginTop:'15px',color:'white',border:'solid 1px','&:hover':{
         color:'black',
         backgroundColor:'white',
         transition:'all 0.3s linear'
@@ -114,7 +114,7 @@ function Description() {
         <Typography sx={{color:'white',fontFamily:'Montserrat'}} variant='h4' align='left' gutterbottom>Bank</Typography>
         <Typography sx={{color:'white',fontFamily: 'Montserrat',fontStyle:'italic'}} variant='h5' align='left'>Join the Blockchain Revolution with Our Platform - The Future of Secure and Profitable Investments. Partner with Us Today and Access a New World of Financial Opportunities</Typography>
         </div>
-        <Button variant='standard' sx={{marginLeft:'-1250px',marginTop:'15px',color:'white',border:'solid 1px','&:hover':{
+        <Button variant='standard' sx={{marginLeft:'15px',marginTop:'15px',color:'white',border:'solid 1px','&:hover':{
         color:'black',
         backgroundColor:'white',
         transition:'all 0.3s linear'
@@ -142,7 +142,7 @@ function Description() {
                 <Typography variant='h4' component='h2' align='center' gutterBottom sx={{fontFamily:'Montserrat'}}>
                     What is BlockFlexi
                 </Typography>
-                <Typography variant='h5' component='h3' sx={{fontFamily:'Montserrat'}}>
+                <Typography variant='h5' component='h3' align='center' sx={{fontFamily:'Montserrat'}}>
                 Block-Flexi is a blockchain-based solution designed to facilitate a flexible jewellery scheme. The system integrates with jewellery and banking institutions to provide customers with a secure and trustworthy way to acquire jewellery. 
                 </Typography>
                
