@@ -24,24 +24,52 @@ import {
   } from '@chakra-ui/react'
   import { Card, CardBody, CardFooter, Heading } from '@chakra-ui/react'
   import axios from "axios";
-  import contract from '../../contracts/FlexiScheme.json'
-  import {ethers} from 'ethers';
+  import abi from '../../contracts/FlexiScheme.json'
+  // import {ethers} from 'ethers';
+  import Web3 from 'web3'
+  // import { Snackbar } from "@mui/material";
   //import {utils} from 'ethers'
-  import {Web3Provider} from '@ethersproject/providers'
+  //import {Web3Provider} from '@ethersproject/providers'
   
 
-function Scheme({isOpen, onClose,jewellerid,customerid,jewellername}){
+function Scheme({isOpen, onClose,jewellerid,customerid,jewellername,customerwallet,jewellerwallet,customername}){
   const[schemes,setSchemes]=useState('');
   
   // const[selectedScheme,setSelectedScheme]=useState(null);
   const [isJoined, setIsJoined] = useState(false);
   // const[schemeid,setSchemeId]=useState('')
    const[isLoading, setIsLoading] = useState(false)
-   const contractaddress="0x90A1499CC18aB124813BDa3F96daC66741f39F6b"
-  const abi=contract.abi
+   const contractaddress="0x13207eaFb0Db808e55d8C3FD9Fe3F7168AF9A929"
+  
   console.log(contractaddress,abi)
 
+  async function connect() {
+    if (window.ethereum) {
+      const web3 = new Web3(window.ethereum);
+      try {
+        await window.ethereum.enable();
+        const accounts = await web3.eth.getAccounts();
+        const networkId = await web3.eth.net.getId();
+        if (networkId !== 51) {
+          alert("Please connect to XDC Wallet")
+          throw new Error("Please connect to XDC network.");
+         
+        }
+        return { web3, accounts };
+      } catch (error) {
+        alert("Please Create an account in the XDC Xinfin network")
+        throw new Error("Please connect to Metamask to connect to XDC network.");
+      }
+
+    } else {
+      alert("Please install XDC pay Extension")
+      throw new Error("Please install Metamask to connect to XDC network.");
+    }
+  }
+ useEffect(()=>{
  
+  connect()
+ },[])
   async function joinscheme(schemes){
    
     const schemeid=schemes.SchemeID
@@ -52,10 +80,11 @@ function Scheme({isOpen, onClose,jewellerid,customerid,jewellername}){
     },).then(res=>{
       if(res.data.status==='exists'){
         alert("You have already joined this scheme")
-       // window.location.reload()
+      window.location.reload()
       }
       else if(res.data.status==='success'){
-        alert("You have joined this scheme successfully.Go to your schemes to view them")
+        console.log("Added to DB ")
+       // alert("You have joined this scheme successfully.Go to your schemes to view them")
      //   window.location.reload()
         
       }
@@ -63,33 +92,43 @@ function Scheme({isOpen, onClose,jewellerid,customerid,jewellername}){
   }
   async function addschemebc(scheme){
     try{
-      const {ethereum}= window
+      const { web3, accounts } = await connect();
+    
       
-      if(ethereum){
-        const provider=new ethers.providers.Web3Provider(ethereum)
+     
+        const bfcontract = new web3.eth.Contract(abi, contractaddress);
+    console.log(bfcontract);
         
-        const signer=provider.getSigner()
-        console.log(await signer.getAddress())
-        const contract=new ethers.Contract(contractaddress,abi,provider)
-        const bfcontract=contract.connect(signer)
-        console.log(bfcontract)
-        try{
-        //  // const value = ethers.hexlify(ethers.parseUnits("0.00000000000001", "ether"));
+        
+        const _customerName=customername
+        const _customerAddress=customerwallet
         const _jewellerName=jewellername
+        const _jewellerAddress=jewellerwallet
         const _schemeName=scheme.SchemeName
         const _totalAmount=scheme.MonthlyPayment * 11
         const _monthlyAmount=scheme.MonthlyPayment
-        // console.log(_jewellerName,_schemeName,_totalAmount,_monthlyAmount)
-        // const encodedargs=ethers.utils.defaultAbiCoder.encode(["string", "string", "uint", "uint"],
-        // [_jewellerName, _schemeName, _totalAmount, _monthlyAmount])
+      
+       
         try{
-          const addscheme = await bfcontract.createScheme(
+          const addscheme = await bfcontract.methods.addCustomerScheme(
+            _customerName,
+            _customerAddress,
             _jewellerName,
+            _jewellerAddress,
             _schemeName,
             _totalAmount,
             _monthlyAmount
-          );
+          ).send({from:accounts[0],gas:1000000});
           console.log('addscheme',addscheme)
+          if(addscheme.status){
+            alert("You have joined the scheme Successfully!")
+            window.location.reload()
+          }
+          else{
+            alert("Try again Later")
+          }
+          // const viewscheme=await bfcontract.methods.schemes(1).call()
+          // console.log(viewscheme)
         }catch(e){
           console.log(e)
         }
@@ -97,13 +136,10 @@ function Scheme({isOpen, onClose,jewellerid,customerid,jewellername}){
         
           // let getscheme=await bfcontract.getScheme(1)
           // console.log(getscheme)
-        }
-        catch(e){
-          console.error(e)
-        }
+       
        
         
-      }
+      
     }catch(e){
       console.error(e)
     }

@@ -14,11 +14,12 @@ import {
 import { Card, CardBody, CardFooter, Heading } from "@chakra-ui/react";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import Web3 from "web3";
+import abi from '../../contracts/FlexiScheme.json'
 
-
-function MySchemes({ isOpen, onClose, jewellerid, customerid }) {
+function MySchemes({ isOpen, onClose, jewellerid, customerid,customername,jewellername }) {
   const [isSchemeOpen, setSchemeOpen] = useState(false);
- 
+  const contractaddress="0x13207eaFb0Db808e55d8C3FD9Fe3F7168AF9A929"
   const [schemeId, setSchemeId] = useState([]);
   const [schemes, setSchemes] = useState([]);
   const handleSchemes = (data) => {
@@ -48,6 +49,33 @@ function MySchemes({ isOpen, onClose, jewellerid, customerid }) {
     onClose();
     handleScheme();
   };
+  async function connect() {
+    if (window.ethereum) {
+      const web3 = new Web3(window.ethereum);
+      try {
+        await window.ethereum.enable();
+        const accounts = await web3.eth.getAccounts();
+        const networkId = await web3.eth.net.getId();
+        if (networkId !== 51) {
+          alert("Please connect to XDC Wallet")
+          throw new Error("Please connect to XDC network.");
+         
+        }
+        return { web3, accounts };
+      } catch (error) {
+        alert("Please Create an account in the XDC Xinfin network")
+        throw new Error("Please connect to Metamask to connect to XDC network.");
+      }
+
+    } else {
+      alert("Please install XDC pay Extension")
+      throw new Error("Please install Metamask to connect to XDC network.");
+    }
+  }
+ useEffect(()=>{
+ 
+  connect()
+ },[])
   async function getSchemeID() {
     try {
       await axios.get("http://localhost:5000/GetSchemeID").then((res) => {
@@ -89,6 +117,36 @@ function MySchemes({ isOpen, onClose, jewellerid, customerid }) {
   useEffect(() => {
     getScheme();
   }, [schemeId]);
+
+  const checkbalance=async (scheme)=>{
+    const { web3, accounts } = await connect();
+    
+      
+     
+        const bfcontract = new web3.eth.Contract(abi, contractaddress);
+    console.log(bfcontract);
+    try{
+      const _customerName=customername
+      const _jewellerName=jewellername
+      const _schemeName=scheme.SchemeName
+
+      const getbal=await bfcontract.methods.getBalance(_customerName,_jewellerName, _schemeName).call()
+      console.log(getbal)
+      const total=scheme.MonthlyPayment *11
+      const balance=total-getbal
+      const monthsPaid=balance / scheme.MonthlyPayment
+
+      if( monthsPaid>=3){
+        loanRequest(scheme)
+      }
+      else{
+        alert(`You have paid for ${Math.ceil(monthsPaid)} months.Please Pay Consecutively for 3 months and apply for Loan.`)
+      }
+      
+    }catch(err){
+      console.log(err)
+    }
+  }
 
   const loanRequest = async (scheme) => {
     const schemeid = scheme.SchemeID;
@@ -146,7 +204,7 @@ function MySchemes({ isOpen, onClose, jewellerid, customerid }) {
                     </CardBody>
 
                     <CardFooter>
-                      <Link to={`/Pay/${customerid}/${jewellerid}/${scheme.SchemeID}`}>
+                      <Link to={`/Pay/${customerid}/${jewellerid}/${scheme.SchemeID}` } state={{data:{customername:customername,jewellername:jewellername}}}>
                       <Button
                         variant="solid"
                         mr={4}
@@ -160,7 +218,7 @@ function MySchemes({ isOpen, onClose, jewellerid, customerid }) {
                         variant="solid"
                         bgColor={"#c17171"}
                         color={"#fff"}
-                        onClick={() => loanRequest(scheme)}
+                        onClick={() => checkbalance(scheme)}
                       >
                         Withdraw
                       </Button>

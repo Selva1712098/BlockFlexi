@@ -56,8 +56,9 @@ text-align: center;
 }
 
 .card button:hover{
-background-color:rgb(235, 80, 9);
+background-color:rgb(154,27,86);
 transform: translate3d(2px, 2px, 0);
+color:#ddd;
 }
 
 

@@ -63,6 +63,10 @@ const customerschema = new mongoose.Schema(
       type: Boolean,
       default: true,
     },
+    WalletAddress:{
+      type:String,
+      required: true
+    }
   },
   { collection: "Customer_Master" }
 );
@@ -99,6 +103,10 @@ const jewellerSchema = new mongoose.Schema(
       type: Boolean,
       default: true,
     },
+    WalletAddress:{
+      type:String,
+      required: true
+    }
   },
   {
     collection: "Jeweller_Master",

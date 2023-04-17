@@ -14,7 +14,9 @@ import { useNavigate } from 'react-router-dom';
 const CustomerLogin = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  
   const navigate=useNavigate()
+  
   const handleEmailChange = (event) => {
     setEmail(event.target.value);
   };
@@ -30,8 +32,10 @@ const CustomerLogin = () => {
       email,password
     },{withCredentials:true}).then((res)=>{
       if(res.data.status==='ok'){
-        alert('login was successful')
-        navigate('/CustomerLanding')
+        alert("Login was successful")
+      
+       
+        navigate('/CustomerLanding',{state:{walletAddress:res.data.wallet}})
       }
       else if(res.data.status==='error'){
         alert("wrong password")
@@ -43,7 +47,15 @@ const CustomerLogin = () => {
       alert('wrong details')
     })
   }
-
+// if(open){
+//   return(
+//     <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+//   <Alert onClose={handleClose} severity="success" sx={{ width: '100%' }}>
+//     This is a success message!
+//   </Alert>
+//   </Snackbar>
+//   )
+// }
   return (
     <>
     <Header/>

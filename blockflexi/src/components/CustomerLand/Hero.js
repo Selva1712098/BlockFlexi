@@ -4,9 +4,10 @@ import { useNavigate } from "react-router";
 import axios from "axios";
 import "./Hero.css";
 import { Circles } from "react-loader-spinner";
-function Hero() {
+function Hero({customerWallet}) {
   // const JewellerHero=forwardRef((props,ref)=>{
   const navigate = useNavigate();
+  console.log(customerWallet)
   const [jewellers, setJewellers] = useState([]);
   const [isloading,setLoading]=useState(true)
   const handleButton = () => {
@@ -16,6 +17,7 @@ function Hero() {
   const [jewellerSchemes, setJewellerSchemes] = useState(false);
   const jeweller=(data)=>{
     setJewellers(data)
+    console.log(jewellers)
   }
   const handleschemebody=()=>{
     setJewellerSchemes(true)
@@ -66,11 +68,13 @@ function Hero() {
       <div className="row1">
         {Array.isArray(jewellers) &&
           jewellers.map((jeweller) => (
-            <Link to={`/CustomerHome/${jeweller.JewellerID}/${jeweller.JewellerName}`}>
+            <Link to={`/CustomerHome/${jeweller.JewellerID}/${jeweller.JewellerName}`} 
+            state={{data:{jewellerwallet:jeweller.JewellerWallet,customerwallet:customerWallet}}}>
               <div className="column1">
                 <div className="card1">
                   <h2>{jeweller.JewellerName}</h2>
                   <p>Jeweller descriptions</p>
+                  
                   {/* <button className="button1" onClick={handleschemebody} >View Schemes</button> */}
             
                 </div>

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Header from "../components/Header";
-import { Link } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import { ChakraProvider, Stack } from "@chakra-ui/react";
 import { SimpleGrid } from "@chakra-ui/react";
@@ -21,6 +21,10 @@ import MySchemes from "../components/Modals/MySchemes";
 import './CustomerHome.css'
 function CustomerHome() {
   const {JewellerName,JewellerID}=useParams()
+  const location=useLocation()
+  console.log(location)
+  const jewellerwallet=location.state.data.jewellerwallet
+  const customerwallet=location.state.data.customerwallet
   console.log(JewellerID)
   const [isOpen, setIsOpen] = useState(false);
   const [isModalOpen, setisModalOpen] = useState(false);
@@ -134,9 +138,11 @@ function CustomerHome() {
                     onClose={handleCloseSchemes}
                     jewellerid={JewellerID}
                     customerid={token.id}
+                    customername={token.name}
+                    jewellername={JewellerName}
                     
                   />
-                  <Scheme isOpen={isOpen} onClose={handleCloseModal} jewellerid={JewellerID} jewellername={JewellerName} customerid={token.id} />
+                  <Scheme isOpen={isOpen} onClose={handleCloseModal} jewellerid={JewellerID} jewellername={JewellerName} customername={token.name} customerwallet={customerwallet} jewellerwallet={jewellerwallet} customerid={token.id} />
                   </div>
               </CardFooter>
             </Card>

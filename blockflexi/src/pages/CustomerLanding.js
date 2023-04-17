@@ -1,7 +1,7 @@
 import Header from "../components/Header";
 import React, { useEffect, useState, useRef } from "react";
 
-import { useNavigate } from "react-router";
+import { useNavigate,useLocation } from "react-router-dom";
 import {useCookies} from 'react-cookie';
 import jwtDecode from 'jwt-decode';
 import JewellerHero2 from "../components/CustomerLand/JewellerHero2";
@@ -10,9 +10,9 @@ import Hero from "../components/CustomerLand/Hero";
 import './CustomerLanding.css';
 
 function CustomerLanding() {
-
+  const location=useLocation();
   const [cookies, setCookie, removeCookie] = useCookies(["customer_sessionId"]);
-  
+  const customerWallet=location.state.walletAddress
 
  
   const [showSection, setShowSection] = useState(false);
@@ -136,11 +136,11 @@ function CustomerLanding() {
       {/* <Carousel /> */}
       {/* <JewellerHero  /> */}
       <div ref={HeroRef}>
-      <Hero  />
+      <Hero customerWallet={customerWallet} />
       </div>
       <br/>
       <br />
-      <JewellerHero2 customerid={customerid}/>
+      <JewellerHero2 customerid={customerid}  />
       {/* ref={jewellerHeroRef} */}
       <br />
       <br />

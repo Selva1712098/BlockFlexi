@@ -30,6 +30,7 @@ const MoreDetailsButton = ({ name, row }) => {
   const [open, setOpen] = useState(false);
   const [selectedUser, setSelectedUser] = useState(null);
   const [hoveredRow, setHoveredRow] = useState(null);
+
   
   const handleRowHover = (row) => {
     setHoveredRow(row);
@@ -57,14 +58,16 @@ const MoreDetailsButton = ({ name, row }) => {
       >
         DETAILS
       </Button>
-      {selectedUser && (
+      
         <Dialog open={open} onClose={handleClose} >
           <DialogTitle
             style={{ fontWeight: "bold", margin: "0px 0px 0px 150px" }}
           >
             DETAILS
           </DialogTitle>
+         
           <DialogContent sx={{height:'200px',width:'400px'}}>
+          {selectedUser && (
             <DialogContentText style={{ fontWeight: "bold"  }}>
               <div style={{margin:'5px 0px 0px 60px'}}>
               CUSTOMER NAME : {selectedUser.CustomerName}
@@ -76,8 +79,11 @@ const MoreDetailsButton = ({ name, row }) => {
               ADDRESS : {selectedUser.Address}
               <br /><br/></div>
              
-            </DialogContentText>
+            </DialogContentText>)}
           </DialogContent>
+          
+           
+         
           <DialogActions>
           <Button style={{
   fontWeight: "bold",
@@ -93,7 +99,7 @@ const MoreDetailsButton = ({ name, row }) => {
           </DialogActions>
          
         </Dialog>
-      )}
+      
     </>
   );
 };

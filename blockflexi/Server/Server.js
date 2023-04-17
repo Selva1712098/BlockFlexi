@@ -113,7 +113,7 @@ app.post('/CustomerLogin',async(req,res)=>{
       
       if(check){
           const isPasswordValid= bcrypt.compareSync(password,check.Password)
-
+          
           if(isPasswordValid){
               const token=jwt.sign({
                   name:check.CustomerName,
@@ -123,7 +123,9 @@ app.post('/CustomerLogin',async(req,res)=>{
               res.cookie('customer_sessionId',token,{
                   httponly:true,
                   maxAge:24*60*60*365
-              }).json({status:'ok'})
+              }).json({status:'ok',wallet:check.
+              WalletAddress
+              })
                
           }
           else{

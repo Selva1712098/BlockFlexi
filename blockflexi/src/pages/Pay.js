@@ -2,8 +2,9 @@ import React,{useState,useEffect} from "react";
 import Header from "../components/Header";
 import axios from "axios";
 import './pay.css';
-import { useParams } from "react-router-dom";
-import contract from '../contracts/FlexiScheme.json'
+import { useParams,useLocation } from "react-router-dom";
+import abi from '../contracts/FlexiScheme.json'
+import Web3 from 'web3'
 //import { Button } from "@mui/material";
 
 //  import dotenv from 'dotenv'
@@ -13,38 +14,73 @@ import contract from '../contracts/FlexiScheme.json'
 
 function Pay(){
   const{CustomerID,JewellerID,SchemeID}=useParams()
-  console.log(CustomerID,JewellerID,SchemeID)
+
+ const location=useLocation()
+ const customername=location.state.data.customername
+ const jewellername=location.state.data.jewellername
+ console.log(customername,jewellername)
   const[schemeId,setSchemeId]=useState([])
   const[schemes,setSchemes]=useState([])
   //const[currentAccount,setCurrentAccount]=useState(null)
-  const contractaddress="0x90A1499CC18aB124813BDa3F96daC66741f39F6b";
-  const abi=contract.abi
-  console.log(abi,contractaddress)
-  // const connectOptions = {
-  //   rpcObj: {
-  //     50: "https://erpc.xinfin.network",
-  //     51: "https://erpc.apothem.network"
-  //   },
-  //   network: "mainnet",
-  //   toDisableInjectedProvider: true
-  // }
-
+  const contractaddress="0x13207eaFb0Db808e55d8C3FD9Fe3F7168AF9A929";
   
-  // const connect=async()=>{
-  //   const {ethereum}=window
+  console.log(abi,contractaddress)
+  
+  async function connect() {
+    if (window.ethereum) {
+      const web3 = new Web3(window.ethereum);
+      try {
+        await window.ethereum.enable();
+        const accounts = await web3.eth.getAccounts();
+        const networkId = await web3.eth.net.getId();
+        if (networkId !== 51) {
+          alert("Please connect to XDC Wallet")
+          throw new Error("Please connect to XDC network.");
+         
+        }
+        return { web3, accounts };
+      } catch (error) {
+        alert("Please Create an account in the XDC Xinfin network")
+        throw new Error("Please connect to Metamask to connect to XDC network.");
+      }
 
-  //   if(!ethereum){
-  //     alert("Please install metamask")
-  //   }
-  //   try{
-  //     const accounts=await ethereum.request({method:'eth_requestAccounts'})
-  //     console.log(accounts[0])
-  //     setCurrentAccount(accounts[0])
+    } else {
+      alert("Please install XDC pay Extension")
+      throw new Error("Please install Metamask to connect to XDC network.");
+    }
+  }
 
-  //   }catch(err){
-  //     console.log(err)
-  //   }
-  // }
+ useEffect(()=>{
+ 
+  connect()
+ },[])
+
+ async function Pay(scheme){
+  try{
+    const { web3, accounts } = await connect();
+    const bfcontract = new web3.eth.Contract(abi, contractaddress);
+console.log(bfcontract);
+      const value1=scheme.MonthlyPayment.toString()
+      const value=web3.utils.toWei(value1,'wei')
+      
+      const _customerName=customername
+      const _jewellerName=jewellername
+      const _schemeName=scheme.SchemeName
+      
+        const pay= await bfcontract.methods.makeMonthlyPayment(_customerName,_jewellerName,_schemeName).send({from:accounts[0],gas:1000000,value})
+      console.log( pay)
+
+      if(pay.status){
+        alert("Your payment has been recorded Successfully")
+      }
+      else{
+        alert("Payment Unsuccessful")
+      }
+      
+  }catch(err){
+    console.log(err)
+  }
+ }
   
   const handleSchemes = (data) => {
     console.log('id',data)
@@ -101,22 +137,7 @@ function Pay(){
       console.log(e);
     }
   }
-// useEffect(()=>{
-//  connect() 
-// },[])
-// useEffect(()=>{
-//   const checkWallet=()=>{
-//     const {ethereum}= window
 
-//     if(!ethereum){
-//       alert("Please connect your wallet")
-//     }
-//     else{
-//       alert("Wallet exists")
-//     }
-//   }
-//   checkWallet()
-// },[])
   useEffect(() => {
     getSchemeID();
   }, []);
@@ -137,8 +158,8 @@ function Pay(){
     <div className="card">
      <h2>{scheme.SchemeName}</h2>
     <p>{scheme.MonthlyPayment}</p>
-    <input placeholder='Enter amount'/>
-    <button>Pay</button>
+    
+    <button onClick={()=>Pay(scheme)}>Pay</button>
     </div>
   </div>
              ))} 
