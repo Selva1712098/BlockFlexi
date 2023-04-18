@@ -22,6 +22,7 @@ import {
     AccordionIcon,
    
   } from '@chakra-ui/react'
+  import Swal from "sweetalert2";
   import { Card, CardBody, CardFooter, Heading } from '@chakra-ui/react'
   import axios from "axios";
   import abi from '../../contracts/FlexiScheme.json'
@@ -34,12 +35,13 @@ import {
 
 function Scheme({isOpen, onClose,jewellerid,customerid,jewellername,customerwallet,jewellerwallet,customername}){
   const[schemes,setSchemes]=useState('');
-  
+  const[open,setOpen]=useState(false)
   // const[selectedScheme,setSelectedScheme]=useState(null);
   const [isJoined, setIsJoined] = useState(false);
   // const[schemeid,setSchemeId]=useState('')
+  
    const[isLoading, setIsLoading] = useState(false)
-   const contractaddress="0x13207eaFb0Db808e55d8C3FD9Fe3F7168AF9A929"
+   const contractaddress="0xfEdB6cbf8a55D553eECc93dE4e7839C81266379e"
   
   console.log(contractaddress,abi)
 
@@ -79,37 +81,53 @@ function Scheme({isOpen, onClose,jewellerid,customerid,jewellername,customerwall
     schemeid:schemeid
     },).then(res=>{
       if(res.data.status==='exists'){
-        alert("You have already joined this scheme")
-      window.location.reload()
+         Swal.fire({
+        icon:'warning',
+        title:'Already Enrolled',
+        text:'You have already enrolled to this Scheme',
+        confirmButtonColor:"#9A1B56"
+       }).then(result=>{
+        if(result.isConfirmed){
+          window.location.reload();
+        }
+       })
+       
+        
+         
+        
+      
+    
       }
       else if(res.data.status==='success'){
         console.log("Added to DB ")
+        addschemebc(schemes);
        // alert("You have joined this scheme successfully.Go to your schemes to view them")
      //   window.location.reload()
         
       }
     })
   }
+  
   async function addschemebc(scheme){
     try{
       const { web3, accounts } = await connect();
-    
+        
       
      
         const bfcontract = new web3.eth.Contract(abi, contractaddress);
     console.log(bfcontract);
         
         
-        const _customerName=customername
+       
+       
+         const _customerName=customername
         const _customerAddress=customerwallet
         const _jewellerName=jewellername
         const _jewellerAddress=jewellerwallet
         const _schemeName=scheme.SchemeName
         const _totalAmount=scheme.MonthlyPayment * 11
         const _monthlyAmount=scheme.MonthlyPayment
-      
-       
-        try{
+         try{
           const addscheme = await bfcontract.methods.addCustomerScheme(
             _customerName,
             _customerAddress,
@@ -121,8 +139,8 @@ function Scheme({isOpen, onClose,jewellerid,customerid,jewellername,customerwall
           ).send({from:accounts[0],gas:1000000});
           console.log('addscheme',addscheme)
           if(addscheme.status){
-            alert("You have joined the scheme Successfully!")
-            window.location.reload()
+           setOpen(true)
+            
           }
           else{
             alert("Try again Later")
@@ -132,6 +150,8 @@ function Scheme({isOpen, onClose,jewellerid,customerid,jewellername,customerwall
         }catch(e){
           console.log(e)
         }
+       
+       
        
         
           // let getscheme=await bfcontract.getScheme(1)
@@ -171,6 +191,18 @@ function Scheme({isOpen, onClose,jewellerid,customerid,jewellername,customerwall
     fetchData();
   }, [jewellerid]);
   
+  if(open){
+    Swal.fire({
+      icon: 'success',
+      title: 'Scheme Added!',
+      text: 'You have Joined the Scheme',
+      confirmButtonColor:"#9A1B56"
+    }).then((result)=>{
+      if(result.isConfirmed){
+        window.location.reload()
+      }
+    });
+  }
  
     return(
 <div>
@@ -205,7 +237,7 @@ function Scheme({isOpen, onClose,jewellerid,customerid,jewellername,customerwall
             Joined
           </Button>
         ) : ( */}
-          <Button variant='solid' onClick={()=>{addschemebc(scheme); joinscheme(scheme)}} bgColor={"#c17171"} mr={'4'} color={"#fff"}>
+          <Button variant='solid' onClick={()=>{ joinscheme(scheme)}} bgColor={"#c17171"} mr={'4'} color={"#fff"}>
             Join
           </Button>
 

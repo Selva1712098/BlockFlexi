@@ -110,6 +110,11 @@
 				"internalType": "uint256",
 				"name": "balanceAmount",
 				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "monthsPaid",
+				"type": "uint256"
 			}
 		],
 		"stateMutability": "view",
@@ -162,7 +167,64 @@
 				"type": "string"
 			}
 		],
+		"name": "getMonthsPaid",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "string",
+				"name": "_customerName",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "_jewellerName",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "_schemeName",
+				"type": "string"
+			}
+		],
 		"name": "makeMonthlyPayment",
+		"outputs": [],
+		"stateMutability": "payable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "string",
+				"name": "_customerName",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "_jewellerName",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "_schemeName",
+				"type": "string"
+			},
+			{
+				"internalType": "address",
+				"name": "_bankAddress",
+				"type": "address"
+			}
+		],
+		"name": "payBalance",
 		"outputs": [],
 		"stateMutability": "payable",
 		"type": "function"

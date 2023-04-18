@@ -9,11 +9,13 @@ import {
   Grid,
 } from '@mui/material';
 import axios from 'axios';
+import Swal from 'sweetalert2'
 import { useNavigate } from 'react-router-dom';
 
 const JewellerLogin = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const[open,setOpen]=useState(false)
   const navigate=useNavigate()
   
 
@@ -34,20 +36,44 @@ const JewellerLogin = () => {
       password
     },{withCredentials:true}).then((res)=>{
       if(res.data.status==='ok'){
-        alert('login was successful')
-        navigate('/jewellerhome')
+        setOpen(true)
+       
+        
       }
       else if(res.data.status==='error'){
         alert("wrong password")
       }
       else if(res.data.status==='not found'){
-        alert('No user found.Please Create an account')
-        navigate('/Jeweller/Register')
+        setOpen(true)
+        if(open){
+          Swal.fire({
+            icon: 'error',
+            title: 'User Not Found!',
+            text: 'Please Create an account',
+          }).then((result)=>{
+            if(result.isConfirmed){
+              navigate('/Jeweller/Register')
+            }
+          })
+        }
+        
       }
     }).catch(e=>{
       alert('wrong details')
 
     })  }
+    { open&&(
+      Swal.fire({
+        icon: 'success',
+        title: 'Login successful!',
+        text: 'You are now logged in.',
+        confirmButtonColor:"#9A1B56"
+      }).then((result)=>{
+        if(result.isConfirmed){
+          navigate('/jewellerhome')
+        }
+      })
+)}
   return (
     <>
     <Header/>

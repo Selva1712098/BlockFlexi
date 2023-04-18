@@ -6,6 +6,7 @@ import JewellerSchemeTable from '../components/JewellerSchemeTable';
 import axios from 'axios';
 import jwt_decode from 'jwt-decode'
 import {useCookies} from 'react-cookie'
+import Swal from 'sweetalert2';
 
 
 const styles = {
@@ -80,13 +81,31 @@ const JewellerHome = () => {
       }).then(res=>{
         if(res.data.status==='ok'){
           console.log(res.data)
-          alert("Scheme Added")
-          window.location.reload()
+          Swal.fire({
+            icon:'success',
+            text:'Your scheme has been added successfully',
+            title:'Scheme added successfully',
+            confirmButtonColor:"#9A1B56"
+          }).then((result)=>{
+            if(result.isConfirmed){
+              window.location.reload()
+            }
+          })
           // navigate('/Customer/login')
     }
         else if(res.data.status==='exists'){
-          alert("You are already a part of us")
-          window.location.reload()
+          console.log(res.data)
+          Swal.fire({
+            icon:'warning',
+            text:'You have already added this scheme',
+            title:'Duplicate Scheme',
+            confirmButtonColor:"#9A1B56"
+          }).then((result)=>{
+            if(result.isConfirmed){
+              window.location.reload()
+            }
+          })
+          
           // navigate('/Customer/login')
         }
       }).catch(e=>{

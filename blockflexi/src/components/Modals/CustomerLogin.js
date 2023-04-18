@@ -7,20 +7,28 @@ import {
   Button,
   Typography,
   Grid,
+  
 } from '@mui/material';
+// import {Alert} from '@mui/material'
+import Swal from 'sweetalert2'
 import axios from 'axios'
+
 import { useNavigate } from 'react-router-dom';
 
 const CustomerLogin = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const[open,setOpen]=useState(false)
+  const[wallet,setWallet]=useState('')
   
   const navigate=useNavigate()
   
   const handleEmailChange = (event) => {
     setEmail(event.target.value);
   };
-
+  // const openalert=()=>{
+  //   setOpen(true)
+  // }
   const handlePasswordChange = (event) => {
     setPassword(event.target.value);
   };
@@ -32,12 +40,13 @@ const CustomerLogin = () => {
       email,password
     },{withCredentials:true}).then((res)=>{
       if(res.data.status==='ok'){
-        alert("Login was successful")
-      
-       
-        navigate('/CustomerLanding',{state:{walletAddress:res.data.wallet}})
+      setOpen(true)
+     
+       setWallet(res.data.wallet)
+        //navigate('/CustomerLanding',{state:{walletAddress:res.data.wallet}})
       }
       else if(res.data.status==='error'){
+       
         alert("wrong password")
       }
       else if(res.data.status==='not found'){
@@ -47,15 +56,18 @@ const CustomerLogin = () => {
       alert('wrong details')
     })
   }
-// if(open){
-//   return(
-//     <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
-//   <Alert onClose={handleClose} severity="success" sx={{ width: '100%' }}>
-//     This is a success message!
-//   </Alert>
-//   </Snackbar>
-//   )
-// }
+  if(open){
+    Swal.fire({
+      icon: 'success',
+      title: 'Login successful!',
+      text: 'You are now logged in.',
+      confirmButtonColor:"#9A1B56"
+    }).then((result)=>{
+      if(result.isConfirmed){
+        navigate('/CustomerLanding',{state:{walletAddress:wallet}})
+      }
+    });
+  }
   return (
     <>
     <Header/>

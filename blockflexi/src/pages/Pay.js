@@ -5,6 +5,7 @@ import './pay.css';
 import { useParams,useLocation } from "react-router-dom";
 import abi from '../contracts/FlexiScheme.json'
 import Web3 from 'web3'
+import Swal from 'sweetalert2'
 //import { Button } from "@mui/material";
 
 //  import dotenv from 'dotenv'
@@ -21,8 +22,9 @@ function Pay(){
  console.log(customername,jewellername)
   const[schemeId,setSchemeId]=useState([])
   const[schemes,setSchemes]=useState([])
+  const[open,setOpen]=useState(false)
   //const[currentAccount,setCurrentAccount]=useState(null)
-  const contractaddress="0x13207eaFb0Db808e55d8C3FD9Fe3F7168AF9A929";
+  const contractaddress="0xfEdB6cbf8a55D553eECc93dE4e7839C81266379e";
   
   console.log(abi,contractaddress)
   
@@ -71,7 +73,7 @@ console.log(bfcontract);
       console.log( pay)
 
       if(pay.status){
-        alert("Your payment has been recorded Successfully")
+        setOpen(true)
       }
       else{
         alert("Payment Unsuccessful")
@@ -144,6 +146,14 @@ console.log(bfcontract);
   useEffect(() => {
     getScheme();
   }, [schemeId]);
+  if(open){
+    Swal.fire({
+      icon: 'success',
+      title: 'Payment Successful!',
+      text: 'You have Paid for this month',
+      confirmButtonColor:"#9A1B56"
+    })
+  }
     return(
      
         <div>

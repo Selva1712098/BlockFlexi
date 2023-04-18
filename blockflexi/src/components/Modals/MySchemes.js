@@ -16,12 +16,14 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import Web3 from "web3";
 import abi from '../../contracts/FlexiScheme.json'
+import Swal from "sweetalert2";
 
 function MySchemes({ isOpen, onClose, jewellerid, customerid,customername,jewellername }) {
   const [isSchemeOpen, setSchemeOpen] = useState(false);
-  const contractaddress="0x13207eaFb0Db808e55d8C3FD9Fe3F7168AF9A929"
+  const contractaddress="0xfEdB6cbf8a55D553eECc93dE4e7839C81266379e"
   const [schemeId, setSchemeId] = useState([]);
   const [schemes, setSchemes] = useState([]);
+  //const[open,setOpen]=useState(false)
   const handleSchemes = (data) => {
     //console.log('id',data)
     if (data && data.length > 0) {
@@ -130,17 +132,21 @@ function MySchemes({ isOpen, onClose, jewellerid, customerid,customername,jewell
       const _jewellerName=jewellername
       const _schemeName=scheme.SchemeName
 
-      const getbal=await bfcontract.methods.getBalance(_customerName,_jewellerName, _schemeName).call()
+      const getbal=await bfcontract.methods.getMonthsPaid(_customerName,_jewellerName, _schemeName).call()
       console.log(getbal)
-      const total=scheme.MonthlyPayment *11
-      const balance=total-getbal
-      const monthsPaid=balance / scheme.MonthlyPayment
+      
 
-      if( monthsPaid>=3){
+      if( getbal>=3){
         loanRequest(scheme)
       }
       else{
-        alert(`You have paid for ${Math.ceil(monthsPaid)} months.Please Pay Consecutively for 3 months and apply for Loan.`)
+        // alert(`You have paid for ${Math.ceil(monthsPaid)} months.Please Pay Consecutively for 3 months and apply for Loan.`)
+      Swal.fire({
+        icon:'warning',
+        title:'Not Paid enough ',
+        text:`You have paid for ${getbal} months.Please Pay Consecutively for 3 months and apply for Loan.`,
+        confirmButtonColor:"#9A1B56"
+      })
       }
       
     }catch(err){
@@ -159,11 +165,22 @@ function MySchemes({ isOpen, onClose, jewellerid, customerid,customername,jewell
       .then((res) => {
         try {
           if (res.data.Status === "done") {
-            alert("Your Request has been sent successfully");
+           Swal.fire({
+            icon:'success',
+            title:'Request Sent',
+            text:'Your request has been sent successfully',
+            confirmButtonColor:"#9A1B56"
+           })
           } else {
-            alert(
-              "You have already requested to withdraw, Please wait for confirmation"
-            );
+            Swal.fire({
+              icon:'warning',
+              title:'Waiting for Confirmation',
+              text:'You have already requested to withdraw, Please wait for confirmation',
+             confirmButtonColor:"#9A1B56"
+             })
+            // alert(
+            //   "You have already requested to withdraw, Please wait for confirmation"
+            // );
           }
         } catch (e) {
           alert("Something went Wrong.Try again later");

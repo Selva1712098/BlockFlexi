@@ -9,6 +9,7 @@ import {
   Typography,
   Grid,
 } from "@mui/material";
+import Swal from "sweetalert2";
 
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -16,6 +17,7 @@ import axios from "axios";
 function BankLogin() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const[open,setOpen]=useState(false)
   const navigate=useNavigate()
 
   const handleEmailChange = (event) => {
@@ -33,9 +35,10 @@ function BankLogin() {
       password
     },{withCredentials:true}).then((res)=>{
       if(res.data.status==='ok' && res.data.authorized){
-        alert('login was successful')
+        setOpen(true)
+        
        
-        navigate('/BankHome',{replace:true})
+        
       }
       else if(res.data.status==='error'){
         alert("wrong password")
@@ -48,7 +51,18 @@ function BankLogin() {
       alert('wrong details')
 
     })  }
-
+    if(open){
+      Swal.fire({
+        icon: 'success',
+      title: 'Login successful!',
+      text: 'You are now logged in.',
+      confirmButtonColor:"#9A1B56"
+      }).then((result)=>{
+        if(result.isConfirmed){
+          navigate('/BankHome',{replace:true})
+        }
+      })
+    }
   return (
     <>
       <Header />

@@ -132,6 +132,7 @@ function Header() {
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' },marginLeft:'170px' }}>
             <Button color='inherit' sx={{fontFamily:'Montserrat',fontWeight:'bold'}} onClick={()=>Navigate('/')}>Home</Button>
+            
             {pages.map((page) => (
               <Button
                 key={page}
