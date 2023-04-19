@@ -15,6 +15,7 @@ const [name, setName] = useState('');
 
 const [email, setEmail] = useState('');
 const [password, setPassword] = useState('');
+const[wallet,setWallet] = useState('');
 const navigate=useNavigate()
 const handleNameChange = (event) => {
 setName(event.target.value);
@@ -27,6 +28,9 @@ setEmail(event.target.value);
 
 const handlePasswordChange = (event) => {
 setPassword(event.target.value);
+};
+const handleWalletChange = (event) => {
+setWallet(event.target.value);
 };
 
 
@@ -55,7 +59,7 @@ return (
     <br/>
     <br/>
     <br/>
-<div style={{ display: 'flex', flexWrap: 'column wrap', justifyContent: 'center',height:'80vh' }}>
+<div style={{ display: 'flex', flexWrap: 'column wrap', justifyContent: 'center',height:'92vh' }}>
     
 
 <Card sx={{ bgcolor: 'white', maxWidth: '400px', margin: '50px' }}>
@@ -110,6 +114,18 @@ JEWELLER REGISTRATION
            onChange={handlePasswordChange}
            margin="normal"
          />
+         <TextField
+           id="wallet"
+           label="WalletAddress"
+           type="text"
+           variant="outlined"
+           fullWidth
+           value={wallet}
+           helpertext="put 0x instead of xdc"
+           onChange={handleWalletChange}
+           margin="normal"
+         />
+
 <Button  style={{ margin: '10px 0px 0px 120px', backgroundColor: '#9A1B56' }} variant="contained"  type="submit">
 Register
 </Button>

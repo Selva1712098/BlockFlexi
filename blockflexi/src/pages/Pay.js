@@ -2,6 +2,7 @@ import React,{useState,useEffect} from "react";
 import Header from "../components/Header";
 import axios from "axios";
 import './pay.css';
+import './PaymentProcessing.css';
 import { useParams,useLocation } from "react-router-dom";
 import abi from '../contracts/FlexiScheme.json'
 import Web3 from 'web3'
@@ -23,6 +24,7 @@ function Pay(){
   const[schemeId,setSchemeId]=useState([])
   const[schemes,setSchemes]=useState([])
   const[open,setOpen]=useState(false)
+  const[loading,setLoading]=useState(false)
   //const[currentAccount,setCurrentAccount]=useState(null)
   const contractaddress="0xfEdB6cbf8a55D553eECc93dE4e7839C81266379e";
   
@@ -68,12 +70,17 @@ console.log(bfcontract);
       const _customerName=customername
       const _jewellerName=jewellername
       const _schemeName=scheme.SchemeName
-      
+      setLoading(true)
         const pay= await bfcontract.methods.makeMonthlyPayment(_customerName,_jewellerName,_schemeName).send({from:accounts[0],gas:1000000,value})
-      console.log( pay)
-
+      
+        console.log( pay)
+     
+      
       if(pay.status){
+        setLoading(false)
         setOpen(true)
+
+
       }
       else{
         alert("Payment Unsuccessful")
@@ -152,7 +159,21 @@ console.log(bfcontract);
       title: 'Payment Successful!',
       text: 'You have Paid for this month',
       confirmButtonColor:"#9A1B56"
+    }).then((result)=>{
+      if(result.isConfirmed){
+        window.location.reload();
+      }
     })
+  }
+  if(loading){
+    return (
+      <div className={`overlay ${loading ? 'active' : ''}`}>
+        <div className="processing-container">
+          <div className="processing-icon"></div>
+          <div className="processing-text">Processing Payment...</div>
+        </div>
+      </div>
+    );
   }
     return(
      

@@ -73,12 +73,14 @@ function Scheme({isOpen, onClose,jewellerid,customerid,jewellername,customerwall
   connect()
  },[])
   async function joinscheme(schemes){
-   
+    
     const schemeid=schemes.SchemeID
+    const schemename=schemes.SchemeName
     // console.log(schemeid,jewellerid,customerid)
     await axios.post('http://localhost:5000/JoinScheme',{
     jewellerid:jewellerid,customerid:customerid,
-    schemeid:schemeid
+    schemeid:schemeid,
+    schemename:schemename
     },).then(res=>{
       if(res.data.status==='exists'){
          Swal.fire({

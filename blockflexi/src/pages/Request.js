@@ -22,24 +22,14 @@ import {
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import CancelRoundedIcon from "@mui/icons-material/CancelRounded";
 import "./Request.css";
+import Swal from "sweetalert2";
 import { Circles } from "react-loader-spinner";
 
-
-
-const MoreDetailsButton = ({ name, row }) => {
+const TableExample = () => {
+  const [hoveredRow, setHoveredRow] = useState(null);
+  const[userid,setUserId]=useState([])
   const [open, setOpen] = useState(false);
   const [selectedUser, setSelectedUser] = useState(null);
-  const [hoveredRow, setHoveredRow] = useState(null);
-
-  
-  const handleRowHover = (row) => {
-    setHoveredRow(row);
-  };
-
-  const handleRowHoverLeave = () => {
-    setHoveredRow(null);
-  };
-
   const handleClose = () => {
     setOpen(false);
   };
@@ -48,72 +38,19 @@ const MoreDetailsButton = ({ name, row }) => {
     setOpen(true);
     setSelectedUser(user);
   };
-
-  return (
-    <>
-      <Button
-        style={{ fontWeight: "bold", margin: "0px 0px 0px 30px" }}
-        variant="contained"
-        onClick={() => handleOpen(row)}
-      >
-        DETAILS
-      </Button>
-      
-        <Dialog open={open} onClose={handleClose} >
-          <DialogTitle
-            style={{ fontWeight: "bold", margin: "0px 0px 0px 150px" }}
-          >
-            DETAILS
-          </DialogTitle>
-         
-          <DialogContent sx={{height:'200px',width:'400px'}}>
-          {selectedUser && (
-            <DialogContentText style={{ fontWeight: "bold"  }}>
-              <div style={{margin:'5px 0px 0px 60px'}}>
-              CUSTOMER NAME : {selectedUser.CustomerName}
-              <br /> <br /></div>
-              <div style={{margin:'0px 0px 0px 60px'}}>
-              PAN NO : {selectedUser.PANno}
-              <br /><br/></div>
-              <div style={{margin:'0px 0px 0px 60px'}}>
-              ADDRESS : {selectedUser.Address}
-              <br /><br/></div>
-             
-            </DialogContentText>)}
-          </DialogContent>
-          
-           
-         
-          <DialogActions>
-          <Button style={{
-  fontWeight: "bold",
-  padding: "8px 25px",
-  fontSize:"14px",
-  borderRadius: "5px",
-  backgroundColor: "#f34642",
-  color: "white"
-}} onClick={handleClose}>
-  Close
-</Button>
-
-          </DialogActions>
-         
-        </Dialog>
-      
-    </>
-  );
-};
-
-const TableExample = () => {
-  const [hoveredRow, setHoveredRow] = useState(null);
-  const[userid,setUserId]=useState([])
   const[user,setUser]=useState([])
   const[isloading,setisLoading]=useState(true);
+  const[schemename,setSchemename]=useState([])
   const[cookies,setCookie,removeCookie]=useCookies(['jeweller_sessionId'])
   const token=jwt_Decode(cookies.jeweller_sessionId)
   const jewellerid=token.id
+  const jewellername=token.name
   const setrows=(data)=>{
     setUserId(data)
+  }
+  const setschemename=(data)=>{
+    setSchemename(data)
+    console.log(schemename)
   }
   useEffect(()=>{
     
@@ -126,6 +63,7 @@ const TableExample = () => {
           const row=res.data.response1.filter(r=>r.JewellerID === jewellerid)
           console.log('filtered',row)
           setrows(row)
+          setschemename(row.SchemeName)
           
         }
         else{
@@ -172,15 +110,34 @@ const fwdrequest=async(row)=>{
 customerid:row.CustomerID,
 jewellerid,
 schemeid:schemeid.SchemeID,
-loanstatus_jw:"yes"
+loanstatus_jw:"yes",
+jewellername:jewellername
 }).then(res=>{
 if(res.data.status==='approved'){
-  alert(`${row.CustomerName}'s Loan request for ${schemeid.SchemeID} has been approved`)
-  window.location.reload()
+  Swal.fire({
+    icon: 'success',
+    title: 'Request Forwarded to Bank',
+    text: `${row.CustomerName}'s Loan request for ${schemeid.SchemeName} has been approved`,
+    confirmButtonColor:"#9A1B56"
+  }).then((result)=>{
+    if(result.isConfirmed){
+      window.location.reload();
+    }
+  })
+  //alert(`${row.CustomerName}'s Loan request for ${schemeid.SchemeName} has been approved`)
+ // window.location.reload()
 }
 else{
-  alert(`No change has been made to ${row.CustomerName}`)
-  window.location.reload()
+  Swal.fire({
+    icon: 'error',
+    title: 'Something went wrong',
+    text: `No change has been made to ${row.CustomerName}`,
+    confirmButtonColor:"#9A1B56"
+  }).then((result)=>{
+    if(result.isConfirmed){
+      window.location.reload();
+    }
+  })
 
 }
 })
@@ -191,17 +148,34 @@ const rjtrequest=async(row)=>{
   customerid:row.CustomerID,
   jewellerid,
   schemeid:schemeid.SchemeID,
-loanstatus_jw:"no"
+  
+loanstatus_jw:"no",
+jewellername:jewellername
   }).then(res=>{
   if(res.data.status==='rejected'){
-    alert(`${row.CustomerName}'s request for ${schemeid.SchemeID} has been rejected`)
-    window.location.reload()
+  Swal.fire({
+    icon: 'success',
+    title: 'Request Rejected',
+    text: `${row.CustomerName}'s Loan request for ${schemeid.SchemeName} has been rejected`,
+    confirmButtonColor:"#9A1B56"
+  }).then((result)=>{
+    if(result.isConfirmed){
+      window.location.reload();
+    }
+  })
 
   }
   else{
-    alert(`No change has been made to ${row.CustomerName}`)
-    window.location.reload()
-
+    Swal.fire({
+      icon: 'error',
+      title: 'Something went wrong',
+      text: `No change has been made to ${row.CustomerName}`,
+      confirmButtonColor:"#9A1B56"
+    }).then((result)=>{
+      if(result.isConfirmed){
+        window.location.reload();
+      }
+    })
   }
   })
   }
@@ -298,7 +272,14 @@ const handleUsers=(data)=>{
                   <TableCell>{row.CustomerName}</TableCell>
                   <TableCell>{row.MobileNo}</TableCell>
                   <TableCell>
-                    <MoreDetailsButton name={row.CustomerName} row={row} />
+                  <Button
+        style={{ fontWeight: "bold", margin: "0px 0px 0px 30px" }}
+        variant="contained"
+        onClick={() => handleOpen(row)}
+      >
+        DETAILS
+      </Button>
+                    
                   </TableCell>
                   <TableCell>
                   <div style={{ display: "flex" }}>
@@ -321,6 +302,47 @@ const handleUsers=(data)=>{
     REJECT<CancelRoundedIcon />
   </Button>
 </div>
+<Dialog open={open} onClose={handleClose} >
+          <DialogTitle
+            style={{ fontWeight: "bold", margin: "0px 0px 0px 150px" }}
+          >
+            DETAILS
+          </DialogTitle>
+         
+          <DialogContent sx={{height:'200px',width:'400px'}}>
+          {selectedUser && (
+            <DialogContentText style={{ fontWeight: "bold"  }}>
+              <div style={{margin:'5px 0px 0px 60px'}}>
+              CUSTOMER NAME : {selectedUser.CustomerName}
+              <br /> <br /></div>
+              <div style={{margin:'0px 0px 0px 60px'}}>
+              PAN NO : {selectedUser.PANno}
+              <br /><br/></div>
+              <div style={{margin:'0px 0px 0px 60px'}}>
+              ADDRESS : {selectedUser.Address}
+              <br /><br/></div>
+             
+            </DialogContentText>)}
+          </DialogContent>
+         
+          
+           
+         
+          <DialogActions>
+          <Button style={{
+  fontWeight: "bold",
+  padding: "8px 25px",
+  fontSize:"14px",
+  borderRadius: "5px",
+  backgroundColor: "#f34642",
+  color: "white"
+}} onClick={handleClose}>
+  Close
+</Button>
+
+          </DialogActions>
+         
+        </Dialog>
 
                   </TableCell>
                 </TableRow>

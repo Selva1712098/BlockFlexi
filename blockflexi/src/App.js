@@ -11,7 +11,7 @@ import JewellerRegister from './components/Modals/JewellerRegister';
 import Request from './pages/Request';
 import Settle from './pages/Settle';
 import Pay from './pages/Pay';
-
+import BankPayment from './pages/BankPayment';
 import {Route,BrowserRouter as Router,Routes} from 'react-router-dom'
 import CustomerHome from './pages/CustomerHome';
 import CustomerScheme from './pages/CustomerScheme';
@@ -49,7 +49,7 @@ function App() {
         <Route path={'/AllJewellers'} element={<AllJewellers />}/>
         <Route path={'/Pay/:CustomerID/:JewellerID/:SchemeID'} element={<Pay/>}></Route>
         <Route path={'/JewellerProfile'} element={<JewellerProfile/>}></Route>
-       
+        <Route path={'BankPayment/:CustomerID/:JewellerID/:SchemeID'} element={<BankPayment/>}></Route>
         
       </Routes>
     </Router>

@@ -1,7 +1,7 @@
 import mongoose, { Schema } from "mongoose";
 import shortid from "shortid";
 import dotenv from "dotenv";
-import { Int32, Timestamp } from "mongodb";
+// import { Int32, Timestamp } from "mongodb";
 dotenv.config();
 
 mongoose.set("strictQuery", false);
@@ -13,7 +13,7 @@ mongoose
     console.log("database connected successfully");
   })
   .catch((err) => console.log(err));
-
+mongoose.models={};
 const customerschema = new mongoose.Schema(
   {
     CustomerID: {
@@ -103,9 +103,10 @@ const jewellerSchema = new mongoose.Schema(
       type: Boolean,
       default: true,
     },
-    WalletAddress:{
+    JewellerWallet:{
       type:String,
-      required: true
+      required: true,
+      unique:true
     }
   },
   {
@@ -192,19 +193,19 @@ const schemeSchema = new mongoose.Schema(
 const CustomerSchemeSchema = new mongoose.Schema(
   {
     JewellerID: {
-      type: String,
-      ref: "Jeweller_Master.JewellerID",
+      type:mongoose.Schema.Types.String,
+      ref: "Jeweller_Master",
       required:true,
       maxLength: 25
     },
     SchemeID: {
-      type: String,
-      ref: "Jewellery_Scheme.SchemeID",
+      type: mongoose.Schema.Types.String,
+      ref: "Jewellery_Scheme",
       required:true
     },
     CustomerID: {
-      type: String,
-      ref: "Customer_Master.CustomerID",
+      type: mongoose.Schema.Types.String,
+      ref: "Customer_Master",
       required: true,
       maxLength: 10
     },
@@ -261,6 +262,14 @@ const CustomerSchemeSchema = new mongoose.Schema(
     GoldSettledDate: {
       type: Date,
       default:null
+    },
+    SchemeName:{
+      type: String,
+      ref:'Jewellery_Scheme.SchemeName'
+    },
+    JewellerName:{
+      type:String,
+      ref:'Jewellery_Scheme.SchemeName'
     }
   },
   {
@@ -268,10 +277,12 @@ const CustomerSchemeSchema = new mongoose.Schema(
   }
 );
 
+
 export const customerMasterCollection = mongoose.model(
   "Customer_Master",
   customerschema
 );
+
 export const jewellerMasterCollection = mongoose.model(
   "Jeweller_Master",
   jewellerSchema
@@ -285,3 +296,9 @@ export const customerSchemeCollection = mongoose.model(
   "Customer_Scheme",
   CustomerSchemeSchema
 );
+// CustomerSchemeSchema.virtual('customer',{
+//   ref:'Customer_Master',
+//   localField:'CustomerID',
+//   foreignField:'CustomerID',
+  
+// })

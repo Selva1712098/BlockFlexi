@@ -75,7 +75,7 @@ app.post("/CustomerRegister", async (req, res) => {
 });
 
 app.post("/JewellerRegister", async (req, res) => {
-  const { name, email, password} = req.body;
+  const { name, email, password,walletaddress} = req.body;
 
   const salt = bcrypt.genSaltSync(10);
   const hash = bcrypt.hashSync(password, salt);
@@ -85,7 +85,7 @@ app.post("/JewellerRegister", async (req, res) => {
    
     EmailID: email,
     Password: hash,
-   
+   JewellerWallet:walletaddress,
     RowDate: new Date(Date.now()),
     Status: true,
   };
@@ -100,6 +100,7 @@ app.post("/JewellerRegister", async (req, res) => {
       return res.json({ message: "Jeweller Added", status: "ok" });
     }
   } catch (e) {
+    console.log(e)
     res.json("Something went wrong try again");
   }
 });
@@ -149,7 +150,7 @@ app.post('/JewellerLogin',async(req,res)=>{
 
     try{
         const check= await jewellerMasterCollection.findOne({EmailID:email})
-        
+        console.log(check)
         if(check){
             const isPasswordValid= bcrypt.compareSync(password,check.Password)
 
@@ -292,11 +293,12 @@ app.get('/GetSchemeID',async(req,res)=>{
   }
 })
 app.post('/JoinScheme', async (req, res) => {
-  const { jewellerid, schemeid, customerid } = req.body;
+  const { jewellerid, schemeid, customerid,schemename } = req.body;
   const schemes = {
     JewellerID: jewellerid,
     SchemeID: schemeid,
     CustomerID: customerid,
+    SchemeName:schemename,
     DOJ: new Date(Date.now())
   };
   console.log(schemes);
@@ -357,6 +359,7 @@ app.get('/CustomerSchemesLoanReq',async(req,res)=>{
   try{
     const response1= await customerSchemeCollection.find({LoanReq:true,LoanStatus_Jw:null,LoanStatus_Bank:null,GoldSettledStatus:false})
     console.log(response1)
+   
     if(response1){
       
       res.json({response1})
@@ -372,7 +375,7 @@ app.get('/CustomerSchemesJwStatus',async(req,res)=>{
  
   try{
     
-    const response3= await customerSchemeCollection.find({LoanReq:true,LoanStatus_Jw:"Approved",LoanStatus_Bank:null},{CustomerID:1,JewellerID:1,SchemeID:1,LoanStatus_Jw:1})
+    const response3= await customerSchemeCollection.find({LoanReq:true,LoanStatus_Jw:"Approved",LoanStatus_Bank:null},{CustomerID:1,JewellerID:1,SchemeID:1,LoanStatus_Jw:1,SchemeName:1,JewellerName:1})
     if(response3){
       res.json({
         response3
@@ -404,7 +407,7 @@ app.get('/GetUsers',async(req,res)=>{
   }
 })
 app.put('/CustomerSchemeEdit',async(req,res)=>{
-  const{customerid,jewellerid,bankid,schemeid,loanreq,loanstatus_jw,loanstatus_bank,goldclaimstatus,goldsettle_status}=req.body
+  const{customerid,jewellerid,bankid,jewellername,schemeid,loanreq,loanstatus_jw,loanstatus_bank,goldclaimstatus,goldsettle_status}=req.body
 
   if(loanreq){
       const response=await customerSchemeCollection.findOneAndUpdate({CustomerID:customerid,SchemeID:schemeid,LoanReq:false},{$set:{LoanReq:true,LoanRegDate:new Date(Date.now())}})
@@ -418,16 +421,16 @@ app.put('/CustomerSchemeEdit',async(req,res)=>{
   }
  
 
-   else if(jewellerid && customerid && schemeid && loanstatus_jw ){
+   else if(jewellerid && customerid && schemeid && loanstatus_jw && jewellername ){
       try{
         if(loanstatus_jw==='yes'){
-        const response2 =await customerSchemeCollection.findOneAndUpdate({JewellerID:jewellerid ,CustomerID:customerid,SchemeID:schemeid,LoanReq:true},{$set:{LoanStatus_Jw:"Approved",LoanStatus_Jw_Date:new Date(Date.now())}})
+        const response2 =await customerSchemeCollection.findOneAndUpdate({JewellerID:jewellerid ,CustomerID:customerid,SchemeID:schemeid,LoanReq:true},{$set:{LoanStatus_Jw:"Approved",LoanStatus_Jw_Date:new Date(Date.now()),JewellerName:jewellername}})
         if(response2){
           res.json({response2,status:"approved"})
         }
       }
       else if(loanstatus_jw==='no'){
-        const response2 =await customerSchemeCollection.findOneAndUpdate({JewellerID:jewellerid ,CustomerID:customerid,SchemeID:schemeid,LoanReq:true},{$set:{LoanStatus_Jw:"Rejected",LoanReq:false,LoanStatus_Jw_Date:new Date(Date.now())}})
+        const response2 =await customerSchemeCollection.findOneAndUpdate({JewellerID:jewellerid ,CustomerID:customerid,SchemeID:schemeid,LoanReq:true},{$set:{LoanStatus_Jw:"Rejected",LoanReq:false,LoanStatus_Jw_Date:new Date(Date.now()),JewellerName:jewellername}})
         if(response2){
           res.json({response2,status:"rejected"})
         }

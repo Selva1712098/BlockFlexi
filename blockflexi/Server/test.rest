@@ -1,0 +1,26 @@
+POST  http://localhost:5000/JewellerRegister
+Content-Type: application/json
+
+{
+   
+"name":"VRT",
+"email":"vrt@gmail.com",
+"password":"vrt",
+"walletaddress":"0x9d16df4d53afe6c637e55e5d590f2cd3af9eb802"
+
+}
+
+# PUT http://localhost:5000/CustomerSchemeEdit
+# Content-Type: application/json
+
+# {
+#    "jewellerid":"80q6vbYm0",
+#    "schemeid":"h3zFn1e4q",
+#  "customerid":"yEp7ztSkX",
+#  "loanstatus_jw":"yes"
+# }
+
+
+
+# GET http://localhost:5000/CustomerSchemesLoanReq
+# Content-Type: application/json

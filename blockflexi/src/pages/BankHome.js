@@ -22,7 +22,8 @@ import {useNavigate} from 'react-router-dom'
 import jwt_decode from 'jwt-decode'
 import axios from "axios";
 import { Circles } from  'react-loader-spinner'
-
+import Web3 from'web3';
+import abi from "../contracts/FlexiScheme.json"
 function createData(Sno, name, Phone_No, Payment_Status, Months_paid, PANNo) {
   return { Sno, name, Phone_No, Payment_Status, Months_paid, PANNo };
 }
@@ -43,12 +44,43 @@ export default function BankHome() {
   const [selectedUser, setSelectedUser] = useState(null);
   const[userid,setUserId]=useState([])
   const[user,setUser]=useState([])
+  const[customername,setcusname]=useState(null)
+  const[jeweller,setjeweller] = useState(null)
+  const[schemename,setscheme]=useState(null)
+  const[balance,setBalance]=useState(null)
   const[cookies,setCookie,removeCookie]=useCookies(['bank_sessionId'])
   const navigate=useNavigate()
   const token=jwt_decode(cookies.bank_sessionId)
   const bankid=token.id
   const [isloading,setisLoading]=useState(true)
-  
+  const contractaddress="0xfEdB6cbf8a55D553eECc93dE4e7839C81266379e"
+  async function connect() {
+    if (window.ethereum) {
+      const web3 = new Web3(window.ethereum);
+      try {
+        await window.ethereum.enable();
+        const accounts = await web3.eth.getAccounts();
+        const networkId = await web3.eth.net.getId();
+        if (networkId !== 51) {
+          alert("Please connect to XDC Wallet")
+          throw new Error("Please connect to XDC network.");
+         
+        }
+        return { web3, accounts };
+      } catch (error) {
+        alert("Please Create an account in the XDC Xinfin network")
+        throw new Error("Please connect to Metamask to connect to XDC network.");
+      }
+
+    } else {
+      alert("Please install XDC pay Extension")
+      throw new Error("Please install Metamask to connect to XDC network.");
+    }
+  }
+ useEffect(()=>{
+ 
+  connect()
+ },[])  
   useEffect(()=>{
     if(token.name!=='YourBank'){
       alert('you are not logged in , please login')
@@ -57,6 +89,7 @@ export default function BankHome() {
   },[token,navigate])
   function handleDialogOpen(user) {
     setOpen(true);
+    getdetails(user)
     setSelectedUser(user);
     
   }
@@ -70,6 +103,47 @@ export default function BankHome() {
   }
   const handleUsers=(data)=>{
     setUser(data)
+  }
+  const passdata=(data)=>{
+    const blockdata=userid.find(user=>user.CustomerID===data.CustomerID)
+    const jewellername=blockdata.JewellerName
+    const schemename=blockdata.SchemeName
+    const customerid=blockdata.CustomerID
+    const jewellerid=blockdata.JewellerID
+    const schemeid=blockdata.SchemeID
+
+    navigate(`/BankPayment/${customerid}/${jewellerid}/${schemeid}`,{state:{customername:data.CustomerName,jewellername:jewellername,schemename:schemename,bankid:bankid,balance:balance}})
+  }
+  const getdetails=async (data)=>{
+    const { web3, accounts } = await connect();
+    
+      
+     
+        const bfcontract = new web3.eth.Contract(abi, contractaddress);
+    console.log(bfcontract);
+    const blockdata=userid.find(user=>user.CustomerID===data.CustomerID)
+    const jewellername=blockdata.JewellerName
+    const schemename=blockdata.SchemeName
+    console.log(jewellername,schemename)
+    setjeweller(jewellername)
+      setscheme(schemename)
+    try{
+      const _customername=data.CustomerName
+
+      const _jewellername=jewellername
+      const _schemename=schemename
+      setcusname(_customername)
+      
+
+      const getBalance= await bfcontract.methods.getBalance(_customername,_jewellername,_schemename).call()
+      console.log(getBalance)
+      setBalance(getBalance)
+
+    }catch(e){
+      console.log(e)
+    }
+
+
   }
   const apprequest=async(row)=>{
     console.log(row)
@@ -197,23 +271,23 @@ useEffect(()=>{
             <Typography variant='h5' sx={{fontWeight:'bold',fontFamily:'Roboto'}}>CUSTOMER DETAILS</Typography></DialogTitle>
             
         <DialogContent>
-          {selectedUser && (
+          
            <DialogContentText>
               <Typography variant="h6"  gutterBottom>
-                Name: {selectedUser.CustomerName}
+                Name: {customername}
               </Typography>
               <Typography variant="h6"  gutterBottom>
-                Phone: {selectedUser.MobileNo}
+                JewellerName: {jeweller}
               </Typography>
               <Typography variant="h6"   gutterBottom>
-                PAN: {selectedUser.PANno}
+                SchemeName: {schemename}
               </Typography>
               <Typography variant="h6"   gutterBottom>
-                Months Paid:3
+                Amount to be paid:{balance}
               </Typography>
               
               </DialogContentText>
-          )}
+         
         </DialogContent>
             <DialogActions>
           <Button variant='contained'  size='small'  onClick={() => setOpen(false)}>Ok</Button>
@@ -267,7 +341,7 @@ useEffect(()=>{
                align="left"
                sx={{ fontWeight: "medium", fontSize: "18px",backgroundColor:'#9A1B56',color:'white' }}
              >
-              PAYMENTS
+              DETAILS
              </TableCell>
              <TableCell
                align='left'
@@ -302,12 +376,12 @@ useEffect(()=>{
                    sx={{padding:'8px'}}
                    onClick={() => handleDialogOpen(row)}
                  >
-                   See Payments
+                   See Details
                  </Button>
                </TableCell>
                <TableCell align="center">
                  <Stack direction="row" alignItems="center" spacing={3}>
-                   <Button variant="contained" size ="small" sx={{padding:'8px'}} color="success" onClick={()=>{apprequest(row)}}>
+                   <Button variant="contained" size ="small" sx={{padding:'8px'}} color="success" onClick={()=>{passdata(row)}}>
                      Approve
                    </Button>
                    <Button variant="contained" size ="small" sx={{padding:'8px'}} color="error" onClick={()=>{rjtrequest(row)}}>
