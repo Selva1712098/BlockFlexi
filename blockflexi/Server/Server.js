@@ -329,7 +329,7 @@ app.get('/CustomerSchemesBankStatus',async(req,res)=>{
 
   try{
     
-    const response= await customerSchemeCollection.find({LoanReq:true,LoanStatus_Bank:"Approved",GoldSettledStatus:false},{CustomerID:1,JewellerID:1,SchemeID:1,LoanStatus_Bank:1})
+    const response= await customerSchemeCollection.find({LoanReq:true,LoanStatus_Bank:"Approved",GoldSettledStatus:false},{CustomerID:1,JewellerID:1,SchemeID:1,LoanStatus_Bank:1,SchemeName:1})
     if(response){
       console.log(response)
       res.json({
