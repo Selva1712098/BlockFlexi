@@ -102,7 +102,7 @@ function Scheme({isOpen, onClose,jewellerid,customerid,jewellername,customerwall
       }
       else if(res.data.status==='success'){
         console.log("Added to DB ")
-        addschemebc(schemes);
+       
        // alert("You have joined this scheme successfully.Go to your schemes to view them")
      //   window.location.reload()
         
@@ -140,6 +140,7 @@ function Scheme({isOpen, onClose,jewellerid,customerid,jewellername,customerwall
             _monthlyAmount
           ).send({from:accounts[0],gas:1000000});
           console.log('addscheme',addscheme)
+            joinscheme(scheme)
           if(addscheme.status){
            setOpen(true)
             
@@ -239,7 +240,7 @@ function Scheme({isOpen, onClose,jewellerid,customerid,jewellername,customerwall
             Joined
           </Button>
         ) : ( */}
-          <Button variant='solid' onClick={()=>{ joinscheme(scheme)}} bgColor={"#c17171"} mr={'4'} color={"#fff"}>
+          <Button variant='solid' onClick={()=>{ addschemebc(scheme)}} bgColor={"#c17171"} mr={'4'} color={"#fff"}>
             Join
           </Button>
 

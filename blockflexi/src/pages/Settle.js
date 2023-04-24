@@ -287,11 +287,11 @@ value={isloading}
         
           
             <TableRow>
-              <TableCell style={{  backgroundColor: '#9a1b56', color: 'white', fontSize: '1.2rem' }}>S.NO</TableCell>
-              <TableCell style={{  backgroundColor: '#9a1b56', color: 'white', fontSize: '1.2rem' }}>CUSTOMER NAME</TableCell>
-              <TableCell style={{ backgroundColor: '#9a1b56', color: 'white', fontSize: '1.2rem'}}>LOAN APPROVED</TableCell>
-              <TableCell style={{  backgroundColor: '#9a1b56', color: 'white', fontSize: '1.2rem' }} align='left'>BANK PAYMENT</TableCell>
-              <TableCell style={{  backgroundColor: '#9a1b56', color: 'white', fontSize: '1.2rem' }}>SETTLE GOLD</TableCell>
+              <TableCell style={{  backgroundColor: '#9a1b56', color: 'white', fontSize: '1.2rem' }}><b>S.NO</b></TableCell>
+              <TableCell style={{  backgroundColor: '#9a1b56', color: 'white', fontSize: '1.2rem' }}><b>CUSTOMER NAME</b></TableCell>
+              <TableCell style={{ backgroundColor: '#9a1b56', color: 'white', fontSize: '1.2rem'}}><b>LOAN APPROVED</b></TableCell>
+              <TableCell style={{  backgroundColor: '#9a1b56', color: 'white', fontSize: '1.2rem' }} align='left'><b>BANK PAYMENT</b></TableCell>
+              <TableCell style={{  backgroundColor: '#9a1b56', color: 'white', fontSize: '1.2rem' }}><b>SETTLE GOLD</b></TableCell>
             </TableRow>
            
           </TableHead>
@@ -309,7 +309,7 @@ value={isloading}
           
 
             <TableCell>Yes</TableCell>
-            <TableCell><Button variant ='contained' onClick={()=>{
+            <TableCell><Button variant ='contained' style={{backgroundColor:'#9a1b56'}} onClick={()=>{
               opendetails(row)
             }}><b>See Details</b></Button></TableCell>
             <TableCell>
