@@ -1,8 +1,9 @@
-import Header from "../components/Header";
 import React, { useEffect, useState } from "react";
 import jwt_Decode from 'jwt-decode'
 import { useCookies } from "react-cookie";
 import axios from "axios";
+import Web3 from'web3';
+import abi from "../contracts/FlexiScheme.json"
 import {
   Table,
   TableBody,
@@ -29,28 +30,96 @@ const TableExample = () => {
   const [hoveredRow, setHoveredRow] = useState(null);
   const[userid,setUserId]=useState([])
   const [open, setOpen] = useState(false);
+   const[customername,setcusname]=useState(null)
+  const[months,setMonths]=useState(null)
+  const[balance,setBalance]=useState(null)
   const [selectedUser, setSelectedUser] = useState(null);
+  const[user,setUser]=useState([])
+  const[isloading,setisLoading]=useState(true);
+  const[schemename,setSchemename]=useState([])
+  const[scheme,setScheme]=useState(null)
+  const[cookies,setCookie,removeCookie]=useCookies(['jeweller_sessionId'])
+  const token=jwt_Decode(cookies.jeweller_sessionId)
+  const jewellerid=token.id
+  const jewellername=token.name
+  const contractaddress="0xfEdB6cbf8a55D553eECc93dE4e7839C81266379e"
+  async function connect() {
+    if (window.ethereum) {
+      const web3 = new Web3(window.ethereum);
+      try {
+        await window.ethereum.enable();
+        const accounts = await web3.eth.getAccounts();
+        const networkId = await web3.eth.net.getId();
+        if (networkId !== 51) {
+          alert("Please connect to XDC Wallet")
+          throw new Error("Please connect to XDC network.");
+         
+        }
+        return { web3, accounts };
+      } catch (error) {
+        alert("Please Create an account in the XDC Xinfin network")
+        throw new Error("Please connect to Metamask to connect to XDC network.");
+      }
+
+    } else {
+      alert("Please install XDC pay Extension")
+      throw new Error("Please install Metamask to connect to XDC network.");
+    }
+  }
+ useEffect(()=>{
+ 
+  connect()
+ },[])  
   const handleClose = () => {
     setOpen(false);
   };
 
   const handleOpen = (user) => {
     setOpen(true);
+    getdetails(user)
     setSelectedUser(user);
   };
-  const[user,setUser]=useState([])
-  const[isloading,setisLoading]=useState(true);
-  const[schemename,setSchemename]=useState([])
-  const[cookies,setCookie,removeCookie]=useCookies(['jeweller_sessionId'])
-  const token=jwt_Decode(cookies.jeweller_sessionId)
-  const jewellerid=token.id
-  const jewellername=token.name
+  
   const setrows=(data)=>{
     setUserId(data)
   }
   const setschemename=(data)=>{
     setSchemename(data)
     console.log(schemename)
+  }
+  const getdetails=async (data)=>{
+     const { web3, accounts } = await connect();
+    
+      
+     
+        const bfcontract = new web3.eth.Contract(abi, contractaddress);
+    console.log(bfcontract);
+    const blockdata=userid.find(user=>user.CustomerID===data.CustomerID)
+    
+    const schemeName=blockdata.SchemeName
+    setScheme(schemeName)
+    console.log(jewellername,schemename)
+    
+    try{
+      const _customername=data.CustomerName
+
+      const _jewellername=jewellername
+      const _schemename=schemeName
+      setcusname(_customername)
+      
+
+      const getBalance= await bfcontract.methods.getBalance(_customername,_jewellername,_schemename).call()
+      const monthspaid=await bfcontract.methods.getMonthsPaid(_customername,_jewellername,_schemename).call()
+      console.log(getBalance)
+      setBalance(getBalance)
+      setMonths(monthspaid)
+
+    }catch(e){
+      console.log(e)
+    }
+
+
+  
   }
   useEffect(()=>{
     
@@ -209,7 +278,7 @@ const handleUsers=(data)=>{
    
   return (
     <div style={{ display: "flex", flexDirection: "column"   }}>
-      <Header />
+      
       <Typography
         variant="h4"
         align="center"
@@ -313,13 +382,16 @@ const handleUsers=(data)=>{
           {selectedUser && (
             <DialogContentText style={{ fontWeight: "bold"  }}>
               <div style={{margin:'5px 0px 0px 60px'}}>
-              CUSTOMER NAME : {selectedUser.CustomerName}
+              CUSTOMER NAME : {customername}
               <br /> <br /></div>
               <div style={{margin:'0px 0px 0px 60px'}}>
-              PAN NO : {selectedUser.PANno}
+             SCHEME NAME : {scheme}
               <br /><br/></div>
               <div style={{margin:'0px 0px 0px 60px'}}>
-              ADDRESS : {selectedUser.Address}
+              AMOUNT TO BE PAID : {balance}
+              <br /><br/></div>
+              <div style={{margin:'0px 0px 0px 60px'}}>
+              MONTHS PAID : {months}
               <br /><br/></div>
              
             </DialogContentText>)}

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Header from "../Header";
+
 
 import {
   Card,
@@ -65,8 +65,7 @@ function BankLogin() {
     }
   return (
     <>
-      <Header />
-
+    
       <div
         style={{
           display: "flex",

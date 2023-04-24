@@ -1,8 +1,7 @@
 import React,{useState,useEffect} from "react";
-import Header from "../components/Header";
 import axios from "axios";
 import './pay.css';
-import './PaymentProcessing.css';
+// import './PaymentProcessing.css';
 import { useParams,useLocation } from "react-router-dom";
 import abi from '../contracts/FlexiScheme.json'
 import Web3 from 'web3'
@@ -165,20 +164,15 @@ console.log(bfcontract);
       }
     })
   }
-  if(loading){
-    return (
-      <div className={`overlay ${loading ? 'active' : ''}`}>
-        <div className="processing-container">
-          <div className="processing-icon"></div>
-          <div className="processing-text">Processing Payment...</div>
-        </div>
-      </div>
-    );
-  }
+  
+   
+     
+    
+  
     return(
      
         <div>
-             <Header/>
+             
             <div style={{display:'flex',justifyContent:'flex-end',marginTop:'13px',marginRight:'10px'}}>
             {/* <Button variant='contained' size='sm' style={{backgroundColor:'#9A1B56'}} onClick={connect} >Connect </Button> */}
               </div>
@@ -191,10 +185,17 @@ console.log(bfcontract);
     <p>{scheme.MonthlyPayment}</p>
     
     <button onClick={()=>Pay(scheme)}>Pay</button>
+  
     </div>
   </div>
              ))} 
   </div>
+  {loading&& <div className={`overlay ${loading ? 'active' : ''}`}>
+        <div className="processing-container">
+          <div className="processing-icon"></div>
+          <div className="processing-text">Processing Payment...</div>
+        </div>
+      </div>}
   </div>
     )
 }

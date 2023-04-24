@@ -1,4 +1,3 @@
-import Header from '../components/Header';
 import {useNavigate} from 'react-router-dom';
 import { useState } from 'react';
 import { Box, Card, CardContent, Typography, CardActions, Button, Modal,TextField } from '@mui/material';
@@ -116,7 +115,7 @@ const JewellerHome = () => {
   
     return (
       <div>
-        <Header/>
+       
         <br/>
         <div style={{display:'flex',justifyContent:'flex-end',alignItems:'center',marginRight:'30px'}}>
         <Button variant='contained' style={{backgroundColor:'#9A1B56'}}  onClick={logout}> <b>LOGOUT</b></Button> <br/>

@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import Header from '../Header';
 import {
   Card,
   CardContent,
@@ -18,8 +17,8 @@ import { useNavigate } from 'react-router-dom';
 const CustomerLogin = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const[open,setOpen]=useState(false)
-  const[wallet,setWallet]=useState('')
+ 
+  //const[wallet,setWallet]=useState('')
   
   const navigate=useNavigate()
   
@@ -40,9 +39,20 @@ const CustomerLogin = () => {
       email,password
     },{withCredentials:true}).then((res)=>{
       if(res.data.status==='ok'){
-      setOpen(true)
-     
-       setWallet(res.data.wallet)
+        
+        Swal.fire({
+          icon: 'success',
+          title: 'Login successful!',
+          text: 'You are now logged in.',
+          confirmButtonColor:"#9A1B56"
+        }).then((result)=>{
+          if(result.isConfirmed){
+            const wallet=res.data.wallet
+            navigate('/CustomerLanding',{state:{walletAddress:wallet}})
+          }
+        });
+        
+       
         //navigate('/CustomerLanding',{state:{walletAddress:res.data.wallet}})
       }
       else if(res.data.status==='error'){
@@ -50,27 +60,26 @@ const CustomerLogin = () => {
         alert("wrong password")
       }
       else if(res.data.status==='not found'){
-        alert('user not found')
+        Swal.fire({
+          icon: 'error',
+          title: 'User Not Found!',
+          text: 'Please Create an account',
+        }).then((result)=>{
+          if(result.isConfirmed){
+            navigate('/Customer/Register')
+          }
+        })
       }
     }).catch(e=>{
       alert('wrong details')
     })
   }
-  if(open){
-    Swal.fire({
-      icon: 'success',
-      title: 'Login successful!',
-      text: 'You are now logged in.',
-      confirmButtonColor:"#9A1B56"
-    }).then((result)=>{
-      if(result.isConfirmed){
-        navigate('/CustomerLanding',{state:{walletAddress:wallet}})
-      }
-    });
-  }
+ 
+    
+  
   return (
     <>
-    <Header/>
+    
     <div
       style={{
         display: 'flex',
@@ -136,7 +145,7 @@ const CustomerLogin = () => {
               type="password"
               variant="outlined"
               fullWidth
-              value={password}
+              
               onChange={handlePasswordChange}
               margin="normal"
               style={{ marginBottom: '30px' }}

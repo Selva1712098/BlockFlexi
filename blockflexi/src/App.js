@@ -1,10 +1,11 @@
 import './App.css';
 import LandingPage from './pages/LandingPage';
-import React from 'react';
+import React, { createContext, useContext,useState } from 'react';
 import CustomerLogin from './components/Modals/CustomerLogin'
 import JewellerLogin from './components/Modals/JewellerLogin'
 import BankLogin from './components/Modals/BankLogin'
 import JewellerHome from './pages/JewellerHome';
+import Header from './components/Header';
 // import BankHome from './pages/BankHome';
 import CustomerRegister from './components/Modals/CustomerRegister';
 import JewellerRegister from './components/Modals/JewellerRegister';
@@ -20,13 +21,17 @@ import AllJewellers from './pages/AllJewellers';
 import JewellerProfile from './pages/JewellerProfile';
 
 
-
 const LazyBankHome=React.lazy(()=>import ('./pages/BankHome'))
-
+export const LoginContext=createContext()
 function App() {
+
+  const[loggedin,setLoggedin]=useState(false)
+  
   return (
     <div className="App">
+      <LoginContext.Provider value={loggedin}>
       <Router>
+        <Header/>
       <Routes>
         <Route path={'/'} element={<LandingPage/>}/>
         <Route path={'/CustomerHome'} element={<CustomerHome/>}/>
@@ -53,7 +58,7 @@ function App() {
         
       </Routes>
     </Router>
-      
+    </LoginContext.Provider>
       
      </div>
   );

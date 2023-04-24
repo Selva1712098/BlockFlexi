@@ -44,7 +44,7 @@ app.use((req, res, next) => {
 });
 
 app.post("/CustomerRegister", async (req, res) => {
-  const { name, address, mobile, email, password, PANNo } = req.body;
+  const { name, address, mobile, email, password, PANNo,wallet } = req.body;
 
   const salt = bcrypt.genSaltSync(10);
   const hash = bcrypt.hashSync(password, salt);
@@ -58,6 +58,7 @@ app.post("/CustomerRegister", async (req, res) => {
     PANno: PANNo,
     RowDate: new Date(Date.now()),
     Status: true,
+    WalletAddress:wallet
   };
 
   try {
@@ -67,6 +68,7 @@ app.post("/CustomerRegister", async (req, res) => {
       res.json({ status: "exists" });
     } else {
       const check1 = await customerMasterCollection.insertMany([datas]);
+      console.log(check1)
       return res.json({ message: "Customer Added", status: "ok" });
     }
   } catch (e) {

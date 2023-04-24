@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import Header from "../components/Header";
 import { useLocation } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import { ChakraProvider, Stack } from "@chakra-ui/react";
@@ -77,7 +76,7 @@ function CustomerHome() {
   return (
     <>
       <div >
-      <Header />
+     
       <br/>
       <h1 className="tpb">Welcome!!!</h1>
 

@@ -1,11 +1,10 @@
 import React,{useEffect,useState} from "react";
-import Header from "../components/Header";
 import { useLocation ,useParams,useNavigate} from "react-router-dom";
 // import jwt_Decode from 'jwt-decode'
 import Web3 from'web3';
 import axios from 'axios'
 import Swal from 'sweetalert2'
-import './PaymentProcessing.css';
+
 import abi from "../contracts/FlexiScheme.json"
 import './BankPay.css';
 function BankPayment(){
@@ -16,10 +15,11 @@ function BankPayment(){
     const customername=location.state.customername
     const jewellername=location.state.jewellername
     const schemename=location.state.schemename
-    const balance=location.state.balance
+    // const balance=location.state.balance
+    const[balance,setBalance]=useState('')
     const bankid=location.state.bankid
     const[loading,setLoading]=useState(false)
-
+    
     async function connect() {
         if (window.ethereum) {
           const web3 = new Web3(window.ethereum);
@@ -47,6 +47,17 @@ function BankPayment(){
      
       connect()
      },[]) 
+     const getdetails=async()=>{
+      const{web3,accounts} = await connect()
+
+      const bfcontract = new web3.eth.Contract(abi, contractaddress);
+  console.log(bfcontract);
+  const getBalance= await bfcontract.methods.getBalance(customername,jewellername,schemename).call()
+  setBalance(getBalance)
+     }
+     useEffect(()=>{
+      getdetails()
+     })
      
      const payJeweller=async()=>{
         const{web3,accounts} = await connect()
@@ -65,7 +76,7 @@ function BankPayment(){
         console.log(payment)
 
         if(payment.status ===true ){
-            setLoading(false)
+           setLoading(false)
             apprequest()
         }
     }catch(e){
@@ -100,20 +111,20 @@ function BankPayment(){
   
   }
   })
-  if(loading){
+
     return (
-      <div className={`overlay ${loading ? 'active' : ''}`}>
-        <div className="processing-container">
-          <div className="processing-icon"></div>
-          <div className="processing-text">Processing Payment...</div>
+      <div className={`overlay-1 ${loading ? 'active' : ''}`}>
+        <div className="processing-container-1">
+          <div className="processing-icon-1"></div>
+          <div className="processing-text-1">Processing Payment...</div>
         </div>
       </div>
     );
-  }
+  
      }
     return(
         <div>
-            <Header/>
+           
     <div className="payment-container">
     <div className="payment-card">
       <div className="customer-details">
@@ -135,7 +146,12 @@ function BankPayment(){
         </div>
       </div>
       <button className="pay-button" onClick={payJeweller}>Pay</button>
-
+     { loading && <div className={`overlay-1 ${loading ? 'active' : ''}`}>
+        <div className="processing-container-1">
+          <div className="processing-icon-1"></div>
+          <div className="processing-text-1">Processing Payment...</div>
+        </div>
+      </div>}
         </div>
         </div>
         </div>

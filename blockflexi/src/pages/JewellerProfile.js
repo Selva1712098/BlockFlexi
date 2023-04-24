@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import './JewellerProfile.css'
-import Header from '../components/Header';
 
 const JewellerProfile = () => {
   const [name, setName] = useState('');
@@ -25,7 +24,7 @@ const JewellerProfile = () => {
 
   return (
     <div>
-        <Header />
+       
         <div className='jeweler-profile'>
             <h1>Edit Your JewelleryDetails</h1>
     <form onSubmit={handleSubmit}>

@@ -7,7 +7,6 @@ Button,
 Typography,
 } from '@mui/material';
 import {useNavigate} from 'react-router-dom'
-import Header from '../Header'
 import axios from 'axios'
 
 const CustomerRegister = () => {
@@ -17,6 +16,7 @@ const [mobile, setMobile] = useState('');
 const [PANNo, setPANNo] = useState('');
 const [email, setEmail] = useState('');
 const [password, setPassword] = useState('');
+const[wallet,setWallet]=useState('')
 const navigate=useNavigate()
 const handleNameChange = (event) => {
 setName(event.target.value);
@@ -41,6 +41,9 @@ setEmail(event.target.value);
 const handlePasswordChange = (event) => {
 setPassword(event.target.value);
 };
+const handleWalletChange = (event) => {
+setWallet(event.target.value);
+};
 
 
 
@@ -49,7 +52,7 @@ setPassword(event.target.value);
   await axios.post("http://localhost:5000/CustomerRegister",{
     name,
     address,
-    mobile,PANNo,email,password
+    mobile,PANNo,email,password,wallet
   }).then(res=>{
     if(res.data.status==='ok'){
       alert("Your account has been created successfully")
@@ -63,16 +66,20 @@ setPassword(event.target.value);
     alert("wrong details")
   })
 }
+
+const data=()=>{
+  console.log(name,address,email,password,wallet,PANNo,mobile)
+}
 return (
     <>
-    <Header/>
+  
     <br/>
     <br/>
     <br/>
 <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}>
     
 
-<Card sx={{ bgcolor: '#f5f5f5', width: '400px', margin: '50px' }}>
+<Card sx={{ bgcolor: '#ffffff', width: '400px', margin: '50px' }}>
 <div
           style={{
             backgroundColor: '#9A1B56',
@@ -146,11 +153,26 @@ CUSTOMER REGISTRATION
            type="password"
            variant="outlined"
            fullWidth
-           value={password}
+           
+           
            onChange={handlePasswordChange}
            margin="normal"
          />
-<Button  sx={{ margin: '10px 0px 0px 120px', backgroundColor: '#9AB156' }} variant="contained"  type="submit">
+         <TextField
+           id="wallet"
+           label="Wallet Address"
+           type="text"
+           variant="outlined"
+           fullWidth
+           value={wallet}
+           onChange={handleWalletChange}
+           margin="normal"
+         />
+         
+        
+
+        
+<Button  style={{ margin: '10px 0px 0px 120px', backgroundColor: '#9A1B56' }} variant="contained" onClick={data} type="submit">
 Register
 </Button>
 </form>

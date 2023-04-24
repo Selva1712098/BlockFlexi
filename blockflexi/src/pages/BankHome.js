@@ -16,7 +16,6 @@ import {
   
   DialogActions,Slide, DialogContentText, Grid
 } from "@mui/material";
-import Header from "../components/Header";
 import {useCookies }from 'react-cookie'
 import {useNavigate} from 'react-router-dom'
 import jwt_decode from 'jwt-decode'
@@ -112,7 +111,7 @@ export default function BankHome() {
     const jewellerid=blockdata.JewellerID
     const schemeid=blockdata.SchemeID
 
-    navigate(`/BankPayment/${customerid}/${jewellerid}/${schemeid}`,{state:{customername:data.CustomerName,jewellername:jewellername,schemename:schemename,bankid:bankid,balance:balance}})
+    navigate(`/BankPayment/${customerid}/${jewellerid}/${schemeid}`,{state:{customername:data.CustomerName,jewellername:jewellername,schemename:schemename,bankid:bankid}})
   }
   const getdetails=async (data)=>{
     const { web3, accounts } = await connect();
@@ -254,7 +253,7 @@ useEffect(()=>{
  
   return (
     <>
-      <Header />
+      
 
       <Dialog
         open={open}
@@ -297,27 +296,24 @@ useEffect(()=>{
       <br/>
       <br/>
       <br/>
-      <Grid container  direction="row"
-  justifyContent="center"
-  alignItems="center">
-      <Grid item xs={12}>
       <div
         style={{
           height: "140px",
           display: "flex",
-          flexFlow: "row wrap",
-          justifyContent: "space-around",
+         
+          justifyContent: "center",
           alignItems: "center",
+          
         }}
       >
-        <Typography variant="h4" sx={{fontWeight:'bold',marginLeft:'395px'}}>
-          INCOMING REQUESTS
-        </Typography>
-        <Button variant="contained" onClick={handleLogout} style={{backgroundColor:'#9A1B56'}}><b>Logout</b></Button>
+        <h1><b>INCOMING REQUESTS</b></h1>
+        <Button variant="contained" onClick={handleLogout} style={{backgroundColor:'#9A1B56',right:'20%',left:'19%',top:'6%'}}><b>Logout</b></Button>
       </div>
+      <div style={{display:'flex',justifyContent:'center',alignItems:'center',flexFlow:'column'}}>
+      
       
         
-        <TableContainer component={Paper} sx={{ maxHeight: "400px",maxWidth:'1000px',margin:'auto',borderRadius:'15px',display:'grid'}} >
+        <TableContainer component={Paper} sx={{ maxHeight: "400px",maxWidth:'900px',margin:'auto',borderRadius:'15px'}} >
        
        <Table aria-label="simple table"  >
          <TableHead >
@@ -349,12 +345,7 @@ useEffect(()=>{
              >
               APPROVAL
              </TableCell>
-             <TableCell
-               align="center"
-               sx={{ fontWeight: "medium", fontSize: "18px" ,backgroundColor:'#9A1B56',color:'white'}}
-             >
-               PAYMENT STATUS
-             </TableCell>
+            
            </TableRow>
          </TableHead>
          <TableBody>
@@ -376,31 +367,28 @@ useEffect(()=>{
                    sx={{padding:'8px'}}
                    onClick={() => handleDialogOpen(row)}
                  >
-                   See Details
+                   <b>See Details</b>
                  </Button>
                </TableCell>
                <TableCell align="center">
                  <Stack direction="row" alignItems="center" spacing={3}>
                    <Button variant="contained" size ="small" sx={{padding:'8px'}} color="success" onClick={()=>{passdata(row)}}>
-                     Approve
+                     <b>Approve</b>
                    </Button>
                    <Button variant="contained" size ="small" sx={{padding:'8px'}} color="error" onClick={()=>{rjtrequest(row)}}>
-                     Reject
+                     <b>Reject</b>
                    </Button>
                  </Stack>
                </TableCell>
-               <TableCell align="center" sx={{ fontSize: "16px" }}>
-                 TBD
-               </TableCell>
+              
              </TableRow>
            ))}
          </TableBody>
        </Table>
        
      </TableContainer>
-        </Grid>
-      </Grid>
-      
+     </div>
+       
       
     </>
   );

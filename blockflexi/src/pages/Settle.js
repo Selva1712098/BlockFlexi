@@ -1,5 +1,4 @@
 import React, { useState,useEffect } from 'react';
-import Header from '../components/Header';
 import axios from 'axios'
 import jwtDecode from 'jwt-decode'
 import { useCookies } from 'react-cookie';
@@ -153,7 +152,7 @@ value={isloading}
 
   return (
     <div>
-      <Header title="Settle Accounts" />
+      
 
       <Typography 
         variant="h4" 

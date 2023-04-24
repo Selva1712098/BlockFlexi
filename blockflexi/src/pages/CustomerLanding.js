@@ -1,4 +1,3 @@
-import Header from "../components/Header";
 import React, { useEffect, useState, useRef } from "react";
 
 import { useNavigate,useLocation } from "react-router-dom";
@@ -13,7 +12,7 @@ function CustomerLanding() {
   const location=useLocation();
   const [cookies, setCookie, removeCookie] = useCookies(["customer_sessionId"]);
   const customerWallet=location.state.walletAddress
-
+  console.log(customerWallet)
  
   const [showSection, setShowSection] = useState(false);
     const HeroRef = useRef(null);
@@ -41,7 +40,7 @@ function CustomerLanding() {
   // }, []);
   return (
     <div style={{ height: "50vh", background: "white"}}>
-      <Header />
+     
       <div
         style={{
           display: "flex",
