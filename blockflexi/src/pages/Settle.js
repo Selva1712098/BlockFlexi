@@ -2,7 +2,8 @@ import React, { useState,useEffect } from 'react';
 import axios from 'axios'
 import jwtDecode from 'jwt-decode'
 import { useCookies } from 'react-cookie';
-
+import Web3 from'web3';
+import abi from "../contracts/FlexiScheme.json"
 
 import {
   Table,
@@ -32,18 +33,89 @@ function Settle() {
   const [cookies]=useCookies(['jeweller_sessionId'])
   const token=jwtDecode(cookies.jeweller_sessionId)
   const jewellerid=token.id
+  const jewellername=token.name
+  const[customername,setcusname]=useState(null)
+  // const[months,setMonths]=useState(null)
+  const[balance,setBalance]=useState(null)
   const [isloading,setisLoading]=useState(true)
-
+  const[open,setOpen]=useState(false)
+  const contractaddress="0xfEdB6cbf8a55D553eECc93dE4e7839C81266379e"
+  const[scheme,setScheme]=useState(null)
   const[user,setUser]=useState([])
   const handleSettleClick = (row) => {
     setSelectedRow(row);
     setOpenDialog(true);
   };
+  async function connect() {
+    if (window.ethereum) {
+      const web3 = new Web3(window.ethereum);
+      try {
+        await window.ethereum.enable();
+        const accounts = await web3.eth.getAccounts();
+        const networkId = await web3.eth.net.getId();
+        if (networkId !== 51) {
+          alert("Please connect to XDC Wallet")
+          throw new Error("Please connect to XDC network.");
+         
+        }
+        return { web3, accounts };
+      } catch (error) {
+        alert("Please Create an account in the XDC Xinfin network")
+        throw new Error("Please connect to Metamask to connect to XDC network.");
+      }
 
+    } else {
+      alert("Please install XDC pay Extension")
+      throw new Error("Please install Metamask to connect to XDC network.");
+    }
+  }
+ useEffect(()=>{
+ 
+  connect()
+ },[]) 
+  const opendetails=(row)=>{
+    setOpen(true)
+    getdetails(row)
+
+  }
+  
   const handleCloseDialog = () => {
     setOpenDialog(false);
   };
+  const getdetails=async (data)=>{
+    const { web3 } = await connect();
+    
+      
+     
+        const bfcontract = new web3.eth.Contract(abi, contractaddress);
+    console.log(bfcontract);
+    const blockdata=userid.find(user=>user.CustomerID===data.CustomerID)
+    console.log(blockdata);
+    const schemeName=blockdata.SchemeName
+    setScheme(schemeName)
+    console.log(jewellername,schemeName)
+    try{
+      const _customername=data.CustomerName
 
+      const _jewellername=jewellername
+      const _schemename=schemeName
+      setcusname(_customername)
+      
+
+      const getBalance= await bfcontract.methods.getBalance(_customername,_jewellername,_schemename).call()
+      // const monthspaid=await bfcontract.methods.getMonthsPaid(_customername,_jewellername,_schemename).call()
+      console.log(getBalance)
+      setBalance(getBalance)
+      // setMonths(monthspaid)
+
+    }catch(e){
+      console.log(e)
+    }
+
+
+
+
+  }
   const [hoveredRow, setHoveredRow] = useState(null);
 
   const settlegold=async(row)=>{
@@ -152,7 +224,44 @@ value={isloading}
 
   return (
     <div>
-      
+      <Dialog
+        open={open}
+        onClose={() => setOpen(false)}
+        aria-labelledby="dialog-title"
+        aria-describedby="dialog-description"
+        maxWidth="xs"
+        fullWidth
+       
+        scroll='paper'
+        
+      >
+        <DialogTitle>
+            <Typography variant='h5' sx={{fontWeight:'bold',fontFamily:'Roboto'}}>CUSTOMER DETAILS</Typography></DialogTitle>
+            
+        <DialogContent>
+          
+           <DialogContentText>
+              <Typography variant="h6"  gutterBottom>
+                Name: {customername}
+              </Typography>
+             
+              <Typography variant="h6"   gutterBottom>
+                SchemeName: {scheme}
+              </Typography>
+              <Typography variant="h6"   gutterBottom>
+                Amount to be paid:{balance}
+              </Typography>
+              <Typography variant="h6"   gutterBottom>
+                Bank Payment Status :Completed
+              </Typography>
+              
+              </DialogContentText>
+         
+        </DialogContent>
+            <DialogActions>
+          <Button variant='contained'  size='small'  onClick={() => setOpen(false)}>Ok</Button>
+          </DialogActions>
+      </Dialog>
 
       <Typography 
         variant="h4" 
@@ -178,11 +287,11 @@ value={isloading}
         
           
             <TableRow>
-              <TableCell style={{  backgroundColor: '#9a1b56', color: 'white', fontSize: '1.2rem' }}>S.NO</TableCell>
-              <TableCell style={{  backgroundColor: '#9a1b56', color: 'white', fontSize: '1.2rem' }}>CUSTOMER NAME</TableCell>
-              <TableCell style={{ backgroundColor: '#9a1b56', color: 'white', fontSize: '1.2rem'}}>LOAN APPROVED</TableCell>
-              <TableCell style={{  backgroundColor: '#9a1b56', color: 'white', fontSize: '1.2rem' }} align='left'>BANK PAYMENT</TableCell>
-              <TableCell style={{  backgroundColor: '#9a1b56', color: 'white', fontSize: '1.2rem' }}>SETTLE GOLD</TableCell>
+              <TableCell style={{  backgroundColor: '#9a1b56', color: 'white', fontSize: '1.2rem' }}><b>S.NO</b></TableCell>
+              <TableCell style={{  backgroundColor: '#9a1b56', color: 'white', fontSize: '1.2rem' }}><b>CUSTOMER NAME</b></TableCell>
+              <TableCell style={{ backgroundColor: '#9a1b56', color: 'white', fontSize: '1.2rem'}}><b>LOAN APPROVED</b></TableCell>
+              <TableCell style={{  backgroundColor: '#9a1b56', color: 'white', fontSize: '1.2rem' }} align='left'><b>BANK PAYMENT</b></TableCell>
+              <TableCell style={{  backgroundColor: '#9a1b56', color: 'white', fontSize: '1.2rem' }}><b>SETTLE GOLD</b></TableCell>
             </TableRow>
            
           </TableHead>
@@ -193,26 +302,25 @@ value={isloading}
             {user.map((row,index) => (
               <TableRow
                 
-                style={{ boxShadow: hoveredRow === row ? '0px 0px 10px 5px rgba(0, 0, 0, 0.1)' : 'none' }}
-                onMouseEnter={() => handleRowHover(row)}
-                onMouseLeave={() => handleRowHoverLeave()}
+               
           >
             <TableCell>{index+1}</TableCell>
             <TableCell>{row.CustomerName}</TableCell>
           
 
             <TableCell>Yes</TableCell>
-            <TableCell>Done</TableCell>
+            <TableCell><Button variant ='contained' style={{backgroundColor:'#9a1b56'}} onClick={()=>{
+              opendetails(row)
+            }}><b>See Details</b></Button></TableCell>
             <TableCell>
               <Button
                 variant="contained"
-                fontWeight="bold"
-                backgroundColor="#9a1b56"
+               
                 
-                disabled={!hoveredRow || hoveredRow.id !== row.id}
                 onClick={() => handleSettleClick(row)}
-              >
-                SETTLE GOLD
+                style={{backgroundColor:'#9a1b56'}}
+              ><b>
+                SETTLE GOLD</b>
               </Button>
             </TableCell>
           </TableRow>
