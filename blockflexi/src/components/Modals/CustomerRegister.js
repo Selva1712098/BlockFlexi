@@ -89,7 +89,7 @@ return (
             justifyContent: 'center',
           }}
         >
-<Typography variant="h5" component="h2" style={{ textAlign: 'center',color:'white' }}>
+<Typography variant="h5" component="h2" style={{ textAlign: 'center',color:'white', fontFamily:'Libre Baskerville,serif' }}>
 CUSTOMER REGISTRATION
 </Typography>
 </div>
@@ -172,7 +172,7 @@ CUSTOMER REGISTRATION
         
 
         
-<Button  style={{ margin: '10px 0px 0px 120px', backgroundColor: '#9A1B56' }} variant="contained" onClick={data} type="submit">
+<Button  style={{ margin: '10px 0px 0px 120px', backgroundColor: '#9A1B56', fontFamily:'Libre Baskerville,serif' }} variant="contained" onClick={data} type="submit">
 Register
 </Button>
 </form>

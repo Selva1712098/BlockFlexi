@@ -78,7 +78,7 @@ function CustomerHome() {
       <div >
      
       <br/>
-      <h1 className="tpb">Welcome!!!</h1>
+      <h1 className="tpb" style={{fontFamily:'Libre Baskerville,serif'}}>Welcome!!!</h1>
 
       </div>
      
@@ -109,20 +109,20 @@ function CustomerHome() {
                 <Heading size="md" style={{fontSize:'30px'}}> Schemes</Heading>
               </CardHeader>
               <CardBody>
-              <Text style={{fontSize:'20px'}}>
+              <Text style={{fontSize:'20px', fontFamily:'Libre Baskerville,serif'}}>
                 Join the future of finance with Blockflexi, pay and withdraw with the power of blockchain!
                 </Text>
               </CardBody>
               <CardFooter>
               <div className="cht">
-                  <Button className="chbtt"
+                  <Button className="chbtt" style={{fontFamily:'Libre Baskerville,serif'}}
                     bgGradient="linear(to-b, #BF8F91, #CAA2A3, #D4B5B5, #DFC7C8)"
                     onClick={handleSchemes}
                    
                   >
                     View Schemes
                   </Button>
-                  <Button className="chbtt1"
+                  <Button className="chbtt1" style={{fontFamily:'Libre Baskerville,serif'}}
                     bgGradient="linear(to-b, #BF8F91, #CAA2A3, #D4B5B5, #DFC7C8)"
                     onClick={handleOpenModal}
                     size="md"

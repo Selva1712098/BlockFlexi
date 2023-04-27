@@ -71,6 +71,7 @@ function CustomerLanding() {
               display:"flex",
               marginBottom: "20px",
               fontSize: "40px",
+              fontFamily:'Libre Baskerville,serif',
               transition: "all 0.3s ease-in-out",
             }}
             onMouseEnter={(e) => {
@@ -89,7 +90,7 @@ function CustomerLanding() {
               maxWidth: "700px",
               fontSize: "25px",
               transition: "all 0.3s ease-in-out",
-              fontFamily: "Shantell Sans', cursive"
+              fontFamily:'Libre Baskerville,serif'
             }}
             onMouseEnter={(e) => {
               e.target.style.transform = "scale(1.1)";
@@ -111,6 +112,7 @@ function CustomerLanding() {
                 padding: "10px 20px",
                 borderRadius: "50px",
                 border: "none",
+                fontFamily:'Libre Baskerville,serif',
                 cursor: "pointer",
                 transition: "all 0.3s ease-in-out",
                 fontSize: "20px",

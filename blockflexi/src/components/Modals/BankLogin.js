@@ -107,7 +107,7 @@ function BankLogin() {
                   variant="h5"
                   component="h2"
                   fontFamily="bold"
-                  style={{ color: "white" }}
+                  style={{ color: "white", fontFamily:'Libre Baskerville,serif' }}
                 >
                   BANK LOGIN
                 </Typography>
@@ -143,6 +143,7 @@ function BankLogin() {
                       color: "white",
                       borderRadius: "20px",
                       width: "100%",
+                      fontFamily:'Libre Baskerville,serif'
                     }}
                     variant="contained"
                     color="primary"

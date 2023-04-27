@@ -120,7 +120,7 @@ const CustomerLogin = () => {
             variant="h5"
             component="h2"
             fontFamily="bold"
-            style={{ color: 'white' }}
+            style={{ color: 'white' , fontFamily:'Libre Baskerville,serif'}}
           >
           CUSTOMER  LOGIN
           </Typography>
@@ -157,6 +157,7 @@ const CustomerLogin = () => {
                 color: 'white',
                 borderRadius: '20px',
                 width: '100%',
+                fontFamily:'Libre Baskerville,serif'
               }}
               variant="contained"
               color="primary"

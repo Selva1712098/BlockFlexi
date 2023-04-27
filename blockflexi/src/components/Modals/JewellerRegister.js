@@ -73,7 +73,7 @@ return (
           boxShadow: '0px 10px 20px rgba(0, 0, 0, 0.1)',
           }}
         >
-<Typography variant="h5" component="h2" style={{ textAlign: 'center',color:'white',fontFamily:'roboto' }}>
+<Typography variant="h5" component="h2" style={{ textAlign: 'center',color:'white',fontFamily:'Libre Baskerville,serif' }}>
 JEWELLER REGISTRATION
 </Typography>
 </div>
@@ -125,7 +125,7 @@ JEWELLER REGISTRATION
            margin="normal"
          />
 
-<Button  style={{ margin: '10px 0px 0px 120px', backgroundColor: '#9A1B56' }} variant="contained"  type="submit">
+<Button  style={{ margin: '10px 0px 0px 120px', backgroundColor: '#9A1B56', fontFamily:'Libre Baskerville,serif' }} variant="contained"  type="submit">
 Register
 </Button>
 </form>

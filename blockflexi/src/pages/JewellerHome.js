@@ -10,7 +10,7 @@ import Swal from 'sweetalert2';
 
 const styles = {
   text: {
-    fontFamily: 'Arial, sans-serif', 
+    fontFamily:'Libre Baskerville,serif'
   },
 
   modal: {
@@ -128,22 +128,22 @@ const JewellerHome = () => {
       <CardContent>
       <Typography 
   variant='h4' 
-  component='div'  style={{fontFamily:'Poppins'}} gutterBottom>
-    SCHEMES
+  component='div'  style={{fontFamily:'Libre Baskerville,serif'}} gutterBottom>
+    Schemes
   </Typography>
   
   <div>
-    <Typography variant='h5' sx={{fontStyle:'italic',fontFamily:'Popins'}}>Add your wonderful schemes here.</Typography>
+    <Typography variant='h5' sx={{fontStyle:'italic',fontFamily:'Libre Baskerville,serif'}}>Add your wonderful schemes here.</Typography>
     
   
   </div>
       </CardContent>
       <CardActions sx={{display:'flex',justifyContent:'flex-end',alignItems:'flex-end'}}>  
-              <Button sx={{backgroundColor:'#9A1B56',fontWeight:'bold',color:'white','&:hover':{
+              <Button sx={{backgroundColor:'#9A1B56',fontWeight:'bold',fontFamily:'Libre Baskerville,serif',color:'white','&:hover':{
                 backgroundColor:'#9A1B56'
               }}} variant='standard'  onClick={handleOpen}>ADD SCHEMES</Button>
               
-              <Button sx={{backgroundColor:'#9A1B56',fontWeight:'bold',color:'white','&:hover':{
+              <Button sx={{backgroundColor:'#9A1B56',fontWeight:'bold',fontFamily:'Libre Baskerville,serif',color:'white','&:hover':{
                 backgroundColor:'#9A1B56'}}}  variant="contained" onClick={viewOpen}>VIEW SCHEMES</Button>
               
                 </CardActions>
@@ -152,19 +152,19 @@ const JewellerHome = () => {
     <CardContent>
               <Typography 
   variant='h4' 
-  component='div'  style={{fontFamily:'Poppins',}} gutterBottom>
-    LOAN REQUESTS
+  component='div'  style={{fontFamily:'Libre Baskerville,serif'}} gutterBottom>
+    Loan Requests
   </Typography>
   
   <div>
-    <Typography variant='h5' sx={{fontStyle:'italic',fontFamily:'Popins'}}> View the loan requests made by the customer</Typography>
+    <Typography variant='h5' sx={{fontStyle:'italic',fontFamily:'Libre Baskerville,serif'}}> View the loan requests made by the customer</Typography>
     
   </div>
   
               </CardContent>
               <CardActions sx={{display:'flex',justifyContent:'flex-end',alignItems:'flex-end'}}>  
              
-              <Button sx={{backgroundColor:'#9A1B56',fontWeight:'bold',color:'white','&:hover':{
+              <Button sx={{backgroundColor:'#9A1B56',fontWeight:'bold',fontFamily:'Libre Baskerville,serif',color:'white','&:hover':{
               backgroundColor:'#9A1B56'}}}  variant="contained" onClick={()=>{navigate('/request')}}>VIEW REQUESTS</Button>
               </CardActions>
              
@@ -173,18 +173,18 @@ const JewellerHome = () => {
       <CardContent>
       <Typography 
   variant='h4' 
-  component='div'  style={{fontFamily:'Poppins'}} gutterBottom>
-    SETTLE GOLD
+  component='div'  style={{fontFamily:'Libre Baskerville,serif'}} gutterBottom>
+    Settle Gold
   </Typography>
   
   <div>
-    <Typography variant='h5' sx={{fontStyle:'italic',fontFamily:'Popins'}}>Click here to settle the gold for customers</Typography>
+    <Typography variant='h5' sx={{fontStyle:'italic',fontFamily:'Libre Baskerville,serif'}}>Click here to settle the gold for customers</Typography>
   
   </div>
   
                </CardContent>
                <CardActions sx={{display:'flex',justifyContent:'flex-end',alignItems:'flex-end'}}>  
-               <Button sx={{backgroundColor:'#9A1B56',fontWeight:'bold',color:'white','&:hover':{
+               <Button sx={{backgroundColor:'#9A1B56',fontWeight:'bold',fontFamily:'Libre Baskerville,serif',color:'white','&:hover':{
                backgroundColor:'#9A1B56'}}}  variant="contained" onClick={()=>{navigate('/settle')}}>SETTLE GOLD</Button>
                </CardActions>
       
@@ -201,8 +201,8 @@ const JewellerHome = () => {
       <Box style={{borderRadius: '16px' }} sx={styles.modal}>
       <form onSubmit={scheme} action='POST'>
         <div style={{display:'flex',justifyContent:'center',alignItems:'center'}}>
-        <Typography style={{fontSize:'20px',fontWeight:'bold'}}id='modal-title' variant='h'  component='h2'>
-          SCHEME NAME</Typography>
+        <Typography style={{fontSize:'20px',fontWeight:'bold',fontFamily:'Libre Baskerville,serif'}}id='modal-title' variant='h'  component='h2'>
+          Scheme Name</Typography>
           <TextField 
     id="outlined-basic"
     variant="outlined"
@@ -230,8 +230,8 @@ const JewellerHome = () => {
   
       </div>
       <div style={{display:'flex',justifyContent:'center',alignItems:'center',marginTop:'30px'}}>
-      <Typography style={{fontSize:'20px',fontWeight:'bold'}}id='modal-title' variant='h'  component='h2'>
-          SCHEME DETAILS</Typography>
+      <Typography style={{fontSize:'20px',fontWeight:'bold',fontFamily:'Libre Baskerville,serif'}}id='modal-title' variant='h'  component='h2'>
+          Scheme Details</Typography>
           <TextField
     id="outlined-basic"
     variant="outlined"
@@ -259,8 +259,8 @@ const JewellerHome = () => {
       </div>
   
         <div style={{display:'flex',justifyContent:'center',alignItems:'center',marginTop:'30px'}}>
-        <Typography style={{fontSize:'20px',fontWeight:'bold',}}id='modal-title' align='center' variant='h'  component='h1'>
-          TOTAL
+        <Typography style={{fontSize:'20px',fontWeight:'bold',fontFamily:'Libre Baskerville,serif'}}id='modal-title' align='center' variant='h'  component='h1'>
+          MonthlyPrice
          </Typography>
         <TextField
     id="outlined-basic"
@@ -286,7 +286,7 @@ const JewellerHome = () => {
         <Typography id='modal-description' sx={{ mt: 6 }}>
         <Button type='submit'
     variant="contained"
-    style={{fontWeight:"bold",margin:"0px 0px 0px 160px",backgroundColor:'#81b735',padding:'8px 30px 8px 30px',fontSize:'15px'
+    style={{fontWeight:"bold",margin:"0px 0px 0px 160px",fontFamily:'Libre Baskerville,serif',backgroundColor:'#81b735',padding:'8px 30px 8px 30px',fontSize:'15px'
     }}
   >
     ADD

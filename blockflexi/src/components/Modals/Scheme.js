@@ -211,7 +211,7 @@ function Scheme({isOpen, onClose,jewellerid,customerid,jewellername,customerwall
 <Modal isOpen={isOpen} onClose={onClose}>
     <ModalOverlay/>
     <ModalContent maxW="50%">
-          <ModalHeader>Schemes</ModalHeader>
+          <ModalHeader style={{fontFamily:'Libre Baskerville,serif'}}>Schemes</ModalHeader>
           <ModalCloseButton />
          
           <ModalBody maxHeight="400px" overflowY="scroll">
@@ -226,9 +226,9 @@ function Scheme({isOpen, onClose,jewellerid,customerid,jewellername,customerwall
 
     <Stack>
       <CardBody>
-        <Heading size='md'>{scheme.SchemeName}</Heading>
+        <Heading size='md' style={{fontFamily:'Libre Baskerville,serif'}}>{scheme.SchemeName}</Heading>
 
-        <Text py='2'>
+        <Text py='2' style={{fontFamily:'Libre Baskerville,serif'}}>
           {scheme.MonthlyPayment}
         </Text>
       </CardBody>
@@ -239,7 +239,7 @@ function Scheme({isOpen, onClose,jewellerid,customerid,jewellername,customerwall
             Joined
           </Button>
         ) : ( */}
-          <Button variant='solid' onClick={()=>{ joinscheme(scheme)}} bgColor={"#c17171"} mr={'4'} color={"#fff"}>
+          <Button style={{fontFamily:'Libre Baskerville,serif'}} variant='solid' onClick={()=>{ joinscheme(scheme)}} bgColor={"#c17171"} mr={'4'} color={"#fff"}>
             Join
           </Button>
 
@@ -319,7 +319,7 @@ function Scheme({isOpen, onClose,jewellerid,customerid,jewellername,customerwall
           <ModalFooter>
             {/* <Button variant='ghost'mr={3} >Go to MySchemes</Button> */}
             
-            <Button bgColor={"#9A1B56"} color={"#fff"}  onClick={onClose}>
+            <Button style={{fontFamily:'Libre Baskerville,serif'}} bgColor={"#9A1B56"} color={"#fff"}  onClick={onClose}>
               Close
             </Button>
           </ModalFooter>

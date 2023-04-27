@@ -292,6 +292,7 @@ const handleUsers=(data)=>{
           textTransform: "uppercase",
           letterSpacing: "2px",
           padding: "1rem",
+          fontFamily:'Libre Baskerville,serif'
           
         }}
       >
@@ -314,11 +315,11 @@ const handleUsers=(data)=>{
           <Table>
             <TableHead>
             <TableRow className="requestfont">
-  <TableCell style={{  backgroundColor: "#9a1b56", color: "white", fontSize: "1.2rem", fontFamily: "Poppins, sans-serif" }}>S.NO</TableCell>
-  <TableCell style={{  backgroundColor: "#9a1b56", color: "white", fontSize: "1.2rem", fontFamily: "Poppins, sans-serif" }}>CUSTOMER NAME</TableCell>
-  <TableCell style={{ backgroundColor: "#9a1b56", color: "white", fontSize: "1.2rem", fontFamily: "Poppins, sans-serif" }}>PHONE NO</TableCell>
-  <TableCell style={{  backgroundColor: "#9a1b56", color: "white", fontSize: "1.2rem", fontFamily: "Poppins, sans-serif" }}>MORE DETAILS</TableCell>
-  <TableCell style={{  backgroundColor: "#9a1b56", color: "white", fontSize: "1.2rem", fontFamily: "Poppins, sans-serif" }}>APPROVAL</TableCell>
+  <TableCell style={{  backgroundColor: "#9a1b56", color: "white", fontSize: "1.2rem", fontFamily:'Libre Baskerville,serif' }}>S.NO</TableCell>
+  <TableCell style={{  backgroundColor: "#9a1b56", color: "white", fontSize: "1.2rem", fontFamily:'Libre Baskerville,serif' }}>CUSTOMER NAME</TableCell>
+  <TableCell style={{ backgroundColor: "#9a1b56", color: "white", fontSize: "1.2rem", fontFamily:'Libre Baskerville,serif' }}>PHONE NO</TableCell>
+  <TableCell style={{  backgroundColor: "#9a1b56", color: "white", fontSize: "1.2rem", fontFamily:'Libre Baskerville,serif' }}>MORE DETAILS</TableCell>
+  <TableCell style={{  backgroundColor: "#9a1b56", color: "white", fontSize: "1.2rem", fontFamily:'Libre Baskerville,serif' }}>APPROVAL</TableCell>
 </TableRow>
 
             </TableHead>
@@ -342,7 +343,7 @@ const handleUsers=(data)=>{
                   <TableCell>{row.MobileNo}</TableCell>
                   <TableCell>
                   <Button
-        style={{ fontWeight: "bold", margin: "0px 0px 0px 30px" }}
+        style={{ fontWeight: "bold", margin: "0px 0px 0px 30px", fontFamily:'Libre Baskerville,serif' }}
         variant="contained"
         onClick={() => handleOpen(row)}
       >
@@ -353,7 +354,7 @@ const handleUsers=(data)=>{
                   <TableCell>
                   <div style={{ display: "flex" }}>
   <Button
-    style={{ fontWeight: "bold" }}
+    style={{ fontWeight: "bold",fontFamily:'Libre Baskerville,serif' }}
     variant="contained"
     disabled={!hoveredRow || hoveredRow.id !== row.id}
     color="success"
@@ -362,7 +363,7 @@ const handleUsers=(data)=>{
     FORWARD <ArrowForwardIcon />
   </Button>
   <Button
-    style={{ fontWeight: "bold", marginLeft: "20px" }}
+    style={{ fontWeight: "bold", marginLeft: "20px",fontFamily:'Libre Baskerville,serif' }}
     variant="contained"
     disabled={!hoveredRow || hoveredRow.id !== row.id}
     color="error"
@@ -373,14 +374,14 @@ const handleUsers=(data)=>{
 </div>
 <Dialog open={open} onClose={handleClose} >
           <DialogTitle
-            style={{ fontWeight: "bold", margin: "0px 0px 0px 150px" }}
+            style={{ fontWeight: "bold", margin: "0px 0px 0px 150px",fontFamily:'Libre Baskerville,serif' }}
           >
             DETAILS
           </DialogTitle>
          
           <DialogContent sx={{height:'200px',width:'400px'}}>
           {selectedUser && (
-            <DialogContentText style={{ fontWeight: "bold"  }}>
+            <DialogContentText style={{ fontWeight: "bold", fontFamily:'Libre Baskerville,serif'  }}>
               <div style={{margin:'5px 0px 0px 60px'}}>
               CUSTOMER NAME : {customername}
               <br /> <br /></div>
@@ -405,6 +406,7 @@ const handleUsers=(data)=>{
   fontWeight: "bold",
   padding: "8px 25px",
   fontSize:"14px",
+  fontFamily:'Libre Baskerville,serif',
   borderRadius: "5px",
   backgroundColor: "#f34642",
   color: "white"

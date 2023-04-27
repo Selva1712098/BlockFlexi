@@ -300,7 +300,7 @@ useEffect(()=>{
         style={{
           height: "140px",
           display: "flex",
-         
+          fontFamily:'Libre Baskerville,serif',
           justifyContent: "center",
           alignItems: "center",
           
@@ -318,30 +318,30 @@ useEffect(()=>{
        <Table aria-label="simple table"  >
          <TableHead >
            <TableRow>
-             <TableCell sx={{ fontWeight: "medium", fontSize: "18px",backgroundColor:'#9A1B56',color:'white' }}>
+             <TableCell sx={{ fontWeight: "medium", fontSize: "18px",fontFamily:'Libre Baskerville,serif',backgroundColor:'#9A1B56',color:'white' }}>
                S.NO
              </TableCell>
              <TableCell
                align="left"
-               sx={{ fontWeight: "medium", fontSize: "18px" ,backgroundColor:'#9A1B56',color:'white'}}
+               sx={{ fontWeight: "medium", fontSize: "18px" ,fontFamily:'Libre Baskerville,serif',backgroundColor:'#9A1B56',color:'white'}}
              >
                NAME
              </TableCell>
              <TableCell
                align="left"
-               sx={{ fontWeight: "medium", fontSize: "18px" ,backgroundColor:'#9A1B56',color:'white'}}
+               sx={{ fontWeight: "medium", fontSize: "18px" ,fontFamily:'Libre Baskerville,serif',backgroundColor:'#9A1B56',color:'white'}}
              >
               PHONE NO
              </TableCell>
              <TableCell
                align="left"
-               sx={{ fontWeight: "medium", fontSize: "18px",backgroundColor:'#9A1B56',color:'white' }}
+               sx={{ fontWeight: "medium", fontSize: "18px",fontFamily:'Libre Baskerville,serif',backgroundColor:'#9A1B56',color:'white' }}
              >
               DETAILS
              </TableCell>
              <TableCell
                align='left'
-               sx={{ fontWeight: "medium", fontSize: "18px",backgroundColor:'#9A1B56',color:'white'}}
+               sx={{ fontWeight: "medium", fontSize: "18px",fontFamily:'Libre Baskerville,serif',backgroundColor:'#9A1B56',color:'white'}}
              >
               APPROVAL
              </TableCell>
@@ -361,7 +361,7 @@ useEffect(()=>{
                  {row.MobileNo}
                </TableCell>
                <TableCell align="left">
-                 <Button
+                 <Button style={{fontFamily:'Libre Baskerville,serif'}}
                    variant="contained"
                    size="small"
                    sx={{padding:'8px'}}
@@ -372,10 +372,10 @@ useEffect(()=>{
                </TableCell>
                <TableCell align="center">
                  <Stack direction="row" alignItems="center" spacing={3}>
-                   <Button variant="contained" size ="small" sx={{padding:'8px'}} color="success" onClick={()=>{passdata(row)}}>
+                   <Button style={{fontFamily:'Libre Baskerville,serif'}} variant="contained" size ="small" sx={{padding:'8px'}} color="success" onClick={()=>{passdata(row)}}>
                      <b>Approve</b>
                    </Button>
-                   <Button variant="contained" size ="small" sx={{padding:'8px'}} color="error" onClick={()=>{rjtrequest(row)}}>
+                   <Button style={{fontFamily:'Libre Baskerville,serif'}} variant="contained" size ="small" sx={{padding:'8px'}} color="error" onClick={()=>{rjtrequest(row)}}>
                      <b>Reject</b>
                    </Button>
                  </Stack>

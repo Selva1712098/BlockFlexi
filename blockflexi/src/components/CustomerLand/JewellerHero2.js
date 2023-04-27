@@ -64,13 +64,13 @@ function JewellerHero2({customerid}){
   }
     return(
         <div>
-          <h1 style={{textAlign:"center"}}>Your schemes</h1>
+          <h1 style={{textAlign:"center",fontFamily:'Libre Baskerville,serif'}}>Your schemes</h1>
          
           <div className="row2">
           {Array.isArray(yourscheme) && yourscheme.map(scheme =>      
                 <div className="card2">
-                  <h2>{scheme.SchemeName}</h2>
-                  <p>{scheme.MonthlyPayment}</p>
+                  <h2 style={{fontFamily:'Libre Baskerville,serif'}}>{scheme.SchemeName}</h2>
+                  <p style={{fontFamily:'Libre Baskerville,serif'}}>{scheme.MonthlyPayment}</p>
                 
             
                 </div>)}

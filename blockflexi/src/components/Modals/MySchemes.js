@@ -196,7 +196,7 @@ function MySchemes({ isOpen, onClose, jewellerid, customerid,customername,jewell
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent maxW="50%">
-          <ModalHeader>My Schemes</ModalHeader>
+          <ModalHeader style={{fontFamily:'Libre Baskerville,serif'}}>My Schemes</ModalHeader>
           <ModalCloseButton />
           {/* <Button variant="contained" onClick={() => getScheme()}>
             Refresh
@@ -212,9 +212,9 @@ function MySchemes({ isOpen, onClose, jewellerid, customerid,customername,jewell
                 >
                   <Stack>
                     <CardBody>
-                      <Heading size="md">{scheme.SchemeName}</Heading>
+                      <Heading size="md" style={{fontFamily:'Libre Baskerville,serif'}}>{scheme.SchemeName}</Heading>
 
-                      <Text py="2">
+                      <Text py="2" style={{fontFamily:'Libre Baskerville,serif'}}>
                         Monthly= {scheme.MonthlyPayment}
                         Total= {scheme.MonthlyPayment * 11}
                       </Text>
@@ -222,7 +222,7 @@ function MySchemes({ isOpen, onClose, jewellerid, customerid,customername,jewell
 
                     <CardFooter>
                       <Link to={`/Pay/${customerid}/${jewellerid}/${scheme.SchemeID}` } state={{data:{customername:customername,jewellername:jewellername}}}>
-                      <Button
+                      <Button style={{fontFamily:'Libre Baskerville,serif'}}
                         variant="solid"
                         mr={4}
                         bgColor={"#c17171"}
@@ -231,7 +231,7 @@ function MySchemes({ isOpen, onClose, jewellerid, customerid,customername,jewell
                         Pay
                       </Button>
                       </Link>
-                      <Button
+                      <Button style={{fontFamily:'Libre Baskerville,serif'}}
                         variant="solid"
                         bgColor={"#c17171"}
                         color={"#fff"}
@@ -246,7 +246,7 @@ function MySchemes({ isOpen, onClose, jewellerid, customerid,customername,jewell
           </ModalBody>
           <ModalFooter>
            
-            <Button bgColor={"#9A1B56"} color={"#fff"} onClick={onClose}>
+            <Button style={{fontFamily:'Libre Baskerville,serif'}} bgColor={"#9A1B56"} color={"#fff"} onClick={onClose}>
               Close
             </Button>
           </ModalFooter>

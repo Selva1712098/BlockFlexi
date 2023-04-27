@@ -61,10 +61,10 @@ function Hero({customerWallet}) {
 }
   return (
     <div>
-      <h1 style={{ textAlign: "center", fontFamily: "sans-serif" }}>
+      <h1 style={{ textAlign: "center", fontFamily:'Libre Baskerville,serif' }}>
         Jewellers
       </h1>
-      <h2 className="oneline">"Your investment is in safe hands with our trusted jewellers on BlockFlexi."</h2>
+      <h2 className="oneline" style={{fontFamily:'Libre Baskerville,serif'}}>"Your investment is in safe hands with our trusted jewellers on BlockFlexi."</h2>
       <div className="row1">
         {Array.isArray(jewellers) &&
           jewellers.map((jeweller) => (
@@ -72,8 +72,8 @@ function Hero({customerWallet}) {
             state={{data:{jewellerwallet:jeweller.JewellerWallet,customerwallet:customerWallet}}}>
               <div className="column1">
                 <div className="card1">
-                  <h2>{jeweller.JewellerName}</h2>
-                  <p>Jeweller descriptions</p>
+                  <h2 style={{fontFamily:'Libre Baskerville,serif'}}>{jeweller.JewellerName}</h2>
+                  <p>{jeweller.JewellerID}</p>
                   
                   {/* <button className="button1" onClick={handleschemebody} >View Schemes</button> */}
             
@@ -84,7 +84,7 @@ function Hero({customerWallet}) {
       </div>
       <br />
       <br />
-      <button class="cta" onClick={handleButton}>
+      <button class="cta" style={{fontFamily:'Libre Baskerville,serif'}} onClick={handleButton}>
         <span>View more</span>
         <svg viewBox="0 0 13 10" height="10px" width="15px">
           <path d="M1,5 L11,5"></path>

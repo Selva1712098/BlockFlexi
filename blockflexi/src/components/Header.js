@@ -16,7 +16,7 @@ import { useNavigate } from 'react-router-dom';
 
 
 
-const pages = [ 'CONTACT', 'SCHEMES'];
+const pages = [ 'Contact', 'Schemes'];
 const settings = [ 'Account', 'Dashboard', 'Logout'];
 
 function Header() {
@@ -51,6 +51,10 @@ function Header() {
 
   // }
   return (
+    <React.Fragment>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville&display=swap');
+    </style>
     <AppBar position="static" sx={{backgroundColor:'#9A1B56'}}>
       <Container maxWidth="xl" >
         <Toolbar >
@@ -63,12 +67,12 @@ function Header() {
             sx={{
               mr: 2,
               display: { xs: 'none', md: 'flex' },
-              fontFamily: 'Montserrat', 
+              fontFamily: 'Libre Baskerville,serif',
               color: 'inherit',
               textDecoration: 'none',
             }}
           >
-            BLOCKFLEXI
+            BlockFlexi
           </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
@@ -122,7 +126,7 @@ function Header() {
               mr: 2,
               display: { xs: 'flex', md: 'none' },
               flexGrow: 1,
-              fontFamily: 'Montserrat',
+              fontFamily: 'Libre Baskerville,serif',
               
               color: 'white',
               textDecoration: 'none',
@@ -131,19 +135,22 @@ function Header() {
             BLOCKFLEXI
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' },marginLeft:'170px' }}>
-            <Button color='inherit' sx={{fontFamily:'Montserrat',fontWeight:'bold'}} onClick={()=>Navigate('/')}>Home</Button>
+            <Button color='inherit' sx={{fontFamily:'Libre Baskerville,serif',
+              fontWeight:'bold'}} onClick={()=>Navigate('/')}>Home</Button>
             
             {pages.map((page) => (
               <Button
                 key={page}
                 onClick={handleCloseNavMenu}
-                sx={{  color: 'white', display: 'flex',marginLeft:'80px',fontFamily:'Montserrat',fontWeight:'bold' }}
+                sx={{  color: 'white', display: 'flex',marginLeft:'80px',fontFamily:'Libre Baskerville,serif',
+                fontWeight:'bold' }}
               >
                 {page}
               </Button>
               
             ))}
-          <Button color='inherit' sx={{fontFamily:'Montserrat',fontWeight:'bold',marginLeft:'80px'}} >GOLD PRICE</Button>
+          <Button color='inherit' sx={{fontFamily:'Libre Baskerville,serif',
+              fontWeight:'bold',marginLeft:'80px'}} >Gold Price</Button>
 
           </Box>
 
@@ -151,6 +158,7 @@ function Header() {
         </Toolbar>
       </Container>
     </AppBar>
+    </React.Fragment>
   );
 }
 export default Header;

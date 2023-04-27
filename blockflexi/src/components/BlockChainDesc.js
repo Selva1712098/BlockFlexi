@@ -9,7 +9,7 @@ function BlockChainDesc() {
   return (
     <Grid container>
       <div style={{display:'flex',justifyContent:'center',alignItems:'center',flex:1}}>
-        <Typography  align='center' style={{fontSize:'40px',fontFamily: 'Montserrat'}}>How Blockchain helps?</Typography>
+        <Typography  align='center' style={{fontSize:'40px',fontFamily: 'Libre Baskerville,serif'}}>How Blockchain helps?</Typography>
         </div>
         <Grid item sx={{display:'flex',justifyContent:'center',alignItems:'center'}}>
             
