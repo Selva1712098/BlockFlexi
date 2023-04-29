@@ -303,8 +303,8 @@ const JewellerHome = () => {
       aria-describedby='modal-description'>
   
       <Box sx={styles.modal} style={{borderRadius:'16px'}} >
-        <div style={{display:'flex',justifyContent:'center',alignItems:'center',flexDirection:'row',minWidth:'400px'}}>
-        <JewellerSchemeTable jewellerid={JewellerID}/></div>
+        <div style={{display:'flex',justifyContent:'center',alignItems:'center',fontFamily:'Libre Baskerville,serif',flexDirection:'row',minWidth:'400px'}}>
+        <JewellerSchemeTable  jewellerid={JewellerID}/></div>
        <Typography id='modal-description' sx={{ mt: 2 }}>
        </Typography>
       </Box>

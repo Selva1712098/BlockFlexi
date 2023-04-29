@@ -236,22 +236,22 @@ value={isloading}
         
       >
         <DialogTitle>
-            <Typography variant='h5' sx={{fontWeight:'bold',fontFamily:'Roboto'}}>CUSTOMER DETAILS</Typography></DialogTitle>
+            <Typography variant='h5' sx={{fontWeight:'bold',fontFamily:'Libre Baskerville,serif'}}>CUSTOMER DETAILS</Typography></DialogTitle>
             
         <DialogContent>
           
            <DialogContentText>
-              <Typography variant="h6"  gutterBottom>
+              <Typography style={{fontFamily:'Libre Baskerville,serif'}} variant="h6"  gutterBottom>
                 Name: {customername}
               </Typography>
              
-              <Typography variant="h6"   gutterBottom>
+              <Typography style={{fontFamily:'Libre Baskerville,serif'}} variant="h6"   gutterBottom>
                 SchemeName: {scheme}
               </Typography>
-              <Typography variant="h6"   gutterBottom>
+              <Typography style={{fontFamily:'Libre Baskerville,serif'}} variant="h6"   gutterBottom>
                 Amount to be paid:{balance}
               </Typography>
-              <Typography variant="h6"   gutterBottom>
+              <Typography style={{fontFamily:'Libre Baskerville,serif'}} variant="h6"   gutterBottom>
                 Bank Payment Status :Completed
               </Typography>
               
@@ -259,7 +259,7 @@ value={isloading}
          
         </DialogContent>
             <DialogActions>
-          <Button variant='contained'  size='small'  onClick={() => setOpen(false)}>Ok</Button>
+          <Button style={{fontFamily:'Libre Baskerville,serif'}} variant='contained'  size='small'  onClick={() => setOpen(false)}>Ok</Button>
           </DialogActions>
       </Dialog>
 
@@ -269,7 +269,7 @@ value={isloading}
         style={{ 
           marginTop: '2rem', 
           marginBottom: '2rem',
-          fontFamily: 'Montserrat, sans-serif',
+          fontFamily:'Libre Baskerville,serif',
           fontSize: '2.5rem',
           fontWeight: 'bold',
           color: 'black',
@@ -287,11 +287,11 @@ value={isloading}
         
           
             <TableRow>
-              <TableCell style={{  backgroundColor: '#9a1b56', color: 'white', fontSize: '1.2rem' }}><b>S.NO</b></TableCell>
-              <TableCell style={{  backgroundColor: '#9a1b56', color: 'white', fontSize: '1.2rem' }}><b>CUSTOMER NAME</b></TableCell>
-              <TableCell style={{ backgroundColor: '#9a1b56', color: 'white', fontSize: '1.2rem'}}><b>LOAN APPROVED</b></TableCell>
-              <TableCell style={{  backgroundColor: '#9a1b56', color: 'white', fontSize: '1.2rem' }} align='left'><b>BANK PAYMENT</b></TableCell>
-              <TableCell style={{  backgroundColor: '#9a1b56', color: 'white', fontSize: '1.2rem' }}><b>SETTLE GOLD</b></TableCell>
+              <TableCell style={{  backgroundColor: '#9a1b56', color: 'white', fontSize: '1.2rem',fontFamily:'Libre Baskerville,serif' }}><b>S.NO</b></TableCell>
+              <TableCell style={{  backgroundColor: '#9a1b56', color: 'white', fontSize: '1.2rem',fontFamily:'Libre Baskerville,serif' }}><b>CUSTOMER NAME</b></TableCell>
+              <TableCell style={{ backgroundColor: '#9a1b56', color: 'white', fontSize: '1.2rem',fontFamily:'Libre Baskerville,serif'}}><b>LOAN APPROVED</b></TableCell>
+              <TableCell style={{  backgroundColor: '#9a1b56', color: 'white', fontSize: '1.2rem',fontFamily:'Libre Baskerville,serif' }} align='left'><b>BANK PAYMENT</b></TableCell>
+              <TableCell style={{  backgroundColor: '#9a1b56', color: 'white', fontSize: '1.2rem',fontFamily:'Libre Baskerville,serif' }}><b>SETTLE GOLD</b></TableCell>
             </TableRow>
            
           </TableHead>
