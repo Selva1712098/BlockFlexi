@@ -13,7 +13,8 @@ import {
   CardFooter
 } from '@chakra-ui/react'
 import styled from "@emotion/styled";
-import axios from "axios";
+// import axios from "axios";
+import axios from '../../integration'
 
 function JewellerHero(){
 // const JewellerHero=forwardRef((props,ref)=>{
@@ -22,7 +23,7 @@ function JewellerHero(){
   useEffect(()=>{
     async function fetchData(){
       try{
-        const response= await axios.get("http://localhost:5000/viewjewellers");
+        const response= await axios.get("/viewjewellers");
         setJewellers(response.data);
       }catch(err){
         console.error(err);

@@ -1,5 +1,7 @@
 import React, { useState,useEffect } from 'react';
-import axios from 'axios'
+// import axios from 'axios'
+import axios from '../integration'
+
 import jwtDecode from 'jwt-decode'
 import { useCookies } from 'react-cookie';
 import Web3 from'web3';
@@ -124,7 +126,7 @@ function Settle() {
    
     const schemeid=userid.find(user=>user.CustomerID===row.CustomerID )
     console.log(row.CustomerID,jewellerid,schemeid.SchemeID)
-    await axios.put("http://localhost:5000/CustomerSchemeEdit",{
+    await axios.put("/CustomerSchemeEdit",{
   customerid:row.CustomerID,
   jewellerid,
   schemeid:schemeid.SchemeID,
@@ -159,7 +161,7 @@ function Settle() {
     
     async function getUserID(){
       try{
-      await axios.get("http://localhost:5000/CustomerSchemesBankStatus").then(res=>{
+      await axios.get("/CustomerSchemesBankStatus").then(res=>{
         if(res.data.response){
           console.log('id',res.data.response)
           const response= res.data.response.filter(user=>user.JewellerID===jewellerid)
@@ -184,7 +186,7 @@ useEffect(()=>{
     try {
       const userIds=userid.map(user=>user.CustomerID)
      
-     await axios.get('http://localhost:5000/GetUsers').then(res=>{
+     await axios.get('/GetUsers').then(res=>{
         const response =res.data.usercheck
         
         console.log(response)

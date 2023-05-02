@@ -12,7 +12,9 @@ import {
   Button,
 } from "@chakra-ui/react";
 import { Card, CardBody, CardFooter, Heading } from "@chakra-ui/react";
-import axios from "axios";
+// import axios from "axios";
+import axios from '../../integration'
+
 import { Link } from "react-router-dom";
 import Web3 from "web3";
 import abi from '../../contracts/FlexiScheme.json'
@@ -80,7 +82,7 @@ function MySchemes({ isOpen, onClose, jewellerid, customerid,customername,jewell
  },[])
   async function getSchemeID() {
     try {
-      await axios.get("http://localhost:5000/GetSchemeID").then((res) => {
+      await axios.get("/GetSchemeID").then((res) => {
         if (res.data) {
           const sc1 = res.data.schemecheck.filter(
             (sc) => sc.JewellerID === jewellerid && sc.CustomerID === customerid
@@ -98,7 +100,7 @@ function MySchemes({ isOpen, onClose, jewellerid, customerid,customername,jewell
   async function getScheme() {
     try {
      
-      axios.get("http://localhost:5000/GetScheme").then((res) => {
+      axios.get("/GetScheme").then((res) => {
         console.log(res.data.schemecheck);
         const response = res.data.schemecheck;
         const schemes = response.filter((res) => {
@@ -157,7 +159,7 @@ function MySchemes({ isOpen, onClose, jewellerid, customerid,customername,jewell
   const loanRequest = async (scheme) => {
     const schemeid = scheme.SchemeID;
     await axios
-      .put("http://localhost:5000/CustomerSchemeEdit", {
+      .put("/CustomerSchemeEdit", {
         customerid,
         schemeid,
         loanreq: true,

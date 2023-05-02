@@ -2,7 +2,8 @@ import React, { useState,useEffect } from "react";
 
 import {  Card, CardContent, Typography, CardActions, Button,Paper,Grid } from '@mui/material';
 
-import axios from "axios";
+// import axios from "axios";
+import axios from '../integration'
 import { Circles } from "react-loader-spinner";
 
 function JewellerSchemeTable({jewellerid}) {
@@ -11,7 +12,7 @@ function JewellerSchemeTable({jewellerid}) {
   async function deletescheme(scheme){
     const schemeid=scheme.SchemeID
     console.log(jewellerid,schemeid)
-    await axios.delete('http://localhost:5000/DeleteScheme',{data:{
+    await axios.delete('/DeleteScheme',{data:{
     jewellerid:jewellerid,schemeid:schemeid
     }}).then(res=>{
       try{
@@ -33,7 +34,7 @@ function JewellerSchemeTable({jewellerid}) {
       try {
         setisLoading(true)
         // Make a GET request to the /schemes API endpoint
-        await axios.get("http://localhost:5000/JewellerScheme",).then(res=>{
+        await axios.get("/JewellerScheme",).then(res=>{
           if(res.data.status==='success'){
             const scheme=res.data.schemes.filter(sc=>sc.JewellerID === jewellerid)
             setSchemes(scheme)

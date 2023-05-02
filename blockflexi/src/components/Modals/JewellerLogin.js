@@ -8,7 +8,9 @@ import {
   Typography,
   Grid,
 } from '@mui/material';
-import axios from 'axios';
+// import axios from 'axios';
+import axios from '../../integration'
+
 import Swal from 'sweetalert2'
 import { useNavigate } from 'react-router-dom';
 import MainHeader from './MainHeader';
@@ -32,7 +34,7 @@ const JewellerLogin = () => {
 
   async function login(event){
     event.preventDefault();
-    await axios.post("http://localhost:5000/JewellerLogin",{
+    await axios.post("/JewellerLogin",{
       email,
       password
     },{withCredentials:true}).then((res)=>{

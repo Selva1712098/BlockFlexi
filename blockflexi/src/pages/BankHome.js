@@ -19,7 +19,9 @@ import {
 import {useCookies }from 'react-cookie'
 import {useNavigate} from 'react-router-dom'
 import jwt_decode from 'jwt-decode'
-import axios from "axios";
+// import axios from "axios";
+import axios from '../integration'
+
 import { Circles } from  'react-loader-spinner'
 import Web3 from'web3';
 import abi from "../contracts/FlexiScheme.json"
@@ -148,7 +150,7 @@ export default function BankHome() {
   const apprequest=async(row)=>{
     console.log(row)
     const schemeid=userid.find(user=>user.CustomerID===row.CustomerID)
-    await axios.put("http://localhost:5000/CustomerSchemeEdit",{
+    await axios.put("/CustomerSchemeEdit",{
   customerid:row.CustomerID,
   jewellerid:schemeid.JewellerID,
   schemeid:schemeid.SchemeID,
@@ -170,7 +172,7 @@ export default function BankHome() {
    // console.log(row)
     const schemeid=userid.find(user=>user.CustomerID===row.CustomerID)
     console.log(schemeid)
-    await axios.put("http://localhost:5000/CustomerSchemeEdit",{
+    await axios.put("/CustomerSchemeEdit",{
     customerid:row.CustomerID,
     jewellerid:schemeid.JewellerID,
     schemeid:schemeid.SchemeID,
@@ -193,7 +195,7 @@ export default function BankHome() {
     
     async function getUserID(){
       try{
-      await axios.get("http://localhost:5000/CustomerSchemesJwStatus").then(res=>{
+      await axios.get("/CustomerSchemesJwStatus").then(res=>{
         if(res.data.response3){
           console.log('id',res.data.response3)
           handleuserid(res.data.response3)
@@ -217,7 +219,7 @@ useEffect(()=>{
           try {
             const userIds=userid.map(user=>user.CustomerID)
            
-           await axios.get('http://localhost:5000/GetUsers').then(res=>{
+           await axios.get('/GetUsers').then(res=>{
               const response =res.data.usercheck
               console.log(response)
               const users = response.filter(user => userIds.includes(user.CustomerID));

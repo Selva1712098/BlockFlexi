@@ -9,6 +9,8 @@ Typography,
 import {useNavigate} from 'react-router-dom'
 import axios from 'axios'
 import MainHeader from './MainHeader';
+// import axios from 'axios'
+import axios from '../../integration'
 
 const JewellerRegister = () => {
 const [name, setName] = useState('');
@@ -37,7 +39,7 @@ setWallet(event.target.value);
 
  async function register(event){
   event.preventDefault();
-  await axios.post("http://localhost:5000/JewellerRegister",{
+  await axios.post("/JewellerRegister",{
     name,
     email,password
   }).then(res=>{

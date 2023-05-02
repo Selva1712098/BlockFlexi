@@ -50,7 +50,7 @@ setWallet(event.target.value);
 
  async function register(event){
   event.preventDefault();
-  await axios.post("http://localhost:5000/CustomerRegister",{
+  await axios.post("/CustomerRegister",{
     name,
     address,
     mobile,PANNo,email,password,wallet

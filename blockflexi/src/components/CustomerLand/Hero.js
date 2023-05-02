@@ -1,7 +1,9 @@
 import React, { useEffect, useState, forwardRef } from "react";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router";
-import axios from "axios";
+// import axios from "axios";
+import axios from '../../integration'
+
 import "./Hero.css";
 import { Circles } from "react-loader-spinner";
 function Hero({customerWallet}) {
@@ -33,7 +35,7 @@ function Hero({customerWallet}) {
     async function fetchData() {
       try {
         setLoading(true)
-        const response = await axios.get("http://localhost:5000/viewjewellers");
+        const response = await axios.get("/viewjewellers");
         jeweller(response.data.jeweller);
         setLoading(false)
        

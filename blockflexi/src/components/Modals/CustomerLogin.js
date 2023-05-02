@@ -10,7 +10,8 @@ import {
 } from '@mui/material';
 // import {Alert} from '@mui/material'
 import Swal from 'sweetalert2'
-import axios from 'axios'
+// import axios from 'axios'
+import axios from '../../integration'
 
 import { useNavigate } from 'react-router-dom';
 import Header from '../Header';
@@ -36,7 +37,7 @@ const CustomerLogin = () => {
 
   async function login(event){
     event.preventDefault();
-    await axios.post('http://localhost:5000/CustomerLogin',
+    await axios.post('/CustomerLogin',
     {
       email,password
     },{withCredentials:true}).then((res)=>{
