@@ -32,7 +32,7 @@ function Footer() {
               CONTACT US
             </Typography>
             <Typography variant="body2" style={{ marginBottom: "1rem",fontSize:'17px' }}>
-              Email: <Link style={{color:"white"}} href="blockedge@example.com">blockedge@example.com</Link>
+              Email: <Link style={{color:"white"}} href="https://www.blockedge.io/">blockedge@example.com</Link>
             </Typography> 
             <Typography variant="body2" style={{ marginBottom: "1rem",fontSize:'17px' }}>
               Phone: <Link style={{color:"white"}} href="tel:+15555555555">+1 844-838-3800</Link>

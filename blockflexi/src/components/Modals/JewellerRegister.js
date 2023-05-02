@@ -8,6 +8,7 @@ Typography,
 } from '@mui/material';
 import {useNavigate} from 'react-router-dom'
 import axios from 'axios'
+import MainHeader from './MainHeader';
 
 const JewellerRegister = () => {
 const [name, setName] = useState('');
@@ -54,7 +55,7 @@ setWallet(event.target.value);
 }
 return (
     <>
-    
+    <MainHeader/>
     <br/>
     <br/>
     <br/>

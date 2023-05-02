@@ -5,7 +5,7 @@ import CustomerLogin from './components/Modals/CustomerLogin'
 import JewellerLogin from './components/Modals/JewellerLogin'
 import BankLogin from './components/Modals/BankLogin'
 import JewellerHome from './pages/JewellerHome';
-import Header from './components/Header';
+// import Header from './components/Header';
 // import BankHome from './pages/BankHome';
 import CustomerRegister from './components/Modals/CustomerRegister';
 import JewellerRegister from './components/Modals/JewellerRegister';
@@ -19,6 +19,7 @@ import CustomerScheme from './pages/CustomerScheme';
 import CustomerLanding from './pages/CustomerLanding';
 import AllJewellers from './pages/AllJewellers';
 import JewellerProfile from './pages/JewellerProfile';
+import MainHeader from './components/Modals/MainHeader';
 
 
 const LazyBankHome=React.lazy(()=>import ('./pages/BankHome'))
@@ -31,7 +32,7 @@ function App() {
     <div className="App">
       <LoginContext.Provider value={loggedin}>
       <Router>
-        <Header/>
+        {/* <Header/> */}
       <Routes>
         <Route path={'/'} element={<LandingPage/>}/>
         <Route path={'/CustomerHome'} element={<CustomerHome/>}/>
@@ -55,6 +56,7 @@ function App() {
         <Route path={'/Pay/:CustomerID/:JewellerID/:SchemeID'} element={<Pay/>}></Route>
         <Route path={'/JewellerProfile'} element={<JewellerProfile/>}></Route>
         <Route path={'BankPayment/:CustomerID/:JewellerID/:SchemeID'} element={<BankPayment/>}></Route>
+        <Route path={'/MainHeader'} element={<MainHeader />}></Route>
         
       </Routes>
     </Router>

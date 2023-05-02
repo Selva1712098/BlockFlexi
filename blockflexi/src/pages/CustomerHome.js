@@ -18,6 +18,7 @@ import Scheme from "../components/Modals/Scheme";
 import jwtDecode from "jwt-decode";
 import MySchemes from "../components/Modals/MySchemes";
 import './CustomerHome.css'
+import Header from "../components/Header";
 function CustomerHome() {
   const {JewellerName,JewellerID}=useParams()
   const location=useLocation()
@@ -76,7 +77,7 @@ function CustomerHome() {
   return (
     <>
       <div >
-     
+     <Header />
       <br/>
       <h1 className="tpb" style={{fontFamily:'Libre Baskerville,serif'}}>Welcome!!!</h1>
 

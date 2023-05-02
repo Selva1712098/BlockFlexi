@@ -13,6 +13,8 @@ import Swal from 'sweetalert2'
 import axios from 'axios'
 
 import { useNavigate } from 'react-router-dom';
+import Header from '../Header';
+import MainHeader from './MainHeader';
 
 const CustomerLogin = () => {
   const [email, setEmail] = useState('');
@@ -79,7 +81,7 @@ const CustomerLogin = () => {
   
   return (
     <>
-    
+    <MainHeader />
     <div
       style={{
         display: 'flex',

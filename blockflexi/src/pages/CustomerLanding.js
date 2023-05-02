@@ -7,6 +7,8 @@ import JewellerHero2 from "../components/CustomerLand/JewellerHero2";
 import Hero from "../components/CustomerLand/Hero";
 
 import './CustomerLanding.css';
+import Header from "../components/Header";
+import MainHeader from "../components/Modals/MainHeader";
 
 function CustomerLanding() {
   const location=useLocation();
@@ -39,6 +41,10 @@ function CustomerLanding() {
   //   setShowSection(true);
   // }, []);
   return (
+   
+   
+    <div>
+     <Header/>
     <div style={{ height: "50vh", background: "white"}}>
      
       <div
@@ -148,6 +154,8 @@ function CustomerLanding() {
       <br />
     
     </div>
+    </div>
+    
   );
 }
 export default CustomerLanding;

@@ -11,6 +11,7 @@ import {
 import axios from 'axios';
 import Swal from 'sweetalert2'
 import { useNavigate } from 'react-router-dom';
+import MainHeader from './MainHeader';
 
 const JewellerLogin = () => {
   const [email, setEmail] = useState('');
@@ -74,7 +75,7 @@ const JewellerLogin = () => {
     
   return (
     <>
-    
+    <MainHeader />
     <div
       style={{
         display: 'flex',

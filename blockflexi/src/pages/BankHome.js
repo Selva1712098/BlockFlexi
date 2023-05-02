@@ -23,6 +23,7 @@ import axios from "axios";
 import { Circles } from  'react-loader-spinner'
 import Web3 from'web3';
 import abi from "../contracts/FlexiScheme.json"
+import Header from "../components/Header";
 function createData(Sno, name, Phone_No, Payment_Status, Months_paid, PANNo) {
   return { Sno, name, Phone_No, Payment_Status, Months_paid, PANNo };
 }
@@ -253,7 +254,7 @@ useEffect(()=>{
  
   return (
     <>
-      
+      <Header />
 
       <Dialog
         open={open}

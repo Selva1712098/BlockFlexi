@@ -25,6 +25,7 @@ import CancelRoundedIcon from "@mui/icons-material/CancelRounded";
 import "./Request.css";
 import Swal from "sweetalert2";
 import { Circles } from "react-loader-spinner";
+import Header from "../components/Header";
 
 const TableExample = () => {
   const [hoveredRow, setHoveredRow] = useState(null);
@@ -278,7 +279,7 @@ const handleUsers=(data)=>{
    
   return (
     <div style={{ display: "flex", flexDirection: "column"   }}>
-      
+      <Header />
       <Typography
         variant="h4"
         align="center"
