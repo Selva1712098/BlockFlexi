@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
 import jwt_Decode from 'jwt-decode'
 import { useCookies } from "react-cookie";
-import axios from "axios";
+// import axios from "axios";
+import axios from '../integration'
+
 import Web3 from'web3';
 import abi from "../contracts/FlexiScheme.json"
 import {
@@ -126,7 +128,7 @@ const TableExample = () => {
     async function getUserID(){
       
       try{
-      await axios.get("http://localhost:5000/CustomerSchemesLoanReq").then(res=>{
+      await axios.get("/CustomerSchemesLoanReq").then(res=>{
         if(res.data.response1){
           console.log('loanreq',res.data.response1)
           const row=res.data.response1.filter(r=>r.JewellerID === jewellerid)
@@ -153,7 +155,7 @@ useEffect(()=>{
             setisLoading(true)
               const userIds=userid.map(user=>user.CustomerID)
              
-             await axios.get('http://localhost:5000/GetUsers').then(res=>{
+             await axios.get('/GetUsers').then(res=>{
                 const response =res.data.usercheck
                 console.log(response)
                 const users = response.filter(user => userIds.includes(user.CustomerID));
@@ -175,7 +177,7 @@ useEffect(()=>{
 const fwdrequest=async(row)=>{
   console.log(row)
   const schemeid=userid.find(user=>user.CustomerID===row.CustomerID)
-  await axios.put("http://localhost:5000/CustomerSchemeEdit",{
+  await axios.put("/CustomerSchemeEdit",{
 customerid:row.CustomerID,
 jewellerid,
 schemeid:schemeid.SchemeID,
@@ -213,7 +215,7 @@ else{
 }
 const rjtrequest=async(row)=>{
   const schemeid=userid.find(user=>user.CustomerID===row.CustomerID)
-  await axios.put("http://localhost:5000/CustomerSchemeEdit",{
+  await axios.put("/CustomerSchemeEdit",{
   customerid:row.CustomerID,
   jewellerid,
   schemeid:schemeid.SchemeID,

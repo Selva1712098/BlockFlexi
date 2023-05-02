@@ -24,7 +24,9 @@ import {
   } from '@chakra-ui/react'
   import Swal from "sweetalert2";
   import { Card, CardBody, CardFooter, Heading } from '@chakra-ui/react'
-  import axios from "axios";
+  // import axios from "axios";
+  import axios from '../../integration'
+
   import abi from '../../contracts/FlexiScheme.json'
   // import {ethers} from 'ethers';
   import Web3 from 'web3'
@@ -77,7 +79,7 @@ function Scheme({isOpen, onClose,jewellerid,customerid,jewellername,customerwall
     const schemeid=schemes.SchemeID
     const schemename=schemes.SchemeName
     // console.log(schemeid,jewellerid,customerid)
-    await axios.post('http://localhost:5000/JoinScheme',{
+    await axios.post('/JoinScheme',{
     jewellerid:jewellerid,customerid:customerid,
     schemeid:schemeid,
     schemename:schemename
@@ -172,7 +174,7 @@ function Scheme({isOpen, onClose,jewellerid,customerid,jewellername,customerwall
      
       try {
         // Make a GET request to the /schemes API endpoint
-        await axios.get("http://localhost:5000/JewellerScheme").then(res=>{
+        await axios.get("/JewellerScheme").then(res=>{
           if(res.data.status==='success'){
             const sc1=res.data.schemes.filter(sc=>sc.JewellerID===jewellerid)
             console.log(sc1)

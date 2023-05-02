@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-
+import axios from '../../integration'
 
 import {
   Card,
@@ -12,7 +12,7 @@ import {
 import Swal from "sweetalert2";
 
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+// import axios from "axios";
 
 function BankLogin() {
   const [email, setEmail] = useState("");
@@ -30,7 +30,7 @@ function BankLogin() {
 
   async function login(event){
     event.preventDefault();
-    await axios.post("http://localhost:5000/BankLogin",{
+    await axios.post("/BankLogin",{
       email,
       password
     },{withCredentials:true}).then((res)=>{

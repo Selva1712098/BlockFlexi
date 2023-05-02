@@ -2,7 +2,9 @@ import React,{useEffect,useState} from "react";
 import { useLocation ,useParams,useNavigate} from "react-router-dom";
 // import jwt_Decode from 'jwt-decode'
 import Web3 from'web3';
-import axios from 'axios'
+// import axios from 'axios'
+import axios from '../integration'
+
 import Swal from 'sweetalert2'
 
 import abi from "../contracts/FlexiScheme.json"
@@ -85,7 +87,7 @@ function BankPayment(){
      }
 
      async function apprequest(){
-        await axios.put("http://localhost:5000/CustomerSchemeEdit",{
+        await axios.put("/CustomerSchemeEdit",{
   customerid:CustomerID,
   jewellerid:JewellerID,
   schemeid:SchemeID,

@@ -1,6 +1,8 @@
 import React,{useState,useEffect} from "react";
 import './JewellerHero2.css';
-import axios from "axios";
+// import axios from "axios";
+import axios from '../../integration'
+
 import { Circles } from "react-loader-spinner";
 
 function JewellerHero2({customerid}){
@@ -10,7 +12,7 @@ function JewellerHero2({customerid}){
   useEffect(()=>{
     async function getSchemeId(){
       try{
-        await axios.get("http://localhost:5000/GetSchemeID").then(res=>{
+        await axios.get("/GetSchemeID").then(res=>{
           if(res.data.schemecheck){
             const id=res.data.schemecheck.filter(r=>r.CustomerID === customerid)
             setyourSchemeid(id)
@@ -28,7 +30,7 @@ function JewellerHero2({customerid}){
 
       try{
         setLoading(true)
-        await axios.get("http://localhost:5000/GetScheme").then(res=>{
+        await axios.get("/GetScheme").then(res=>{
           if(res.data.schemecheck){
             const response = res.data.schemecheck;
             const schemes = response.filter((res) => {

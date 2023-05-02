@@ -7,7 +7,9 @@ Button,
 Typography,
 } from '@mui/material';
 import {useNavigate} from 'react-router-dom'
-import axios from 'axios'
+// import axios from 'axios'
+import axios from '../../integration'
+
 
 const CustomerRegister = () => {
 const [name, setName] = useState('');
@@ -49,7 +51,7 @@ setWallet(event.target.value);
 
  async function register(event){
   event.preventDefault();
-  await axios.post("http://localhost:5000/CustomerRegister",{
+  await axios.post("/CustomerRegister",{
     name,
     address,
     mobile,PANNo,email,password,wallet

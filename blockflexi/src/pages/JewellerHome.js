@@ -2,7 +2,9 @@ import {useNavigate} from 'react-router-dom';
 import { useState } from 'react';
 import { Box, Card, CardContent, Typography, CardActions, Button, Modal,TextField } from '@mui/material';
 import JewellerSchemeTable from '../components/JewellerSchemeTable';
-import axios from 'axios';
+// import axios from 'axios';
+import axios from '../integration'
+
 import jwt_decode from 'jwt-decode'
 import {useCookies} from 'react-cookie'
 import Swal from 'sweetalert2';
@@ -72,7 +74,7 @@ const JewellerHome = () => {
     };
     async function scheme(event){
       event.preventDefault();
-      await axios.post("http://localhost:5000/scheme",{
+      await axios.post("/scheme",{
         JewellerID,
         SchemeName,
         SchemeDetails,

@@ -1,5 +1,7 @@
 import React,{useState,useEffect} from "react";
-import axios from "axios";
+// import axios from "axios";
+import axios from '../integration'
+
 import './pay.css';
 // import './PaymentProcessing.css';
 import { useParams,useLocation } from "react-router-dom";
@@ -113,7 +115,7 @@ console.log(bfcontract);
 
   async function getSchemeID() {
     try {
-      await axios.get("http://localhost:5000/GetSchemeID").then((res) => {
+      await axios.get("/GetSchemeID").then((res) => {
         if (res.data) {
           const sc1 = res.data.schemecheck.filter(
             (sc) => sc.JewellerID === JewellerID && sc.CustomerID === CustomerID && sc.SchemeID === SchemeID
@@ -131,7 +133,7 @@ console.log(bfcontract);
   async function getScheme() {
     try {
      
-      axios.get("http://localhost:5000/GetScheme").then((res) => {
+      axios.get("/GetScheme").then((res) => {
         console.log(res.data.schemecheck);
         const response = res.data.schemecheck;
         const schemes = response.filter((res) => {
