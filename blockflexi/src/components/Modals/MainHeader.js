@@ -1,6 +1,7 @@
 import React from "react";
 import './MainHeader.css';
 import Header from "../Header";
+import { Link } from "react-router-dom";
 function MainHeader(){
     return(
         <div>
@@ -11,7 +12,7 @@ function MainHeader(){
   <div className="headbar1-right">
     <nav>
       <ul>
-        <li><a href="#">Home</a></li>
+        <li><Link to={'/'}>Home</Link></li>
         <li><a href="https://www.blockedge.io/">Contact</a></li>
       </ul>
     </nav>

@@ -16,7 +16,7 @@ import { useNavigate } from 'react-router-dom';
 
 
 
-const pages = [ 'Contact', 'Schemes'];
+
 const settings = [ 'Account', 'Dashboard', 'Logout'];
 
 function Header() {
@@ -40,6 +40,11 @@ function Header() {
   const handleHomeClick = () => {
     window.location.reload();
   };
+
+  const handleContactClick = () => {
+    window.location.href = 'https://blockedge.io'; // Replace with your desired URL
+  };
+  
 
   // const goldprice=async ()=>{
    
@@ -78,7 +83,7 @@ function Header() {
             BlockFlexi
           </Typography>
 
-          <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
+          {/* <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
             <IconButton
               size="large"
               aria-label="account of current user"
@@ -111,14 +116,14 @@ function Header() {
             <Typography textAlign="left" onClick={handleHomeClick}>HOME</Typography>
             </MenuItem>
                
-              {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
+              
+                {/* <MenuItem key={page} onClick={handleCloseNavMenu}> */}
                  
-                  <Typography textAlign="center">{page}</Typography>
-                </MenuItem>
-              ))}
-            </Menu>
-          </Box>
+                  {/* <Typography textAlign="center">{page}</Typography> */}
+                {/* </MenuItem> */}
+              
+            {/* </Menu> */}
+          {/* </Box> */} 
           
           <Typography
             variant="h5"
@@ -141,17 +146,27 @@ function Header() {
             <Button color='inherit' sx={{fontFamily:'Libre Baskerville,serif',
               fontWeight:'bold'}} onClick={handleHomeClick}>Home</Button>
             
-            {pages.map((page) => (
+           
               <Button
-                key={page}
+                key="Scheme"
                 onClick={handleCloseNavMenu}
                 sx={{  color: 'white', display: 'flex',marginLeft:'80px',fontFamily:'Libre Baskerville,serif',
                 fontWeight:'bold' }}
               >
-                {page}
+                Schemes
+              </Button>
+
+              <Button
+                key="Contact"
+                onClick={handleContactClick}
+                sx={{  color: 'white', display: 'flex',marginLeft:'80px',fontFamily:'Libre Baskerville,serif',
+                fontWeight:'bold' }}
+              >
+                Contact
               </Button>
               
-            ))}
+              
+            
           <Button color='inherit' sx={{fontFamily:'Libre Baskerville,serif',
               fontWeight:'bold',marginLeft:'80px'}} >Gold Price</Button>
 
