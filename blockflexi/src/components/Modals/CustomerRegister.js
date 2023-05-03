@@ -7,9 +7,8 @@ Button,
 Typography,
 } from '@mui/material';
 import {useNavigate} from 'react-router-dom'
-// import axios from 'axios'
-import axios from '../../integration'
-
+import axios from 'axios'
+import MainHeader from './MainHeader';
 
 const CustomerRegister = () => {
 const [name, setName] = useState('');
@@ -74,7 +73,7 @@ const data=()=>{
 }
 return (
     <>
-  
+  <MainHeader />
     <br/>
     <br/>
     <br/>

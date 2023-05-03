@@ -12,6 +12,9 @@ import {
 import Swal from "sweetalert2";
 
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import Header from "../Header";
+import MainHeader from "./MainHeader";
 // import axios from "axios";
 
 function BankLogin() {
@@ -80,7 +83,7 @@ function BankLogin() {
     }
   return (
     <>
-    
+    <MainHeader />
       <div
         style={{
           display: "flex",

@@ -26,6 +26,7 @@ import {
 
 
 import { Circles } from  'react-loader-spinner'
+import Header from '../components/Header';
 
 
 function Settle() {
@@ -226,6 +227,7 @@ value={isloading}
 
   return (
     <div>
+      <Header />
       <Dialog
         open={open}
         onClose={() => setOpen(false)}

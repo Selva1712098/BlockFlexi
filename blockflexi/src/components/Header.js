@@ -37,6 +37,9 @@ function Header() {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
+  const handleHomeClick = () => {
+    window.location.reload();
+  };
 
   // const goldprice=async ()=>{
    
@@ -105,7 +108,7 @@ function Header() {
                 
               }}
             >   <MenuItem>
-            <Typography textAlign="left" onClick={()=>Navigate('/')}>HOME</Typography>
+            <Typography textAlign="left" onClick={handleHomeClick}>HOME</Typography>
             </MenuItem>
                
               {pages.map((page) => (
@@ -136,7 +139,7 @@ function Header() {
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' },marginLeft:'170px' }}>
             <Button color='inherit' sx={{fontFamily:'Libre Baskerville,serif',
-              fontWeight:'bold'}} onClick={()=>Navigate('/')}>Home</Button>
+              fontWeight:'bold'}} onClick={handleHomeClick}>Home</Button>
             
             {pages.map((page) => (
               <Button

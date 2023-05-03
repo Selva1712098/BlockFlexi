@@ -8,6 +8,7 @@ import { useParams,useLocation } from "react-router-dom";
 import abi from '../contracts/FlexiScheme.json'
 import Web3 from 'web3'
 import Swal from 'sweetalert2'
+import Header from "../components/Header";
 //import { Button } from "@mui/material";
 
 //  import dotenv from 'dotenv'
@@ -172,9 +173,8 @@ console.log(bfcontract);
     
   
     return(
-     
         <div>
-             
+             <Header />
             <div style={{display:'flex',justifyContent:'flex-end',marginTop:'13px',marginRight:'10px'}}>
             {/* <Button variant='contained' size='sm' style={{backgroundColor:'#9A1B56'}} onClick={connect} >Connect </Button> */}
               </div>

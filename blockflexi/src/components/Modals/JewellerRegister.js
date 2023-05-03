@@ -7,6 +7,8 @@ Button,
 Typography,
 } from '@mui/material';
 import {useNavigate} from 'react-router-dom'
+import axios from 'axios'
+import MainHeader from './MainHeader';
 // import axios from 'axios'
 import axios from '../../integration'
 
@@ -55,7 +57,7 @@ setWallet(event.target.value);
 }
 return (
     <>
-    
+    <MainHeader/>
     <br/>
     <br/>
     <br/>
