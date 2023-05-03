@@ -47,11 +47,26 @@ function BankLogin() {
         alert("wrong password")
       }
       else if(res.data.status==='not found'){
-        alert('No user found.Contact us to create an account')
-        navigate('/')
+        Swal.fire({
+          icon: 'error',
+          title: 'Invalid Credentials',
+          text: 'Please use Valid Credentials',
+        }).then((result)=>{
+          if(result.isConfirmed){
+            window.location.reload();
+          }
+        })
       }
     }).catch(e=>{
-      alert('wrong details')
+      Swal.fire({
+        icon: 'error',
+        title: 'Something Went Wrong',
+        text: 'Please Try Again later',
+      }).then((result)=>{
+        if(result.isConfirmed){
+          window.location.reload();
+        }
+      })
 
     })  }
     if(open){

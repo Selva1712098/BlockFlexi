@@ -58,20 +58,28 @@ const JewellerLogin = () => {
       else if(res.data.status==='not found'){
        
         
-          Swal.fire({
-            icon: 'error',
-            title: 'User Not Found!',
-            text: 'Please Create an account',
-          }).then((result)=>{
-            if(result.isConfirmed){
-              navigate('/Jeweller/Register')
-            }
-          })
+        Swal.fire({
+          icon: 'error',
+          title: 'Invalid Credentials',
+          text: 'Please use Valid Credentials',
+        }).then((result)=>{
+          if(result.isConfirmed){
+            window.location.reload();
+          }
+        })
         
         
       }
     }).catch(e=>{
-      alert('wrong details')
+      Swal.fire({
+        icon: 'error',
+        title: 'Something Went Wrong',
+        text: 'Please Try Again later',
+      }).then((result)=>{
+        if(result.isConfirmed){
+          window.location.reload();
+        }
+      })
 
     })  }
     
