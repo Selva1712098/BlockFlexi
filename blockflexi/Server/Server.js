@@ -344,7 +344,17 @@ app.get('/CustomerSchemesBankStatus',async(req,res)=>{
 
   }
 })
-
+app.get('/AllSchemes', async(req,res)=>{
+  try{
+    const schemescheck = await jewellerySchemeCollection.find()
+    if(schemescheck){
+      res.json({schemescheck})
+    }
+  }
+  catch(e){
+    console.log(e)
+  }
+})
 app.put('/StatusChange',async (req,res)=>{
   const{customerid,schemeid,jewellerid}=req.body
   try{
