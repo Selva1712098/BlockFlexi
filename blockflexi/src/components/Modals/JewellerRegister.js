@@ -11,13 +11,17 @@ import {useNavigate} from 'react-router-dom'
 import MainHeader from './MainHeader';
 // import axios from 'axios'
 import axios from '../../integration'
+import IconButton from '@mui/material/IconButton';
+import Visibility from '@mui/icons-material/Visibility';
+import InputAdornment from '@mui/material/InputAdornment';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
 
 const JewellerRegister = () => {
 const [name, setName] = useState('');
-
+const [showPassword,setShowPassword]=useState(false)
 const [email, setEmail] = useState('');
 const [password, setPassword] = useState('');
-const[wallet,setWallet] = useState('');
+const[walletaddress,setWallet] = useState('');
 const navigate=useNavigate()
 const handleNameChange = (event) => {
 setName(event.target.value);
@@ -41,7 +45,7 @@ setWallet(event.target.value);
   event.preventDefault();
   await axios.post("/JewellerRegister",{
     name,
-    email,password
+    email,password,walletaddress
   }).then(res=>{
     if(res.data.status==='ok'){
       alert("Your account has been created successfully")
@@ -49,7 +53,7 @@ setWallet(event.target.value);
 }
     else if(res.data.status==='exists'){
       alert("You are already a part of us")
-      navigate('/Jeweller/login')
+     window.location.reload()
     }
   }).catch(e=>{
     alert("wrong details")
@@ -85,6 +89,7 @@ JEWELLER REGISTRATION
 
 <form onSubmit={register} action="POST">
 <TextField
+required
            id="name"
            label="Name"
            type="text"
@@ -97,6 +102,7 @@ JEWELLER REGISTRATION
 
 
 <TextField
+required
            id="email"
            label="Email ID"
            type="email"
@@ -107,22 +113,31 @@ JEWELLER REGISTRATION
            margin="normal"
          />
 <TextField
+required
            id="password"
            label="Password"
-           type="password"
+           type={showPassword?"text":"password"}
            variant="outlined"
            fullWidth
            value={password}
            onChange={handlePasswordChange}
            margin="normal"
+           InputProps={{endAdornment:<InputAdornment position="end"> <IconButton
+           onClick={()=>setShowPassword(!showPassword)}>
+           {showPassword ? <VisibilityOff /> : <Visibility />}
+           </IconButton></InputAdornment>}}
          />
+        
+        
+
          <TextField
+         required
            id="wallet"
            label="WalletAddress"
            type="text"
            variant="outlined"
            fullWidth
-           value={wallet}
+           value={walletaddress}
            helpertext="put 0x instead of xdc"
            onChange={handleWalletChange}
            margin="normal"

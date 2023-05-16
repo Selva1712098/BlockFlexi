@@ -270,7 +270,12 @@ const CustomerSchemeSchema = new mongoose.Schema(
     JewellerName:{
       type:String,
       ref:'Jewellery_Scheme.SchemeName'
+    },
+    Status:{
+      type:String,
+      default:'Pending'
     }
+    
   },
   {
     collection: "Customer_Scheme"

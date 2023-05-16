@@ -15,6 +15,10 @@ import { useNavigate } from "react-router-dom";
 
 import Header from "../Header";
 import MainHeader from "./MainHeader";
+import IconButton from '@mui/material/IconButton';
+import Visibility from '@mui/icons-material/Visibility';
+import InputAdornment from '@mui/material/InputAdornment';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
 // import axios from "axios";
 
 function BankLogin() {
@@ -22,7 +26,7 @@ function BankLogin() {
   const [password, setPassword] = useState("");
   const[open,setOpen]=useState(false)
   const navigate=useNavigate()
-
+  const [showPassword,setShowPassword]=useState(false)
   const handleEmailChange = (event) => {
     setEmail(event.target.value);
   };
@@ -133,6 +137,7 @@ function BankLogin() {
               <CardContent style={{ paddingTop: "40px" }}>
                 <form onSubmit={login} action="POST">
                   <TextField
+                  required
                     id="email"
                     label="Email"
                     type="email"
@@ -144,11 +149,16 @@ function BankLogin() {
                     style={{ marginBottom: "20px" }}
                   />
                   <TextField
+                  required
                     id="password"
                     label="Password"
-                    type="password"
+                    type={showPassword?"text":"password"}
                     variant="outlined"
                     fullWidth
+                    InputProps={{endAdornment:<InputAdornment position="end"> <IconButton
+                    onClick={()=>setShowPassword(!showPassword)}>
+                    {showPassword ? <VisibilityOff /> : <Visibility />}
+                    </IconButton></InputAdornment>}}
                     value={password}
                     onChange={handlePasswordChange}
                     margin="normal"

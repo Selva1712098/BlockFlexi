@@ -123,6 +123,7 @@ function MySchemes({ isOpen, onClose, jewellerid, customerid,customername,jewell
   }, [schemeId]);
 
   const checkbalance=async (scheme)=>{
+   
     const { web3, accounts } = await connect();
     
       
@@ -154,6 +155,7 @@ function MySchemes({ isOpen, onClose, jewellerid, customerid,customername,jewell
     }catch(err){
       console.log(err)
     }
+    onClose()
   }
 
   const loanRequest = async (scheme) => {
@@ -163,6 +165,7 @@ function MySchemes({ isOpen, onClose, jewellerid, customerid,customername,jewell
         customerid,
         schemeid,
         loanreq: true,
+        jewellerid
       })
       .then((res) => {
         try {
@@ -198,8 +201,8 @@ function MySchemes({ isOpen, onClose, jewellerid, customerid,customername,jewell
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent maxW="50%">
-          <ModalHeader style={{fontFamily:'Libre Baskerville,serif'}}>My Schemes</ModalHeader>
-          <ModalCloseButton />
+          <ModalHeader style={{fontFamily:'Libre Baskerville,serif',backgroundColor:'#9a1b56',color:'white'}}>My Schemes</ModalHeader>
+          <ModalCloseButton  style={{color:'white'}}/>
           {/* <Button variant="contained" onClick={() => getScheme()}>
             Refresh
           </Button> */}

@@ -98,7 +98,7 @@ const TableExample = () => {
         const bfcontract = new web3.eth.Contract(abi, contractaddress);
     console.log(bfcontract);
     const blockdata=userid.find(user=>user.CustomerID===data.CustomerID)
-    
+    console.log(blockdata)
     const schemeName=blockdata.SchemeName
     setScheme(schemeName)
     console.log(jewellername,schemename)

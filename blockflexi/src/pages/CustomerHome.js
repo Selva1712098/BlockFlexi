@@ -19,6 +19,7 @@ import jwtDecode from "jwt-decode";
 import MySchemes from "../components/Modals/MySchemes";
 import './CustomerHome.css'
 import Header from "../components/Header";
+import Web3 from 'web3'
 function CustomerHome() {
   const {JewellerName,JewellerID}=useParams()
   const location=useLocation()
@@ -31,14 +32,40 @@ function CustomerHome() {
   const [cookies, setCookie, removeCookie] = useCookies(["customer_sessionId"]);
   const navigate=useNavigate()
   const [isActive, setIsActive] = useState(false);
+  const[off,setOff]=useState(false)
 
-  
 
-  // const handleSchemeidChange=(sid)=>{
-  //   setSchemeId(sid)
-  //   console.log(sid)
-  // }
-  
+  async function connect() {
+    if (window.ethereum) {
+      const web3 = new Web3(window.ethereum);
+      try {
+        await window.ethereum.enable();
+        const accounts = await web3.eth.getAccounts();
+        const networkId = await web3.eth.net.getId();
+        if (networkId !== 51) {
+          alert("Please connect to XDC Wallet")
+          setOff(true)
+         
+          throw new Error("Please connect to XDC network.");
+         
+        }
+        return { web3, accounts };
+      } catch (error) {
+        alert("Please Create an account in the XDC Xinfin network")
+        throw new Error("Please connect to Metamask to connect to XDC network.");
+      }
+
+    } else {
+      setOff(true)
+      alert("Please install XDC pay Extension")
+      throw new Error("Please install Metamask to connect to XDC network.");
+    }
+  }
+ useEffect(()=>{
+ 
+  connect()
+ },[])
+    
   
   const token = jwtDecode(cookies.customer_sessionId);
 
@@ -74,6 +101,18 @@ function CustomerHome() {
   const handleButtonPay = () => {
     setIsActive(!isActive);
   };
+
+  if(off){
+    return (
+      <div className={`overlay-1 ${off ? 'active' : ''}`}>
+        <div className="processing-container-1">
+         
+          <div className="processing-text-1">Please Install XDCPAY Wallet and Refresh the page.😉</div>
+        </div>
+      </div>
+    );
+  
+  }
   return (
     <>
       <div >

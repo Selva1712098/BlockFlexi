@@ -283,8 +283,8 @@ app.get('/GetSchemeID',async(req,res)=>{
   
   try {
     const schemecheck = await customerSchemeCollection.find({
-      
-    },{SchemeID:1,JewellerID:1,CustomerID:1});
+      Status:"Completed"
+    },{SchemeID:1,JewellerID:1,CustomerID:1,});
     
 
       res.json({ schemecheck});
@@ -309,6 +309,7 @@ app.post('/JoinScheme', async (req, res) => {
       JewellerID: jewellerid,
       SchemeID: schemeid,
       CustomerID: customerid,
+      
     });
     console.log(schemecheck);
     if (schemecheck !== null) {
@@ -344,6 +345,20 @@ app.get('/CustomerSchemesBankStatus',async(req,res)=>{
   }
 })
 
+app.put('/StatusChange',async (req,res)=>{
+  const{customerid,schemeid,jewellerid}=req.body
+  try{
+    const change=await customerSchemeCollection.findOneAndUpdate({CustomerID:customerid,SchemeID:schemeid,JewellerID:jewellerid,Status:'Pending'},{$set:{
+      Status:"Completed"
+    }})
+
+    if(change){
+      res.data.json({status:200})
+    }
+  }catch(err){
+    console.log(err)
+  }
+})
 
 app.get('/CustomerHome/:JewellerID',async (req, res) => {
   console.log(req.params.JewellerID)
@@ -412,7 +427,7 @@ app.put('/CustomerSchemeEdit',async(req,res)=>{
   const{customerid,jewellerid,bankid,jewellername,schemeid,loanreq,loanstatus_jw,loanstatus_bank,goldclaimstatus,goldsettle_status}=req.body
 
   if(loanreq){
-      const response=await customerSchemeCollection.findOneAndUpdate({CustomerID:customerid,SchemeID:schemeid,LoanReq:false},{$set:{LoanReq:true,LoanRegDate:new Date(Date.now())}})
+      const response=await customerSchemeCollection.findOneAndUpdate({LoanReq:false,CustomerID:customerid,JewellerID:jewellerid,SchemeID:schemeid},{$set:{LoanReq:true,LoanRegDate:new Date(Date.now())}})
       console.log(response)
       if(response){
         res.json({Status:'done'})

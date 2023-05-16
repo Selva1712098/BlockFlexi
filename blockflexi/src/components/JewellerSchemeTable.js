@@ -75,20 +75,20 @@ function JewellerSchemeTable({jewellerid}) {
     <div >
       <Paper style={{overflow:'auto',maxHeight:'400px',maxWidth:'400px',minWidth:'300px'}}>
       <Grid container  >
-      <Typography variant='h5' align='center' mb={2} sx={{fontWeight:'bold'}}>MY SCHEMES</Typography>
+      <Typography variant='h5' align='center' mb={2} sx={{fontWeight:'bold',fontFamily:'Libre Baskerville,serif'}}>MY SCHEMES</Typography>
       {Array.isArray(schemes) && schemes.map((scheme)=>(
         
         <Grid item >
          
          <Card variant='outlined' spacing={3} style={{minWidth:'400px',marginBottom:'15px'}}>
          <CardContent>
-          <Typography variant='subtitle1' sx={{fontWeight:'bold',textTransform:'uppercase'}} gutterbottom>{scheme.SchemeName}
+          <Typography variant='subtitle1' sx={{fontWeight:'bold',textTransform:'uppercase',fontFamily:'Libre Baskerville,serif'}} gutterbottom>{scheme.SchemeName}
           </Typography>
           
 
-          <Typography variant='subtitle1' sx={{fontWeight:'medium-bold',textTransform:'uppercase'}} >Monthly Installment: {scheme.MonthlyPayment}
+          <Typography variant='subtitle1' sx={{fontWeight:'medium-bold',textTransform:'uppercase',fontFamily:'Libre Baskerville,serif'}} >Monthly Installment: {scheme.MonthlyPayment}
             </Typography>
-          <Typography variant='subtitle1' sx={{fontWeight:'medium-bold',textTransform:'uppercase'}}  >Total : {scheme.MonthlyPayment*11}
+          <Typography variant='subtitle1' sx={{fontWeight:'medium-bold',textTransform:'uppercase',fontFamily:'Libre Baskerville,serif'}}  >Total : {scheme.MonthlyPayment*11}
             </Typography></CardContent>
      <CardActions >
       <div style={{position:'relative',top:'0%',bottom:'0%',left:'75%'}}>

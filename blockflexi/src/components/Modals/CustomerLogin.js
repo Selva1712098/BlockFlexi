@@ -16,11 +16,15 @@ import axios from '../../integration'
 import { useNavigate } from 'react-router-dom';
 import Header from '../Header';
 import MainHeader from './MainHeader';
+import IconButton from '@mui/material/IconButton';
+import Visibility from '@mui/icons-material/Visibility';
+import InputAdornment from '@mui/material/InputAdornment';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
 
 const CustomerLogin = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
- 
+  const [showPassword,setShowPassword]=useState(false)
   //const[wallet,setWallet]=useState('')
   
   const navigate=useNavigate()
@@ -140,6 +144,7 @@ const CustomerLogin = () => {
         <CardContent style={{ paddingTop: '40px' }}>
           <form onSubmit={login}>
             <TextField
+            required
               id="email"
               label="Email"
               type="email"
@@ -151,12 +156,16 @@ const CustomerLogin = () => {
               style={{ marginBottom: '20px' }}
             />
             <TextField
+            required
               id="password"
               label="Password"
-              type="password"
+              type={showPassword?"text":"password"}
               variant="outlined"
               fullWidth
-              
+              InputProps={{endAdornment:<InputAdornment position="end"> <IconButton
+              onClick={()=>setShowPassword(!showPassword)}>
+              {showPassword ? <VisibilityOff /> : <Visibility />}
+              </IconButton></InputAdornment>}}
               onChange={handlePasswordChange}
               margin="normal"
               style={{ marginBottom: '30px' }}

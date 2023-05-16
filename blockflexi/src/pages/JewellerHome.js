@@ -75,6 +75,7 @@ const JewellerHome = () => {
     };
     async function scheme(event){
       event.preventDefault();
+      handleClose()
       await axios.post("/scheme",{
         JewellerID,
         SchemeName,
@@ -207,6 +208,7 @@ const JewellerHome = () => {
         <Typography style={{fontSize:'20px',fontWeight:'bold',fontFamily:'Libre Baskerville,serif'}}id='modal-title' variant='h'  component='h2'>
           Scheme Name</Typography>
           <TextField 
+          required
     id="outlined-basic"
     variant="outlined"
     name='SchemeName'
@@ -236,6 +238,7 @@ const JewellerHome = () => {
       <Typography style={{fontSize:'20px',fontWeight:'bold',fontFamily:'Libre Baskerville,serif'}}id='modal-title' variant='h'  component='h2'>
           Scheme Details</Typography>
           <TextField
+          required
     id="outlined-basic"
     variant="outlined"
     name='SchemeDetails'
@@ -266,6 +269,7 @@ const JewellerHome = () => {
           MonthlyPrice
          </Typography>
         <TextField
+        required
     id="outlined-basic"
     variant="outlined"
     name='MonthlyPayment'
@@ -289,7 +293,7 @@ const JewellerHome = () => {
         <Typography id='modal-description' sx={{ mt: 6 }}>
         <Button type='submit'
     variant="contained"
-    style={{fontWeight:"bold",margin:"0px 0px 0px 160px",fontFamily:'Libre Baskerville,serif',backgroundColor:'#81b735',padding:'8px 30px 8px 30px',fontSize:'15px'
+    style={{fontWeight:"bold",margin:"0px 0px 0px 160px",fontFamily:'Libre Baskerville,serif',backgroundColor:'#9a1b56',padding:'8px 30px 8px 30px',fontSize:'15px'
     }}
   >
     ADD

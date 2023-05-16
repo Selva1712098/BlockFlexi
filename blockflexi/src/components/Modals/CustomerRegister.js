@@ -7,8 +7,12 @@ Button,
 Typography,
 } from '@mui/material';
 import {useNavigate} from 'react-router-dom'
-import axios from 'axios'
+import axios from '../../integration'
 import MainHeader from './MainHeader';
+import IconButton from '@mui/material/IconButton';
+import Visibility from '@mui/icons-material/Visibility';
+import InputAdornment from '@mui/material/InputAdornment';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
 
 const CustomerRegister = () => {
 const [name, setName] = useState('');
@@ -19,6 +23,7 @@ const [email, setEmail] = useState('');
 const [password, setPassword] = useState('');
 const[wallet,setWallet]=useState('')
 const navigate=useNavigate()
+const [showPassword,setShowPassword]=useState(false)
 const handleNameChange = (event) => {
 setName(event.target.value);
 };
@@ -61,7 +66,8 @@ setWallet(event.target.value);
 }
     else if(res.data.status==='exists'){
       alert("You are already a part of us")
-      navigate('/Customer/login')
+      window.location.reload()
+     
     }
   }).catch(e=>{
     alert("wrong details")
@@ -99,6 +105,7 @@ CUSTOMER REGISTRATION
 
 <form onSubmit={register} action="POST">
 <TextField
+required
            id="name"
            label="Name"
            type="text"
@@ -109,6 +116,7 @@ CUSTOMER REGISTRATION
            margin="normal"
          />
 <TextField
+required
            id="address"
            label="Address"
            type="text"
@@ -119,6 +127,7 @@ CUSTOMER REGISTRATION
            margin="normal"
          />
 <TextField
+required
            id="mobile"
            label="Mobile No"
            type="text"
@@ -129,6 +138,7 @@ CUSTOMER REGISTRATION
            margin="normal"
          />
 <TextField
+required
            id="PAN No"
            label="PAN No"
            type="text"
@@ -139,6 +149,7 @@ CUSTOMER REGISTRATION
            margin="normal"
          />
 <TextField
+required
            id="email"
            label="Email ID"
            type="email"
@@ -149,17 +160,21 @@ CUSTOMER REGISTRATION
            margin="normal"
          />
 <TextField
+required
            id="password"
            label="Password"
-           type="password"
+           type={showPassword?"text":"password"}
            variant="outlined"
            fullWidth
-           
-           
+           InputProps={{endAdornment:<InputAdornment position="end"> <IconButton
+           onClick={()=>setShowPassword(!showPassword)}>
+           {showPassword ? <VisibilityOff /> : <Visibility />}
+           </IconButton></InputAdornment>}}
            onChange={handlePasswordChange}
            margin="normal"
          />
          <TextField
+         required
            id="wallet"
            label="Wallet Address"
            type="text"

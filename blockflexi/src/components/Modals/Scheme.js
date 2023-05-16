@@ -7,8 +7,7 @@ import {
     ModalHeader,
     ModalFooter,
     ModalBody,
-    Alert,
-  AlertIcon,
+   
     ModalCloseButton,
     Text,
     Button,
@@ -37,12 +36,13 @@ import {
 
 function Scheme({isOpen, onClose,jewellerid,customerid,jewellername,customerwallet,jewellerwallet,customername}){
   const[schemes,setSchemes]=useState('');
-  const[open,setOpen]=useState(false)
+  // const[open,setOpen]=useState(false)
   // const[selectedScheme,setSelectedScheme]=useState(null);
   const [isJoined, setIsJoined] = useState(false);
+ 
   // const[schemeid,setSchemeId]=useState('')
   
-   const[isLoading, setIsLoading] = useState(false)
+  //  const[isLoading, setIsLoading] = useState(false)
    const contractaddress="0xfEdB6cbf8a55D553eECc93dE4e7839C81266379e"
   
   console.log(contractaddress,abi)
@@ -56,6 +56,8 @@ function Scheme({isOpen, onClose,jewellerid,customerid,jewellername,customerwall
         const networkId = await web3.eth.net.getId();
         if (networkId !== 51) {
           alert("Please connect to XDC Wallet")
+         
+         
           throw new Error("Please connect to XDC network.");
          
         }
@@ -75,16 +77,18 @@ function Scheme({isOpen, onClose,jewellerid,customerid,jewellername,customerwall
   connect()
  },[])
   async function joinscheme(schemes){
-    
+    onClose()
     const schemeid=schemes.SchemeID
     const schemename=schemes.SchemeName
     // console.log(schemeid,jewellerid,customerid)
     await axios.post('/JoinScheme',{
     jewellerid:jewellerid,customerid:customerid,
     schemeid:schemeid,
-    schemename:schemename
+    schemename:schemename,
+   
     },).then(res=>{
       if(res.data.status==='exists'){
+
          Swal.fire({
         icon:'warning',
         title:'Already Enrolled',
@@ -102,13 +106,11 @@ function Scheme({isOpen, onClose,jewellerid,customerid,jewellername,customerwall
       
     
       }
-      else if(res.data.status==='success'){
-        console.log("Added to DB ")
-       
-       // alert("You have joined this scheme successfully.Go to your schemes to view them")
-     //   window.location.reload()
-        
+      else{
+        addschemebc(schemes)
       }
+     
+     
     })
   }
   
@@ -142,14 +144,17 @@ function Scheme({isOpen, onClose,jewellerid,customerid,jewellername,customerwall
             _monthlyAmount
           ).send({from:accounts[0],gas:1000000});
           console.log('addscheme',addscheme)
-            joinscheme(scheme)
+           
           if(addscheme.status){
-           setOpen(true)
+          
+       
+        statuschange(scheme)
+        
+          
+           
             
           }
-          else{
-            alert("Try again Later")
-          }
+         
           // const viewscheme=await bfcontract.methods.schemes(1).call()
           // console.log(viewscheme)
         }catch(e){
@@ -168,6 +173,30 @@ function Scheme({isOpen, onClose,jewellerid,customerid,jewellername,customerwall
     }catch(e){
       console.error(e)
     }
+  }
+  const statuschange = async(scheme)=>{
+    await axios.put('/StatusChange',{
+            customerid,jewellerid,schemeid:scheme.SchemeID
+          }).then(
+            res =>{
+              if(res.data.status == 200){
+                Swal.fire({
+                  icon: 'success',
+                  title: 'Scheme Added!',
+                  text: 'You have Joined the Scheme',
+                  confirmButtonColor:"#9A1B56"
+                }).then((result)=>{
+                  if(result.isConfirmed){
+                    window.location.reload()
+                  }
+                });  
+                //alert("You have joined the scheme successfully")
+              }
+            }
+          )
+
+        
+
   }
   useEffect(() => {
     async function fetchData() {
@@ -196,26 +225,29 @@ function Scheme({isOpen, onClose,jewellerid,customerid,jewellername,customerwall
     fetchData();
   }, [jewellerid]);
   
-  if(open){
-    Swal.fire({
-      icon: 'success',
-      title: 'Scheme Added!',
-      text: 'You have Joined the Scheme',
-      confirmButtonColor:"#9A1B56"
-    }).then((result)=>{
-      if(result.isConfirmed){
-        window.location.reload()
-      }
-    });
-  }
+// if(open){
+//   Swal.fire({
+//     icon: 'success',
+//     title: 'Scheme Added!',
+//     text: 'You have Joined the Scheme',
+//     confirmButtonColor:"#9A1B56"
+//   }).then((result)=>{
+//     if(result.isConfirmed){
+//       window.location.reload()
+//     }
+//   });  
+// }
+ 
+  
+
  
     return(
 <div>
 <Modal isOpen={isOpen} onClose={onClose}>
     <ModalOverlay/>
     <ModalContent maxW="50%">
-          <ModalHeader style={{fontFamily:'Libre Baskerville,serif'}}>Schemes</ModalHeader>
-          <ModalCloseButton />
+          <ModalHeader style={{fontFamily:'Libre Baskerville,serif',backgroundColor:'#9a1b56',color:'white'}}>Schemes</ModalHeader>
+          <ModalCloseButton style={{color:'white'}} />
          
           <ModalBody maxHeight="400px" overflowY="scroll">
             {schemes && schemes.map((scheme,index)=>(
@@ -242,7 +274,7 @@ function Scheme({isOpen, onClose,jewellerid,customerid,jewellername,customerwall
             Joined
           </Button>
         ) : ( */}
-          <Button variant='solid' onClick={()=>{ addschemebc(scheme)}} bgColor={"#c17171"} mr={'4'} color={"#fff"}>
+          <Button variant='solid' onClick={()=>{ joinscheme(scheme)}} bgColor={"#c17171"} mr={'4'} color={"#fff"}>
             Join
           </Button>
 
@@ -269,54 +301,6 @@ function Scheme({isOpen, onClose,jewellerid,customerid,jewellername,customerwall
 </Card>
             ))}
       
-{/* <Card
-  direction={{ base: 'column', sm: 'row' }}
-  overflow='hidden'
-  variant='outline'
->
-<Stack>
-    <CardBody>
-      <Heading size='md'>Budget value(11 months)</Heading>
-
-      <Text py='2'>
-       Monthly= 5000/month
-       Total= 55000
-      </Text>
-    </CardBody>
-
-    <CardFooter>
-      <Button variant='solid' bgColor={"#c17171"} color={"#fff"}>
-        Join
-      </Button>
-    </CardFooter>
-  </Stack>
-</Card>
-<Card
-  direction={{ base: 'column', sm: 'row' }}
-  overflow='hidden'
-  variant='outline'
->
-<Stack>
-    <CardBody>
-      <Heading size='md'>Budget value(11 months)</Heading>
-
-      <Text py='2'>
-       Monthly= 5000/month
-       Total= 55000
-      </Text>
-    </CardBody>
-
-    <CardFooter>
-      <Button variant='solid' bgColor={"#c17171"} color={"#fff"}>
-        Join
-      </Button>
-    </CardFooter>
-  </Stack>
-</Card> */}
-<Alert status='success' variant='left-accent' hidden={!isJoined}>
-              <AlertIcon />
-              You have successfully joined the scheme!
-            </Alert>
 
           </ModalBody>
           <ModalFooter>
