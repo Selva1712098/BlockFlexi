@@ -68,7 +68,7 @@ return (
 <div style={{ display: 'flex', flexWrap: 'column wrap', justifyContent: 'center',height:'92vh' }}>
     
 
-<Card sx={{ bgcolor: 'white', maxWidth: '400px', margin: '50px' }}>
+<Card sx={{ bgcolor: 'white', maxWidth: '400px', margin: '30px' }}>
 <div
           style={{
             backgroundColor: '#9A1B56',
