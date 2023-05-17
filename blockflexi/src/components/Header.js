@@ -31,7 +31,7 @@ function Header() {
   };
 
   const handleCloseNavMenu = () => {
-    setAnchorElNav(null);
+    Navigate('/AllJewellers')
   };
   const Navigate=useNavigate()
   const handleCloseUserMenu = () => {
