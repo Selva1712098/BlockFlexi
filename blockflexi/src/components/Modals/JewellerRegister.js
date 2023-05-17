@@ -63,9 +63,8 @@ return (
     <>
     <MainHeader/>
     <br/>
-    <br/>
-    <br/>
-<div style={{ display: 'flex', flexWrap: 'column wrap', justifyContent: 'center',height:'92vh' }}>
+    
+<div style={{ display: 'flex', flexWrap: 'column wrap', justifyContent: 'center',height:'90vh' }}>
     
 
 <Card sx={{ bgcolor: 'white', maxWidth: '400px', margin: '50px' }}>

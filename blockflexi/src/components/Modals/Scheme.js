@@ -34,12 +34,14 @@ import {
   //import {Web3Provider} from '@ethersproject/providers'
   
 
-function Scheme({isOpen, onClose,jewellerid,customerid,jewellername,customerwallet,jewellerwallet,customername}){
+function Scheme({isOpen,handleLoader, onClose,jewellerid,customerid,jewellername,customerwallet,jewellerwallet,customername}){
   const[schemes,setSchemes]=useState('');
   // const[open,setOpen]=useState(false)
   // const[selectedScheme,setSelectedScheme]=useState(null);
   const [isJoined, setIsJoined] = useState(false);
- 
+  function handleLoading(){
+handleLoader()
+  }
   // const[schemeid,setSchemeId]=useState('')
   
   //  const[isLoading, setIsLoading] = useState(false)
@@ -77,6 +79,7 @@ function Scheme({isOpen, onClose,jewellerid,customerid,jewellername,customerwall
   connect()
  },[])
   async function joinscheme(schemes){
+    handleLoading()
     onClose()
     const schemeid=schemes.SchemeID
     const schemename=schemes.SchemeName
@@ -147,9 +150,22 @@ function Scheme({isOpen, onClose,jewellerid,customerid,jewellername,customerwall
            
           if(addscheme.status){
           
+            // Swal.fire({
+            //   title: 'Do you want to save the changes?',
+            //   showDenyButton: true,
+            //   showCancelButton: true,
+            //   confirmButtonText: 'Save',
+            //   denyButtonText: `Don't save`,
+            // }).then((result) => {
+             
+            //   if (result.isConfirmed) {
+            //    
+            //   } else if (result.isDenied) {
+            //     Swal.fire('Changes are not saved', 'To join the scheme again, please try later. ', 'info')
+            //   }
+            // })
        
-        statuschange(scheme)
-        
+            statuschange(scheme)
           
            
             
@@ -178,7 +194,7 @@ function Scheme({isOpen, onClose,jewellerid,customerid,jewellername,customerwall
     await axios.put('/StatusChange',{
             customerid,jewellerid,schemeid:scheme.SchemeID
           }).then(
-            res =>{
+            (res) =>{
               if(res.data.status == 200){
                 Swal.fire({
                   icon: 'success',

@@ -30,10 +30,13 @@ function CustomerHome() {
   const [isOpen, setIsOpen] = useState(false);
   const [isModalOpen, setisModalOpen] = useState(false);
   const [cookies, setCookie, removeCookie] = useCookies(["customer_sessionId"]);
+  const[loading,setLoading]=useState(false)
   const navigate=useNavigate()
   const [isActive, setIsActive] = useState(false);
   const[off,setOff]=useState(false)
-
+  function handleLoader(){
+    setLoading(!loading)
+  }
 
   async function connect() {
     if (window.ethereum) {
@@ -102,17 +105,10 @@ function CustomerHome() {
     setIsActive(!isActive);
   };
 
-  if(off){
-    return (
-      <div className={`overlay-1 ${off ? 'active' : ''}`}>
-        <div className="processing-container-1">
-         
-          <div className="processing-text-1">Please Install XDCPAY Wallet and Refresh the page.😉</div>
-        </div>
-      </div>
-    );
+ 
   
-  }
+      
+   
   return (
     <>
       <div >
@@ -181,7 +177,7 @@ function CustomerHome() {
                     jewellername={JewellerName}
                     
                   />
-                  <Scheme isOpen={isOpen} onClose={handleCloseModal} jewellerid={JewellerID} jewellername={JewellerName} customername={token.name} customerwallet={customerwallet} jewellerwallet={jewellerwallet} customerid={token.id} />
+                  <Scheme isOpen={isOpen} onClose={handleCloseModal} handleLoader={handleLoader} jewellerid={JewellerID} jewellername={JewellerName} customername={token.name} customerwallet={customerwallet} jewellerwallet={jewellerwallet} customerid={token.id} />
                   </div>
               </CardFooter>
             </Card>
@@ -189,6 +185,19 @@ function CustomerHome() {
            
          
         </ChakraProvider>
+        {loading&& <div className={`overlay ${loading ? 'active' : ''}`}>
+        <div className="processing-container">
+          <div className="processing-icon"></div>
+          {/* <div className="processing-text">Wait a Moment Please...</div> */}
+        </div>
+      </div>}
+
+      {off && <div className={`overlay-1 ${off ? 'active' : ''}`}>
+        <div className="processing-container-1">
+         
+          <div className="processing-text-1">Please Install XDCPAY Wallet and Refresh the page.</div>
+        </div>
+      </div>}
      
     </>
   );

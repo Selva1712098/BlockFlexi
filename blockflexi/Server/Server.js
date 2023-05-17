@@ -353,7 +353,7 @@ app.put('/StatusChange',async (req,res)=>{
     }})
 
     if(change){
-      res.data.json({status:200})
+      res.json({status:200})
     }
   }catch(err){
     console.log(err)

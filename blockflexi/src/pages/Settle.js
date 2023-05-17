@@ -6,6 +6,8 @@ import jwtDecode from 'jwt-decode'
 import { useCookies } from 'react-cookie';
 import Web3 from'web3';
 import abi from "../contracts/FlexiScheme.json"
+import Swal from "sweetalert2";
+
 
 import {
   Table,
@@ -122,6 +124,7 @@ function Settle() {
   const [hoveredRow, setHoveredRow] = useState(null);
 
   const settlegold=async(row)=>{
+   handleCloseDialog()
     console.log('settlegold',row)
    
     const schemeid=userid.find(user=>user.CustomerID===row.CustomerID )
@@ -135,12 +138,30 @@ function Settle() {
   }).then(res=>{
   if(res.data.status==='approved'){
     console.log(res.data.response4)
-    alert(`${row.CustomerName}'s Gold has been Settled`)
-    window.location.reload()
+    Swal.fire({
+      icon: 'success',
+      title: 'Gold Settled',
+      text: `${row.CustomerName}'s Gold has been Settled`,
+      confirmButtonColor:"#9A1B56"
+    }).then((result)=>{
+      if(result.isConfirmed){
+        window.location.reload();
+      }
+    })
+   
+  
   }
   else{
-    alert(`No change has been made to ${row.CustomerName}`)
-    window.location.reload()
+    Swal.fire({
+      icon: 'error',
+      title: 'Not Settled',
+      text: `${row.CustomerName}'s Gold has been Settled`,
+    }).then((result)=>{
+      if(result.isConfirmed){
+        window.location.reload();
+      }
+    })
+   
   
   }
   })
