@@ -41,7 +41,12 @@ setPANNo(event.target.value);
 };
 
 const handleEmailChange = (event) => {
-setEmail(event.target.value);
+
+
+
+
+  setEmail(event.target.value);
+
 };
 
 const handlePasswordChange = (event) => {
@@ -51,28 +56,45 @@ const handleWalletChange = (event) => {
 setWallet(event.target.value);
 };
 
+const validateEmail=(email)=>{
+  const regex=/^\w+([\.-]?\w+)*@(gmail\.com|hotmail\.com|yahoo\.com|outlook\.com|aol\.com)$/
 
+  // console.log(regex.test(email))
+  return regex.test(email)
+ 
+
+}
 
  async function register(event){
   event.preventDefault();
-  await axios.post("/CustomerRegister",{
-    name,
-    address,
-    mobile,PANNo,email,password,wallet
-  }).then(res=>{
-    if(res.data.status==='ok'){
-      alert("Your account has been created successfully")
-      navigate('/Customer/login')
-}
-    else if(res.data.status==='exists'){
-      alert("You are already a part of us")
-      window.location.reload()
-     
+    if(validateEmail(email)){
+      await axios.post("/CustomerRegister",{
+        name,
+        address,
+        mobile,PANNo,email,password,wallet
+      }).then(res=>{
+        if(res.data.status==='ok'){
+          alert("Your account has been created successfully")
+          navigate('/Customer/login')
     }
-  }).catch(e=>{
-    alert("wrong details")
-  })
-}
+        else if(res.data.status==='exists'){
+          alert("You are already a part of us")
+          window.location.reload()
+         
+        }
+      }).catch(e=>{
+        alert("wrong details")
+      })
+    }
+    else{
+      alert("Invalid Email ID")
+    }
+  }
+
+ 
+  
+
+
 
 const data=()=>{
   console.log(name,address,email,password,wallet,PANNo,mobile)
@@ -158,6 +180,8 @@ required
            value={email}
            onChange={handleEmailChange}
            margin="normal"
+           
+      helperText="Please enter a valid email address"
          />
 <TextField
 required

@@ -22,7 +22,7 @@ import Swal from "sweetalert2";
 
 function MySchemes({ isOpen, onClose, jewellerid, customerid,customername,jewellername }) {
   const [isSchemeOpen, setSchemeOpen] = useState(false);
-  const contractaddress="0xfEdB6cbf8a55D553eECc93dE4e7839C81266379e"
+  const contractaddress="0x8B9Ce2D6A5b472F1B8A96d859bDCE88b254435F8"
   const [schemeId, setSchemeId] = useState([]);
   const [schemes, setSchemes] = useState([]);
   //const[open,setOpen]=useState(false)
@@ -60,7 +60,7 @@ function MySchemes({ isOpen, onClose, jewellerid, customerid,customername,jewell
         await window.ethereum.enable();
         const accounts = await web3.eth.getAccounts();
         const networkId = await web3.eth.net.getId();
-        if (networkId !== 51) {
+        if (networkId !== 888) {
           alert("Please connect to XDC Wallet")
           throw new Error("Please connect to XDC network.");
          

@@ -45,7 +45,7 @@ function CustomerHome() {
         await window.ethereum.enable();
         const accounts = await web3.eth.getAccounts();
         const networkId = await web3.eth.net.getId();
-        if (networkId !== 51) {
+        if (networkId !== 888) {
           alert("Please connect to XDC Wallet")
           setOff(true)
          
