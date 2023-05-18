@@ -40,24 +40,39 @@ setWallet(event.target.value);
 };
 
 
+const validateEmail=(email)=>{
+  const regex=/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
+
+  console.log(regex.test(email))
+  return regex.test(email)
+ 
+
+}
+
 
  async function register(event){
   event.preventDefault();
-  await axios.post("/JewellerRegister",{
-    name,
-    email,password,walletaddress
-  }).then(res=>{
-    if(res.data.status==='ok'){
-      alert("Your account has been created successfully")
-      navigate('/Jeweller/login')
-}
-    else if(res.data.status==='exists'){
-      alert("You are already a part of us")
-     window.location.reload()
-    }
-  }).catch(e=>{
-    alert("wrong details")
-  })
+  if(validateEmail(email)){
+    await axios.post("/JewellerRegister",{
+      name,
+      email,password,walletaddress
+    }).then(res=>{
+      if(res.data.status==='ok'){
+        alert("Your account has been created successfully")
+        navigate('/Jeweller/login')
+  }
+      else if(res.data.status==='exists'){
+        alert("You are already a part of us")
+       window.location.reload()
+      }
+    }).catch(e=>{
+      alert("wrong details")
+    })
+  }
+  else{
+    alert("Invalid Email ID")
+  }
+  
 }
 return (
     <>

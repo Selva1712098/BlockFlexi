@@ -55,7 +55,7 @@ export default function BankHome() {
   const token=jwt_decode(cookies.bank_sessionId)
   const bankid=token.id
   const [isloading,setisLoading]=useState(true)
-  const contractaddress="0xfEdB6cbf8a55D553eECc93dE4e7839C81266379e"
+  const contractaddress="0x8B9Ce2D6A5b472F1B8A96d859bDCE88b254435F8"
   async function connect() {
     if (window.ethereum) {
       const web3 = new Web3(window.ethereum);
@@ -63,7 +63,7 @@ export default function BankHome() {
         await window.ethereum.enable();
         const accounts = await web3.eth.getAccounts();
         const networkId = await web3.eth.net.getId();
-        if (networkId !== 51) {
+        if (networkId !== 888) {
           alert("Please connect to XDC Wallet")
           throw new Error("Please connect to XDC network.");
          

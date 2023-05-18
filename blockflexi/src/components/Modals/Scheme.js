@@ -45,7 +45,7 @@ handleLoader()
   // const[schemeid,setSchemeId]=useState('')
   
   //  const[isLoading, setIsLoading] = useState(false)
-   const contractaddress="0xfEdB6cbf8a55D553eECc93dE4e7839C81266379e"
+   const contractaddress="0x8B9Ce2D6A5b472F1B8A96d859bDCE88b254435F8"
   
   console.log(contractaddress,abi)
 
@@ -56,7 +56,7 @@ handleLoader()
         await window.ethereum.enable();
         const accounts = await web3.eth.getAccounts();
         const networkId = await web3.eth.net.getId();
-        if (networkId !== 51) {
+        if (networkId !== 888) {
           alert("Please connect to XDC Wallet")
          
          
