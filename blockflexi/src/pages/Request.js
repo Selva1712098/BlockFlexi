@@ -28,6 +28,7 @@ import "./Request.css";
 import Swal from "sweetalert2";
 import { Circles } from "react-loader-spinner";
 import Header from "../components/Header";
+import JewellerHeader from "../components/JewellerHeader";
 
 const TableExample = () => {
   const [hoveredRow, setHoveredRow] = useState(null);
@@ -281,7 +282,7 @@ const handleUsers=(data)=>{
    
   return (
     <div style={{ display: "flex", flexDirection: "column"   }}>
-      <Header />
+      <JewellerHeader/>
       <Typography
         variant="h4"
         align="center"

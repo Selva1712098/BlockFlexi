@@ -2,6 +2,7 @@ import React, { useState,useEffect } from "react";
 import axios from '../integration.js';
 
 import './AllJewellers.css';
+import Header from "../components/Header.js";
 function AllJewellers(){
     const[scheme, setscheme]= useState([]);
     useEffect(() => {
@@ -18,6 +19,7 @@ function AllJewellers(){
     }, []);
 
     return(
+
         <div>
            <h1 style={{textAlign:"center",fontFamily:'Libre Baskerville,serif'}}>All schemes</h1>
          
