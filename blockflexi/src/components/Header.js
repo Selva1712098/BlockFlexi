@@ -38,7 +38,7 @@ function Header() {
     setAnchorElUser(null);
   };
   const handleHomeClick = () => {
-    window.location.reload();
+   Navigate('/CustomerLanding')
   };
 
   const handleContactClick = () => {
@@ -143,8 +143,8 @@ function Header() {
             BLOCKFLEXI
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' },marginLeft:'170px' }}>
-            <Button color='inherit' sx={{fontFamily:'Libre Baskerville,serif',
-              fontWeight:'bold'}} onClick={handleHomeClick}>Home</Button>
+            {/* <Button color='inherit' sx={{fontFamily:'Libre Baskerville,serif',
+              fontWeight:'bold'}} onClick={handleHomeClick}>Home</Button> */}
             
            
               <Button
