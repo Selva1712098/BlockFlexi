@@ -1,12 +1,12 @@
-POST  http://localhost:5000/JewellerRegister
+POST  http://localhost:5000/CustomerLogin
 Content-Type: application/json
 
 {
    
-"name":"VRT",
-"email":"vrt@gmail.com",
-"password":"vrt",
-"walletaddress":"0x9d16df4d53afe6c637e55e5d590f2cd3af9eb802"
+
+"email":"john@j.com",
+"password":"jjj"
+
 
 }
 

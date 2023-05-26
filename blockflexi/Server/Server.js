@@ -1,5 +1,7 @@
 import express, { request } from "express";
 
+ 
+
 import cors from "cors";
 import session from "express-session";
 import jwt from "jsonwebtoken";
@@ -11,12 +13,34 @@ import {
   customerSchemeCollection
 } from "./mongo.js";
 
+ 
+
 import dotenv from "dotenv";
+
+ 
 
 import bcrypt from "bcryptjs";
 dotenv.config();
 
+ 
+
 const app = express();
+
+ 
+
+
+app.use(cors({ origin: "http://localhost:3000", credentials: true }));
+
+ 
+
+app.use(function(req, res, next) {
+res.header("Access-Control-Allow-Origin", ["http://localhost:3000"]);
+res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+next();
+});
+
+ 
+
 
 app.use(
   session({
@@ -26,22 +50,9 @@ app.use(
   })
 );
 
-app.use(cors({ origin: ["http://localhost:3000"], credentials: true }));
-app.use(express.json());
+ 
 
-app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "http://localhost:3000");
-  res.header("Access-Control-Allow-Credentials", true);
-  res.header(
-    "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept, Authorization"
-  );
-  res.header(
-    "Access-Control-Allow-Methods",
-    "GET, POST, PUT, PATCH, DELETE, OPTIONS"
-  );
-  next();
-});
+app.use(express.json());
 
 app.post("/CustomerRegister", async (req, res) => {
   const { name, address, mobile, email, password, PANNo,wallet } = req.body;
