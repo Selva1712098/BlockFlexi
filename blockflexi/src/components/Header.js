@@ -38,7 +38,7 @@ function Header() {
     setAnchorElUser(null);
   };
   const handleHomeClick = () => {
-   Navigate('/CustomerLanding')
+   Navigate('/CustomerHome')
   };
 
   const handleContactClick = () => {
