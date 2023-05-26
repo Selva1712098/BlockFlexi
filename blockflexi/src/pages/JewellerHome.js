@@ -9,6 +9,7 @@ import jwt_decode from 'jwt-decode'
 import {useCookies} from 'react-cookie'
 import Swal from 'sweetalert2';
 import Header from '../components/Header';
+import JewellerHeader from '../components/JewellerHeader';
 
 
 const styles = {
@@ -119,7 +120,7 @@ const JewellerHome = () => {
   
     return (
       <div>
-       <Header />
+       <JewellerHeader />
         <br/>
         <div style={{display:'flex',justifyContent:'flex-end',alignItems:'center',marginRight:'30px'}}>
         <Button variant='contained' style={{backgroundColor:'#9A1B56'}}  onClick={logout}> <b>LOGOUT</b></Button> <br/>

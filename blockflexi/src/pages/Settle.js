@@ -29,6 +29,7 @@ import {
 
 import { Circles } from  'react-loader-spinner'
 import Header from '../components/Header';
+import JewellerHeader from '../components/JewellerHeader';
 
 
 function Settle() {
@@ -248,7 +249,7 @@ value={isloading}
 
   return (
     <div>
-      <Header />
+      <JewellerHeader />
       <Dialog
         open={open}
         onClose={() => setOpen(false)}

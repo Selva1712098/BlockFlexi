@@ -10,6 +10,7 @@ import Swal from 'sweetalert2'
 import abi from "../contracts/FlexiScheme.json"
 import './BankPay.css';
 import Header from "../components/Header";
+import BankHeader from "../components/BankHeader";
 function BankPayment(){
     const contractaddress="0x8B9Ce2D6A5b472F1B8A96d859bDCE88b254435F8"
     const location=useLocation();
@@ -127,7 +128,7 @@ function BankPayment(){
      }
     return(
         <div>
-         < Header />  
+         < BankHeader />  
     <div className="payment-container">
     <div className="payment-card">
       <div className="customer-details">
