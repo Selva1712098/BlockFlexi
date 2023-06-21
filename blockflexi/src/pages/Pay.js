@@ -78,17 +78,39 @@ console.log(bfcontract);
         console.log( pay)
      
       
-      if(pay.status){
+      if(pay.status ){
         setLoading(false)
         setOpen(true)
 
 
       }
       else{
-        alert("Payment Unsuccessful")
+         setLoading(false)
+        Swal.fire({
+          icon: 'error',
+          title: 'Payment Failed',
+          text: 'Please try again later.',
+          confirmButtonColor:"#9A1B56"
+        }).then((result)=>{
+          if(result.isConfirmed){
+            window.location.reload();
+          }
+        })
       }
       
   }catch(err){
+    setLoading(false)
+    if(err.code==-32603)
+    Swal.fire({
+      icon: 'error',
+      title: 'Payment Rejected',
+      confirmButtonColor:"#9A1B56"
+     
+    }).then((result)=>{
+      if(result.isConfirmed){
+        window.location.reload();
+      }
+    })
     console.log(err)
   }
  }

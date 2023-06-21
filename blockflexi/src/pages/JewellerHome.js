@@ -122,8 +122,8 @@ const JewellerHome = () => {
       <div>
        <JewellerHeader />
         <br/>
-        <div style={{display:'flex',justifyContent:'flex-end',alignItems:'center',marginRight:'30px'}}>
-        <Button variant='contained' style={{backgroundColor:'#9A1B56'}}  onClick={logout}> <b>LOGOUT</b></Button> <br/>
+        <div style={{display:'flex',justifyContent:'flex-end',alignItems:'center',marginRight:'30px',marginBottom:'10px'}}>
+        <Button variant='contained' style={{backgroundColor:'#9A1B56',fontFamily:'Libre Baskerville,serif'}}  onClick={logout}> <b>LOGOUT</b></Button> <br/>
 
         </div>
        
@@ -146,7 +146,7 @@ const JewellerHome = () => {
       <CardActions sx={{display:'flex',justifyContent:'flex-end',alignItems:'flex-end'}}>  
               <Button sx={{backgroundColor:'#9A1B56',fontWeight:'bold',fontFamily:'Libre Baskerville,serif',color:'white','&:hover':{
                 backgroundColor:'#9A1B56'
-              }}} variant='standard'  onClick={handleOpen}>ADD SCHEMES</Button>
+              }}} variant='contained'  onClick={handleOpen}>ADD SCHEMES</Button>
               
               <Button sx={{backgroundColor:'#9A1B56',fontWeight:'bold',fontFamily:'Libre Baskerville,serif',color:'white','&:hover':{
                 backgroundColor:'#9A1B56'}}}  variant="contained" onClick={viewOpen}>VIEW SCHEMES</Button>
@@ -267,7 +267,7 @@ const JewellerHome = () => {
   
         <div style={{display:'flex',justifyContent:'center',alignItems:'center',marginTop:'30px'}}>
         <Typography style={{fontSize:'20px',fontWeight:'bold',fontFamily:'Libre Baskerville,serif'}}id='modal-title' align='center' variant='h'  component='h1'>
-          MonthlyPrice
+        Price/M
          </Typography>
         <TextField
         required
@@ -276,7 +276,7 @@ const JewellerHome = () => {
     name='MonthlyPayment'
     value={MonthlyPayment}
    onChange={handleMonthlyPayment}
-    style={{ marginLeft:'120px', borderRadius: '4px', boxShadow: '0 2px 4px 0 rgba(0,0,0,0.10)', fontSize: '100px',
+    style={{ marginLeft:'85px', borderRadius: '4px', boxShadow: '0 2px 4px 0 rgba(0,0,0,0.10)', fontSize: '100px',
     }}
     InputLabelProps={{
       style: {
