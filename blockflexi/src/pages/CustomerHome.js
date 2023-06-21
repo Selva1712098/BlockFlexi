@@ -151,14 +151,7 @@ function CustomerHome() {
               </CardBody>
               <CardFooter>
               <div className="cht">
-                  <Button className="chbtt" style={{fontFamily:'Libre Baskerville,serif'}}
-                    bgGradient="linear(to-b, #BF8F91, #CAA2A3, #D4B5B5, #DFC7C8)"
-                    onClick={handleSchemes}
-                   
-                  >
-                    View Schemes
-                  </Button>
-                  <Button className="chbtt1" style={{fontFamily:'Libre Baskerville,serif'}}
+              <Button className="chbtt1" style={{fontFamily:'Libre Baskerville,serif'}}
                     bgGradient="linear(to-b, #BF8F91, #CAA2A3, #D4B5B5, #DFC7C8)"
                     onClick={handleOpenModal}
                     size="md"
@@ -166,6 +159,14 @@ function CustomerHome() {
                   >
                     Join Scheme
                   </Button>
+                  <Button className="chbtt" style={{fontFamily:'Libre Baskerville,serif'}}
+                    bgGradient="linear(to-b, #BF8F91, #CAA2A3, #D4B5B5, #DFC7C8)"
+                    onClick={handleSchemes}
+                   
+                  >
+                    View Schemes
+                  </Button>
+                 
 
 
                   <MySchemes

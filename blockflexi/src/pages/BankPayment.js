@@ -2,6 +2,9 @@ import React,{useEffect,useState} from "react";
 import { useLocation ,useParams,useNavigate} from "react-router-dom";
 // import jwt_Decode from 'jwt-decode'
 import Web3 from'web3';
+import {useCookies }from 'react-cookie'
+import jwt_decode from 'jwt-decode'
+
 import { Typography } from "@mui/material";
 // import axios from 'axios'
 import axios from '../integration'
@@ -17,6 +20,8 @@ function BankPayment(){
     const location=useLocation();
     const navigate=useNavigate();
     const{CustomerID,JewellerID,SchemeID}=useParams()
+    const[cookies,setCookie,removeCookie]=useCookies(['bank_sessionId'])
+  const token=jwt_decode(cookies.bank_sessionId)
     const customername=location.state.customername
     const jewellername=location.state.jewellername
     const schemename=location.state.schemename
