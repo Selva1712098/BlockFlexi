@@ -17,13 +17,13 @@ function JewellerSchemeTable({jewellerid}) {
     }}).then(res=>{
       try{
       if(res.data.status==='Deleted'){
-        alert('Your scheme has been deleted')
+        alert('Your Scheme has been deleted')
         window.location.reload()
         
       }
       else{
         console.log(res.data.response)
-        alert('Something went wrong.Try again')
+        alert('Something went Wrong.Try again')
       }}catch(e){
         console.log(e)
       }
@@ -73,16 +73,20 @@ function JewellerSchemeTable({jewellerid}) {
 
   return (
     <div >
+            <Typography variant='h5' align='center' mb={2} sx={{fontWeight:'bold',fontFamily:'Libre Baskerville,serif'}}>MY SCHEMES</Typography>
+
       <Paper style={{overflow:'auto',maxHeight:'400px',maxWidth:'400px',minWidth:'300px'}}>
+
       <Grid container  >
-      <Typography variant='h5' align='center' mb={2} sx={{fontWeight:'bold',fontFamily:'Libre Baskerville,serif'}}>MY SCHEMES</Typography>
       {Array.isArray(schemes) && schemes.map((scheme)=>(
         
         <Grid item >
          
-         <Card variant='outlined' spacing={3} style={{minWidth:'400px',marginBottom:'15px'}}>
+         <Card variant='outlined' spacing={3} style={{minWidth:'380px',marginBottom:'15px'}}>
          <CardContent>
           <Typography variant='subtitle1' sx={{fontWeight:'bold',textTransform:'uppercase',fontFamily:'Libre Baskerville,serif'}} gutterbottom>{scheme.SchemeName}
+          </Typography>
+          <Typography variant='subtitle1' sx={{fontWeight:'medium-bold',textTransform:'uppercase',fontFamily:'Libre Baskerville,serif'}} gutterbottom>{scheme.SchemeDetails}
           </Typography>
           
 
@@ -91,8 +95,8 @@ function JewellerSchemeTable({jewellerid}) {
           <Typography variant='subtitle1' sx={{fontWeight:'medium-bold',textTransform:'uppercase',fontFamily:'Libre Baskerville,serif'}}  >Total : {scheme.MonthlyPayment*11}
             </Typography></CardContent>
      <CardActions >
-      <div style={{position:'relative',top:'0%',bottom:'0%',left:'75%'}}>
-      <Button variant='contained' size="small" sx={{padding:'7px'}} color='error' onClick={()=>deletescheme(scheme)}><Typography sx={{fontWeight:'medium-bold'}} variant='body2'>
+      <div style={{position:'relative',top:'0%',bottom:'0%',left:'80%'}}>
+      <Button variant='contained' size="small" style={{padding:'7px',backgroundColor:'#9a1b56'}}  onClick={()=>deletescheme(scheme)}><Typography sx={{fontWeight:'medium-bold',fontFamily:'Libre Baskerville,serif',fontSize:'15px'}} variant='body2'>
         DELETE</Typography></Button>
         </div>
      </CardActions>

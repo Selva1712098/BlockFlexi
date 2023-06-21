@@ -2,6 +2,10 @@ import React,{useEffect,useState} from "react";
 import { useLocation ,useParams,useNavigate} from "react-router-dom";
 // import jwt_Decode from 'jwt-decode'
 import Web3 from'web3';
+import {useCookies }from 'react-cookie'
+import jwt_decode from 'jwt-decode'
+
+import { Typography } from "@mui/material";
 // import axios from 'axios'
 import axios from '../integration'
 
@@ -16,6 +20,8 @@ function BankPayment(){
     const location=useLocation();
     const navigate=useNavigate();
     const{CustomerID,JewellerID,SchemeID}=useParams()
+    const[cookies,setCookie,removeCookie]=useCookies(['bank_sessionId'])
+  const token=jwt_decode(cookies.bank_sessionId)
     const customername=location.state.customername
     const jewellername=location.state.jewellername
     const schemename=location.state.schemename
@@ -83,7 +89,30 @@ function BankPayment(){
            setLoading(false)
             apprequest()
         }
+        else{
+          setLoading(false)
+          Swal.fire({
+            icon: 'error',
+            title: 'Payment Failed',
+            text: 'Please try again later.',
+          }).then((result)=>{
+            if(result.isConfirmed){
+              window.location.reload();
+            }
+          })  
+        }
     }catch(e){
+      setLoading(false)
+      if(e.code==-32603)
+      Swal.fire({
+        icon: 'error',
+        title: 'Payment Rejected',
+       
+      }).then((result)=>{
+        if(result.isConfirmed){
+          window.location.reload();
+        }
+      })
         console.log(e)
     }
      }
@@ -132,22 +161,38 @@ function BankPayment(){
     <div className="payment-container">
     <div className="payment-card">
       <div className="customer-details">
-        <div className="detail">
-          <span className="label">Name:</span>
-          <span className="value">{customername}</span>
-        </div>
-        <div className="detail">
-          <span className="label">Scheme Name:</span>
-          <span className="value">{schemename}</span>
-        </div>
-        <div className="detail">
-          <span className="label">Jeweler Name:</span>
-          <span className="value">{jewellername}</span>
-        </div>
-        <div className="detail">
-          <span className="label">Amount to be Paid:</span>
-          <span className="value">{balance}</span>
-        </div>
+      <table>
+                <tbody>
+                <tr>
+                  <td >
+                  <Typography variant="h6"  gutterBottom><b>Name</b></Typography></td>
+                 
+                  <td style={{padding:'0 20px',textTransform:'capitalize'}}><Typography variant="h6"  gutterBottom>{customername}</Typography></td>
+                </tr>
+                <tr>
+                  <td>
+                  <Typography variant="h6"  gutterBottom><b>Jeweller Name</b></Typography></td>
+                
+                  <td style={{padding:'0 20px',textTransform:'capitalize'}}><Typography variant="h6"  gutterBottom>{jewellername}</Typography></td>
+                </tr>
+                <tr>
+                  <td>
+                  <Typography variant="h6"  gutterBottom><b>Scheme Name</b></Typography></td>
+                  
+                  <td style={{padding:'0 20px',textTransform:'capitalize'}}><Typography variant="h6"  gutterBottom>{schemename}</Typography></td>
+                </tr>
+                <tr>
+                  <td>
+                  <Typography variant="h6" style={{marginTop:'1px'}} gutterBottom ><b>Amount to be paid</b></Typography></td>
+                  
+                  <td style={{padding:'0 20px'}}><Typography variant="h6"  gutterBottom>{balance}</Typography></td>
+                </tr>
+                
+               
+
+              
+                </tbody>
+              </table>
       </div>
       <button className="pay-button" onClick={payJeweller}>Pay</button>
      { loading && <div className={`overlay-1 ${loading ? 'active' : ''}`}>

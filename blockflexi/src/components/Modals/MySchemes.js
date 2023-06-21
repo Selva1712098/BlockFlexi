@@ -220,7 +220,7 @@ function MySchemes({ isOpen, onClose, jewellerid, customerid,customername,jewell
                       <Heading size="md" style={{fontFamily:'Libre Baskerville,serif'}}>{scheme.SchemeName}</Heading>
 
                       <Text py="2" style={{fontFamily:'Libre Baskerville,serif'}}>
-                        Monthly= {scheme.MonthlyPayment}
+                        Monthly= {scheme.MonthlyPayment} {"  "}
                         Total= {scheme.MonthlyPayment * 11}
                       </Text>
                     </CardBody>

@@ -347,7 +347,7 @@ const handleUsers=(data)=>{
                   <TableCell>{row.MobileNo}</TableCell>
                   <TableCell>
                   <Button
-        style={{ fontWeight: "bold", margin: "0px 0px 0px 30px", fontFamily:'Libre Baskerville,serif' }}
+        style={{ fontWeight: "bold", margin: "0px 0px 0px 30px", fontFamily:'Libre Baskerville,serif',backgroundColor:'#9a1b56' }}
         variant="contained"
         onClick={() => handleOpen(row)}
       >
@@ -358,19 +358,19 @@ const handleUsers=(data)=>{
                   <TableCell>
                   <div style={{ display: "flex" }}>
   <Button
-    style={{ fontWeight: "bold",fontFamily:'Libre Baskerville,serif' }}
+    style={{ fontWeight: "bold",fontFamily:'Libre Baskerville,serif',backgroundColor:'#9a1b56' }}
     variant="contained"
     disabled={!hoveredRow || hoveredRow.id !== row.id}
-    color="success"
+    
     onClick={()=>fwdrequest(row)}
   >
     FORWARD <ArrowForwardIcon />
   </Button>
   <Button
-    style={{ fontWeight: "bold", marginLeft: "20px",fontFamily:'Libre Baskerville,serif' }}
+    style={{ fontWeight: "bold", marginLeft: "20px",fontFamily:'Libre Baskerville,serif',backgroundColor:'#9a1b56' }}
     variant="contained"
     disabled={!hoveredRow || hoveredRow.id !== row.id}
-    color="error"
+    
     onClick={()=>rjtrequest(row)}
   >
     REJECT<CancelRoundedIcon />
@@ -386,18 +386,41 @@ const handleUsers=(data)=>{
           <DialogContent sx={{height:'200px',width:'400px'}}>
           {selectedUser && (
             <DialogContentText style={{ fontWeight: "bold", fontFamily:'Libre Baskerville,serif'  }}>
-              <div style={{margin:'5px 0px 0px 60px'}}>
-              CUSTOMER NAME : {customername}
-              <br /> <br /></div>
-              <div style={{margin:'0px 0px 0px 60px'}}>
-             SCHEME NAME : {scheme}
-              <br /><br/></div>
-              <div style={{margin:'0px 0px 0px 60px'}}>
-              AMOUNT TO BE PAID : {balance}
-              <br /><br/></div>
-              <div style={{margin:'0px 0px 0px 60px'}}>
-              MONTHS PAID : {months}
-              <br /><br/></div>
+    
+
+              <table>
+                <tbody>
+                <tr>
+                  <td >
+                  <Typography variant="h6"  gutterBottom>Name</Typography></td>
+                 
+                  <td style={{padding:'0 20px',textTransform:'capitalize'}}><Typography variant="h6"  gutterBottom>{customername}</Typography></td>
+                </tr>
+                <tr>
+                  <td>
+                  <Typography variant="h6"  gutterBottom>Jeweller Name</Typography></td>
+                
+                  <td style={{padding:'0 20px',textTransform:'capitalize'}}><Typography variant="h6"  gutterBottom>{scheme}</Typography></td>
+                </tr>
+                <tr>
+                  <td>
+                  <Typography variant="h6"  gutterBottom>Months Paid</Typography></td>
+                  
+                  <td style={{padding:'0 20px',textTransform:'capitalize'}}><Typography variant="h6"  gutterBottom>{months}</Typography></td>
+                </tr>
+                <tr>
+                  <td>
+                  <Typography variant="h6" style={{marginTop:'1px'}} gutterBottom >Amount to be paid</Typography></td>
+                  
+                  <td style={{padding:'0 20px'}}><Typography variant="h6"  gutterBottom>{balance}</Typography></td>
+                </tr>
+                
+               
+
+              
+                </tbody>
+              </table>
+              
              
             </DialogContentText>)}
           </DialogContent>
@@ -412,7 +435,7 @@ const handleUsers=(data)=>{
   fontSize:"14px",
   fontFamily:'Libre Baskerville,serif',
   borderRadius: "5px",
-  backgroundColor: "#f34642",
+  backgroundColor: "#9a1b56",
   color: "white"
 }} onClick={handleClose}>
   Close

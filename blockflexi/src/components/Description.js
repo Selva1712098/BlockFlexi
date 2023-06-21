@@ -51,9 +51,12 @@ function Description() {
     //key={activeIndex}
     modules={[ Pagination, Scrollbar, A11y,Autoplay]}
     spaceBetween={100}
+    disableOnInteraction= {true}
     // initialSlide={activeIndex}    
    autoplay={
     {delay:3000,
+      disableOnInteraction: true,
+      pauseOnMouseEnter: true,
 
     }
    }
@@ -125,7 +128,7 @@ function Description() {
         </Grid> 
                 </SwiperSlide>
       
-        ...
+        .
     </Swiper>
        
             

@@ -276,24 +276,44 @@ useEffect(()=>{
         <DialogContent>
           
            <DialogContentText>
-              <Typography variant="h6"  gutterBottom>
-                Name: {customername}
-              </Typography>
-              <Typography variant="h6"  gutterBottom>
-                JewellerName: {jeweller}
-              </Typography>
-              <Typography variant="h6"   gutterBottom>
-                SchemeName: {schemename}
-              </Typography>
-              <Typography variant="h6"   gutterBottom>
-                Amount to be paid:{balance}
-              </Typography>
+              <table>
+                <tbody>
+                <tr>
+                  <td >
+                  <Typography variant="h6"  gutterBottom>Name</Typography></td>
+                 
+                  <td style={{padding:'0 20px',textTransform:'capitalize'}}><Typography variant="h6"  gutterBottom>{customername}</Typography></td>
+                </tr>
+                <tr>
+                  <td>
+                  <Typography variant="h6"  gutterBottom>Jeweller Name</Typography></td>
+                
+                  <td style={{padding:'0 20px',textTransform:'capitalize'}}><Typography variant="h6"  gutterBottom>{jeweller}</Typography></td>
+                </tr>
+                <tr>
+                  <td>
+                  <Typography variant="h6"  gutterBottom>Scheme Name</Typography></td>
+                  
+                  <td style={{padding:'0 20px',textTransform:'capitalize'}}><Typography variant="h6"  gutterBottom>{schemename}</Typography></td>
+                </tr>
+                <tr>
+                  <td>
+                  <Typography variant="h6" style={{marginTop:'1px'}} gutterBottom >Amount to be paid</Typography></td>
+                  
+                  <td style={{padding:'0 20px'}}><Typography variant="h6"  gutterBottom>{balance}</Typography></td>
+                </tr>
+                
+               
+
+              
+                </tbody>
+              </table>
               
               </DialogContentText>
          
         </DialogContent>
-            <DialogActions>
-          <Button variant='contained'  size='small'  onClick={() => setOpen(false)}>Ok</Button>
+            <DialogActions style={{display:'flex',justifyContent:'center',alignItems:'center'}}>
+          <Button variant='contained'  size='small' style={{backgroundColor:'#9A1B56',fontFamily:'Libre Baskerville,serif'}}  onClick={() => setOpen(false)}>Ok</Button>
           </DialogActions>
       </Dialog>
       <br/>
@@ -311,7 +331,7 @@ useEffect(()=>{
         }}
       >
         <h1><b>INCOMING REQUESTS</b></h1>
-        <Button variant="contained" onClick={handleLogout} style={{backgroundColor:'#9A1B56',right:'20%',left:'19%',top:'6%'}}><b>Logout</b></Button>
+        <Button variant="contained" onClick={handleLogout} style={{backgroundColor:'#9A1B56',right:'20%',left:'19%',top:'6%',fontFamily:'Libre Baskerville,serif'}}><b>Logout</b></Button>
       </div>
       <div style={{display:'flex',justifyContent:'center',alignItems:'center',flexFlow:'column'}}>
       
@@ -365,7 +385,7 @@ useEffect(()=>{
                  {row.MobileNo}
                </TableCell>
                <TableCell align="left">
-                 <Button style={{fontFamily:'Libre Baskerville,serif'}}
+                 <Button style={{fontFamily:'Libre Baskerville,serif',backgroundColor:'#9A1B56'}}
                    variant="contained"
                    size="small"
                    sx={{padding:'8px'}}
@@ -376,10 +396,10 @@ useEffect(()=>{
                </TableCell>
                <TableCell align="center">
                  <Stack direction="row" alignItems="center" spacing={3}>
-                   <Button style={{fontFamily:'Libre Baskerville,serif'}} variant="contained" size ="small" sx={{padding:'8px'}} color="success" onClick={()=>{passdata(row)}}>
+                   <Button style={{fontFamily:'Libre Baskerville,serif',backgroundColor:'#9A1B56'}} variant="contained" size ="small" sx={{padding:'8px'}}  onClick={()=>{passdata(row)}}>
                      <b>Approve</b>
                    </Button>
-                   <Button style={{fontFamily:'Libre Baskerville,serif'}} variant="contained" size ="small" sx={{padding:'8px'}} color="error" onClick={()=>{rjtrequest(row)}}>
+                   <Button style={{fontFamily:'Libre Baskerville,serif',backgroundColor:'#9A1B56'}} variant="contained" size ="small" sx={{padding:'8px'}}  onClick={()=>{rjtrequest(row)}}>
                      <b>Reject</b>
                    </Button>
                  </Stack>

@@ -157,6 +157,7 @@ function Settle() {
       icon: 'error',
       title: 'Not Settled',
       text: `${row.CustomerName}'s Gold has been Settled`,
+      confirmButtonColor:"#9A1B56"
     }).then((result)=>{
       if(result.isConfirmed){
         window.location.reload();
@@ -267,25 +268,48 @@ value={isloading}
         <DialogContent>
           
            <DialogContentText>
-              <Typography style={{fontFamily:'Libre Baskerville,serif'}} variant="h6"  gutterBottom>
-                Name: {customername}
-              </Typography>
-             
-              <Typography style={{fontFamily:'Libre Baskerville,serif'}} variant="h6"   gutterBottom>
-                SchemeName: {scheme}
-              </Typography>
-              <Typography style={{fontFamily:'Libre Baskerville,serif'}} variant="h6"   gutterBottom>
-                Amount to be paid:{balance}
-              </Typography>
-              <Typography style={{fontFamily:'Libre Baskerville,serif'}} variant="h6"   gutterBottom>
-                Bank Payment Status :Completed
-              </Typography>
+
+              <table>
+                <tbody>
+                <tr>
+                  <td >
+                  <Typography variant="h6"  style={{fontFamily:'Libre Baskerville,serif'}} gutterBottom>Name</Typography></td>
+                 
+                  <td style={{padding:'0 20px',textTransform:'capitalize'}}><Typography variant="h6" style={{fontFamily:'Libre Baskerville,serif'}} gutterBottom>{customername}</Typography></td>
+                </tr>
+                <tr>
+                  <td>
+                  <Typography variant="h6" style={{fontFamily:'Libre Baskerville,serif'}} gutterBottom>Scheme Name</Typography></td>
+                  
+                  <td style={{padding:'0 20px',textTransform:'capitalize'}}><Typography variant="h6" style={{fontFamily:'Libre Baskerville,serif'}} gutterBottom>{scheme}</Typography></td>
+                </tr>
+                <tr>
+                  <td>
+                  <Typography variant="h6" style={{marginTop:'1px',fontFamily:'Libre Baskerville,serif'}} gutterBottom >Amount to be paid</Typography></td>
+                  
+                  <td style={{padding:'0 20px'}}><Typography variant="h6" style={{fontFamily:'Libre Baskerville,serif'}} gutterBottom>{balance}</Typography></td>
+                </tr>
+                <tr>
+                  <td>
+                  <Typography variant="h6" style={{marginTop:'1px',fontFamily:'Libre Baskerville,serif'}} gutterBottom >Bank Payment Status</Typography>
+
+                    
+                  </td>
+                  <td style={{padding:'0 20px'}}><Typography variant="h6" style={{fontFamily:'Libre Baskerville,serif'}} gutterBottom>Completed</Typography></td>
+
+
+                </tr>
+               
+
+              
+                </tbody>
+              </table>
               
               </DialogContentText>
          
         </DialogContent>
-            <DialogActions>
-          <Button style={{fontFamily:'Libre Baskerville,serif'}} variant='contained'  size='small'  onClick={() => setOpen(false)}>Ok</Button>
+            <DialogActions style={{display:'flex',justifyContent:'center',alignItems:'center'}}>
+          <Button style={{fontFamily:'Libre Baskerville,serif',backgroundColor:'#9A1B56'}} variant='contained'  size='small'  onClick={() => setOpen(false)}>Ok</Button>
           </DialogActions>
       </Dialog>
 
@@ -335,7 +359,7 @@ value={isloading}
           
 
             <TableCell>Yes</TableCell>
-            <TableCell><Button variant ='contained' style={{backgroundColor:'#9a1b56'}} onClick={()=>{
+            <TableCell><Button variant ='contained' style={{backgroundColor:'#9a1b56',fontFamily:'Libre Baskerville,serif'}} onClick={()=>{
               opendetails(row)
             }}><b>See Details</b></Button></TableCell>
             <TableCell>
@@ -344,7 +368,7 @@ value={isloading}
                
                 
                 onClick={() => handleSettleClick(row)}
-                style={{backgroundColor:'#9a1b56'}}
+                style={{backgroundColor:'#9a1b56',fontFamily:'Libre Baskerville,serif'}}
               ><b>
                 SETTLE GOLD</b>
               </Button>
@@ -371,7 +395,7 @@ value={isloading}
         color="secondary"
         onClick={handleCloseDialog}
         style={{
-          backgroundColor: '#f44336',
+          backgroundColor:'#9A1B56',
           color: '#fff',
           fontWeight: 'bold',
           borderRadius: '4px',
@@ -386,7 +410,7 @@ value={isloading}
         color="secondary"
         onClick={()=>settlegold(selectedRow)}
         style={{
-          backgroundColor: '#4caf50',
+          backgroundColor:'#9A1B56',
           color: '#fff',
           fontWeight: 'bold',
           borderRadius: '4px',
