@@ -10,10 +10,11 @@ function Hero({customerWallet}) {
   // const JewellerHero=forwardRef((props,ref)=>{
   const navigate = useNavigate();
   console.log(customerWallet)
+  const wallet=customerWallet
   const [jewellers, setJewellers] = useState([]);
   const [isloading,setLoading]=useState(true)
   const handleButton = () => {
-    navigate("/AllJewellers");
+    navigate("/TotalJewellers",{state:{walletAddress:wallet}});
   };
 
   const [jewellerSchemes, setJewellerSchemes] = useState(false);
@@ -36,7 +37,8 @@ function Hero({customerWallet}) {
       try {
         setLoading(true)
         const response = await axios.get("/viewjewellers");
-        jeweller(response.data.jeweller);
+        const slicedData = response.data.jeweller.slice(0, 3); // Display only the first three jewellers
+        jeweller(slicedData);
         setLoading(false)
        
       } catch (err) {

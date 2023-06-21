@@ -24,7 +24,7 @@ function JewellerHero(){
     async function fetchData(){
       try{
         const response= await axios.get("/viewjewellers");
-        setJewellers(response.data);
+        setJewellers(response.data.slice(0, 3));
       }catch(err){
         console.error(err);
       }

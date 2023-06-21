@@ -20,6 +20,7 @@ import CustomerLanding from './pages/CustomerLanding';
 import AllJewellers from './pages/AllJewellers';
 import JewellerProfile from './pages/JewellerProfile';
 import MainHeader from './components/Modals/MainHeader';
+import TotalJewellers from './pages/TotalJewellers';
 
 
 const LazyBankHome=React.lazy(()=>import ('./pages/BankHome'))
@@ -46,7 +47,7 @@ function App() {
       
         <Route path={'/BankHome'} element={<React.Suspense fallback='Loading ...'><LazyBankHome/></React.Suspense>}/>
         <Route path={'/jewellerhome'} element={<JewellerHome/>}/>
-       
+        <Route path={'/TotalJewellers'} element={<TotalJewellers/>}/>
         <Route path={'/request'} element={<Request/>}/>
         <Route path={'/settle'} element={<Settle/>}/>
       
